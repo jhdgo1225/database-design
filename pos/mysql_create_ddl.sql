@@ -1,0 +1,193 @@
+-- 1) 회원 테이블 (tblmebrm)
+CREATE TABLE tblmebrm (
+    mebrid   VARCHAR(16)       NOT NULL,
+    passwd   CHAR(64)          NOT NULL,
+    name     VARCHAR(128)      NOT NULL,
+    addr     VARCHAR(128)      NOT NULL,
+    email    VARCHAR(64)       NOT NULL,
+    phone    CHAR(11)          NOT NULL,
+    manager  CHAR(1)           NOT NULL  CHECK (manager IN ('T','F')),
+    CONSTRAINT pk_tblmebrm_mebrid PRIMARY KEY (mebrid)
+);
+
+
+-- 2) 게시판 테이블 (tblpostm)
+CREATE TABLE tblpostm (
+    postno   INT                     NOT NULL AUTO_INCREMENT,
+    mebrid   VARCHAR(16)             NOT NULL,
+    title    VARCHAR(256)            NOT NULL,
+    content  VARCHAR(1024),
+    write    DATETIME                NOT NULL,
+    edit     DATETIME                NOT NULL,
+    CONSTRAINT pk_tblpostm_postno PRIMARY KEY (postno),
+    CONSTRAINT fk_tblpostm_mebrid FOREIGN KEY (mebrid)
+        REFERENCES tblmebrm(mebrid)
+);
+
+
+-- 3) 댓글 테이블 (tblrepld)
+CREATE TABLE tblrepld (
+    replno   INT                     NOT NULL AUTO_INCREMENT,
+    postno   INT                     NOT NULL,
+    mebrid   VARCHAR(16)             NOT NULL,
+    content  VARCHAR(1024)           NOT NULL,
+    write    DATETIME                NOT NULL,
+    edit     DATETIME                NOT NULL,
+    CONSTRAINT pk_tblrepld_replno PRIMARY KEY (replno),
+    CONSTRAINT fk_tblrepld_postno FOREIGN KEY (postno)
+        REFERENCES tblpostm(postno),
+    CONSTRAINT fk_tblrepld_mebrid FOREIGN KEY (mebrid)
+        REFERENCES tblmebrm(mebrid)
+);
+
+CREATE TABLE tblbsctl (
+    cateno SMALLINT NOT NULL,
+    name   CHAR(4)  NOT NULL,
+    CONSTRAINT pk_tblbsctl_cateno PRIMARY KEY (cateno)
+);
+
+
+CREATE TABLE tblbusim (
+    busino   VARCHAR(9)    NOT NULL,  -- 업체 번호 (도번호 + 시/군/구번호 + 업체 등록 순서)
+    serv     SMALLINT      NOT NULL,  -- 업종 (외래키: tblbsctl(cateno))
+    name     VARCHAR(128)  NOT NULL,  -- 업체 이름
+    mgr      VARCHAR(16)   NOT NULL,  -- 업체 관리자 (외래키: tblmebrm(mebrid))
+    tablecnt  SMALLINT      NOT NULL,  -- 업체 테이블 총 수
+    addr     VARCHAR(128)  NOT NULL,  -- 업체 주소
+    CONSTRAINT pk_tblbusim_busino PRIMARY KEY (busino),
+    CONSTRAINT fk_tblbusim_serv   FOREIGN KEY (serv) REFERENCES tblbsctl(cateno),
+    CONSTRAINT fk_tblbusim_mgr    FOREIGN KEY (mgr)  REFERENCES tblmebrm(mebrid)
+);
+
+CREATE TABLE tblstafm (
+    stafno   VARCHAR(12)  NOT NULL,  -- 직원 번호 (업체 번호 + 등록 순서)
+    busino   VARCHAR(9)   NOT NULL,  -- 근무 업체 번호 (외래키)
+    name     VARCHAR(128) NOT NULL,  -- 직원 이름
+    position CHAR(1)      NOT NULL,  -- 직원 직책
+    salary   INT          NOT NULL,  -- 직원 급여
+    status   CHAR(1)      NOT NULL,  -- 직원 근무 상태
+    addr     VARCHAR(128) NOT NULL,  -- 직원 거주 주소
+    phone    CHAR(11)     NOT NULL,  -- 직원 전화번호
+    CONSTRAINT pk_tblstafm_stafno PRIMARY KEY (stafno),
+    CONSTRAINT fk_tblstafm_busino FOREIGN KEY (busino)
+        REFERENCES tblbusim(busino),
+    CONSTRAINT chk_tblstafm_position CHECK (position IN ('M', 'F', 'P')),
+    CONSTRAINT chk_tblstafm_status   CHECK (status IN ('N', 'L', 'R'))
+);
+
+CREATE TABLE tblunitl (
+    cateno SMALLINT    NOT NULL,
+    name   VARCHAR(2)  NOT NULL,
+    CONSTRAINT pk_tblunitl_cateno PRIMARY KEY (cateno),
+    CONSTRAINT chk_tblunitl_name CHECK (
+        name IN (
+            'kg',  -- 1
+            'mg',  -- 2
+            'g',   -- 3
+            '개',  -- 4
+            '단',  -- 5
+            '판',  -- 6
+            'L',   -- 7
+            'ml',  -- 8
+            '병',  -- 9
+            '박스' -- 10
+        )
+    )
+);
+
+CREATE TABLE tblstokm (
+    stokno    VARCHAR(14)  NOT NULL,  -- 재고 번호 (업체 번호 + 등록 순서)
+    busino    VARCHAR(9)   NOT NULL,  -- 재고 관리업체 (외래키)
+    unit      SMALLINT     NOT NULL,  -- 재고의 단위 (외래키)
+    name      VARCHAR(64)  NOT NULL,  -- 재고 이름
+    amount    REAL         NOT NULL,  -- 재고 수량
+    appamount REAL         NOT NULL,  -- 재고 적정수량
+    CONSTRAINT pk_tblstokm_stokno PRIMARY KEY (stokno),
+    CONSTRAINT fk_tblstokm_busino FOREIGN KEY (busino)
+        REFERENCES tblbusim(busino),
+    CONSTRAINT fk_tblstokm_unit FOREIGN KEY (unit)
+        REFERENCES tblunitl(cateno)
+);
+
+CREATE TABLE tblarext (
+    arexno    BIGINT       NOT NULL AUTO_INCREMENT,  -- 입출고 번호 (자동 증가)
+    stokno    VARCHAR(14)  NOT NULL,                 -- 입출고 대상 재고
+    gubun     CHAR(1)      NOT NULL,                 -- 입출고 구분
+    amount    REAL         NOT NULL,                 -- 입출고 수량
+    arexdate  DATETIME     NOT NULL,                 -- 입출고 날짜
+    reason    VARCHAR(60)  NOT NULL,                 -- 입출고 사유
+    CONSTRAINT pk_tblarext_arexno PRIMARY KEY (arexno),
+    CONSTRAINT fk_tblarext_stokno FOREIGN KEY (stokno)
+        REFERENCES tblstokm(stokno),
+    CONSTRAINT chk_tblarext_gubun CHECK (gubun IN ('I', 'O', 'L', 'D'))
+);
+
+CREATE TABLE tblordrt (
+    ordrno     BIGINT       NOT NULL AUTO_INCREMENT,  -- 주문번호 (자동 증가)
+    busino     VARCHAR(9)   NOT NULL,                 -- 재고 주문 업체 (외래키)
+    orderdate  DATETIME     NOT NULL,                 -- 재고 주문 날짜
+    total      BIGINT       NOT NULL,                 -- 재고 주문 총금액
+    CONSTRAINT pk_tblordrt_ordrno PRIMARY KEY (ordrno),
+    CONSTRAINT fk_tblordrt_busino FOREIGN KEY (busino)
+        REFERENCES tblbusim(busino)
+);
+
+CREATE TABLE tblstodd (
+    stodno   BIGINT       NOT NULL AUTO_INCREMENT,  -- 주문상세번호 (자동 증가)
+    ordrno   BIGINT       NOT NULL,                 -- 재고 주문 번호 (외래키)
+    stokno   VARCHAR(14)  NOT NULL,                 -- 주문 재고 번호 (외래키)
+    amount   REAL         NOT NULL,                 -- 주문 재고 수량
+    price    INT          NOT NULL,                 -- 주문 재고 가격
+    CONSTRAINT pk_tblstodd_stodno PRIMARY KEY (stodno),
+    CONSTRAINT fk_tblstodd_ordrno FOREIGN KEY (ordrno)
+        REFERENCES tblordrt(ordrno),
+    CONSTRAINT fk_tblstodd_stokno FOREIGN KEY (stokno)
+        REFERENCES tblstokm(stokno)
+);
+
+CREATE TABLE tblmenum (
+    menuno  VARCHAR(11)  NOT NULL,  -- 메뉴 번호 (업체 번호 + 메뉴 등록 순서 2자리)
+    busino  VARCHAR(9)   NOT NULL,  -- 메뉴 관리 업체 (외래키)
+    name    VARCHAR(64)  NOT NULL,  -- 메뉴 이름
+    price   INT          NOT NULL,  -- 메뉴 가격
+    size    VARCHAR(2)   NOT NULL,  -- 메뉴 양
+    CONSTRAINT pk_tblmenum_menuno PRIMARY KEY (menuno),
+    CONSTRAINT fk_tblmenum_busino FOREIGN KEY (busino)
+        REFERENCES tblbusim(busino)
+);
+
+CREATE TABLE tblmestt (
+    mestno   BIGINT       NOT NULL AUTO_INCREMENT,  -- 메뉴-재고 번호 (자동 증가)
+    menuno   VARCHAR(11)  NOT NULL,                 -- 메뉴 번호 (외래키)
+    stokno   VARCHAR(14)  NOT NULL,                 -- 재고 번호 (외래키)
+    amount   REAL         NOT NULL,                 -- 재고 소모량
+    CONSTRAINT pk_tblmestt_mestno PRIMARY KEY (mestno),
+    CONSTRAINT fk_tblmestt_menuno FOREIGN KEY (menuno)
+        REFERENCES tblmenum(menuno),
+    CONSTRAINT fk_tblmestt_stokno FOREIGN KEY (stokno)
+        REFERENCES tblstokm(stokno)
+);
+
+CREATE TABLE tblsalet (
+    saleno    BIGINT       NOT NULL AUTO_INCREMENT,  -- 판매 번호 (자동 증가)
+    busino    VARCHAR(9)   NOT NULL,                 -- 판매 업체 번호 (외래키)
+    tableno   INT          NOT NULL,                 -- 판매 테이블 번호
+    saledate  DATETIME     NOT NULL,                 -- 판매 날짜
+    total     INT          NOT NULL,                 -- 총금액
+    CONSTRAINT pk_tblsalet_saleno PRIMARY KEY (saleno),
+    CONSTRAINT fk_tblsalet_busino FOREIGN KEY (busino)
+        REFERENCES tblbusim(busino)
+);
+
+CREATE TABLE tblsadtd (
+    sadtno   BIGINT       NOT NULL AUTO_INCREMENT,  -- 판매상세번호 (자동 증가)
+    saleno   BIGINT       NOT NULL,                 -- 판매번호 (외래키)
+    menuno   VARCHAR(11)  NOT NULL,                 -- 메뉴번호 (외래키)
+    count    INT          NOT NULL,                 -- 판매 메뉴 수량
+    price    INT          NOT NULL,                 -- 금액 (메뉴 가격 * 수량)
+    CONSTRAINT pk_tblsadtd_sadtno PRIMARY KEY (sadtno),
+    CONSTRAINT fk_tblsadtd_saleno FOREIGN KEY (saleno)
+        REFERENCES tblsalet(saleno),
+    CONSTRAINT fk_tblsadtd_menuno FOREIGN KEY (menuno)
+        REFERENCES tblmenum(menuno)
+);

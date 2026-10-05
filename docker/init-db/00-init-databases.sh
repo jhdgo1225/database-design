@@ -27,11 +27,21 @@ for db in $DATABASES; do
   echo "[create] database '${db}'"
   $PSQL -c "CREATE DATABASE \"${db}\";"
 
-  echo "[load]   ${db}/postgresql_create_ddl.sql"
-  $PSQL -d "$db" -f "$SQL_ROOT/$db/postgresql_create_ddl.sql"
+  # library is split into mysql/postgresql/postgresql_denormalized/migration
+  # subfolders; every other DB keeps its flat postgresql_*.sql layout.
+  if [ "$db" = "library" ]; then
+    ddl_path="$SQL_ROOT/$db/postgresql/create_ddl.sql"
+    insert_path="$SQL_ROOT/$db/postgresql/insert_data.sql"
+  else
+    ddl_path="$SQL_ROOT/$db/postgresql_create_ddl.sql"
+    insert_path="$SQL_ROOT/$db/postgresql_insert_data.sql"
+  fi
 
-  echo "[load]   ${db}/postgresql_insert_data.sql"
-  $PSQL -d "$db" -f "$SQL_ROOT/$db/postgresql_insert_data.sql"
+  echo "[load]   ${ddl_path#"$SQL_ROOT/"}"
+  $PSQL -d "$db" -f "$ddl_path"
+
+  echo "[load]   ${insert_path#"$SQL_ROOT/"}"
+  $PSQL -d "$db" -f "$insert_path"
 
   created=$((created + 1))
 done

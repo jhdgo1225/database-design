@@ -16,6 +16,7 @@ CREATE TABLE tbl_stud_m1 (
 , zipcode CHAR(5)      NOT NULL                                          -- 우정사업본부 표준
 , phone   CHAR(11)     NOT NULL                                          -- '01000000000' 형식
 , email   VARCHAR(64)  NOT NULL                                          -- 학생 이메일
+, status  CHAR(1)      DEFAULT 'E' CHECK (status IN ('E', 'G'))          -- 재학/졸업 상태
 );
 
 CREATE TABLE tbl_prof_m1 (
@@ -84,4 +85,6 @@ CREATE TABLE tbl_enrl_t1 (
     ON UPDATE CASCADE ON DELETE RESTRICT
     -- 시간표 ID
 , grade VARCHAR(2) NULL
+, ygrade INT NULL
+    -- 신청 학년
 );

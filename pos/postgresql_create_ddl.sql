@@ -111,7 +111,6 @@ CREATE TABLE tblstokm (
         REFERENCES tblunitl(cateno)
 );
 
-drop table tblstokm;
 
 CREATE TABLE tblarext (
     arexno    BIGINT       NOT NULL
@@ -127,7 +126,6 @@ CREATE TABLE tblarext (
     CONSTRAINT chk_tblarext_gubun CHECK (gubun IN ('I', 'O', 'L', 'D'))
 );
 
-drop table tblarext;
 
 CREATE TABLE tblordrt (
     ordrno     BIGINT       NOT NULL
@@ -140,7 +138,6 @@ CREATE TABLE tblordrt (
         REFERENCES tblbusim(busino)
 );
 
-drop table tblordrt;
 
 CREATE TABLE tblstodd (
     stodno   BIGINT       NOT NULL
@@ -156,7 +153,6 @@ CREATE TABLE tblstodd (
         REFERENCES tblstokm(stokno)
 );
 
-drop table tblstodd;
 
 CREATE TABLE tblmenum (
     menuno  VARCHAR(11)  NOT NULL,  -- 메뉴 번호 (업체 번호 + 메뉴 등록 순서 2자리)
@@ -169,7 +165,6 @@ CREATE TABLE tblmenum (
         REFERENCES tblbusim(busino)
 );
 
-drop table tblmenum;
 
 CREATE TABLE tblmestt (
     mestno   BIGINT       NOT NULL
@@ -184,7 +179,6 @@ CREATE TABLE tblmestt (
         REFERENCES tblstokm(stokno)
 );
 
-drop table tblmestt;
 
 CREATE TABLE tblsalet (
     saleno    BIGINT       NOT NULL
@@ -198,7 +192,6 @@ CREATE TABLE tblsalet (
         REFERENCES tblbusim(busino)
 );
 
-drop table tblsalet;
 
 CREATE TABLE tblsadtd (
     sadtno   BIGINT       NOT NULL
@@ -214,4 +207,3 @@ CREATE TABLE tblsadtd (
         REFERENCES tblmenum(menuno)
 );
 
-drop table tblsadtd;

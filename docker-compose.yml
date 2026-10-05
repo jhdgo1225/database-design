@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:17
+    container_name: ${CONTAINER_NAME:-db-optimization-postgres}
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      # DDL/INSERT scripts for each DB (library, cinema, school, bicycle_rental, pos),
+      # read-only, available both for the automatic first-boot init and for
+      # `make check-dbs` re-runs against an already-initialized volume.
+      - ./:/workspace:ro
+      - ./docker/init-db:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db_data:

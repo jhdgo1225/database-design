@@ -15,7 +15,6 @@ CREATE TABLE tblmebrM1 (
     flag CHAR(1) NOT NULL DEFAULT 'N' CHECK (flag IN ('Y', 'N'))
 );
 
-drop table tblmebrm1;
 
 CREATE TABLE tbltickD1 (
   tick_id   INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -34,7 +33,6 @@ CREATE TABLE tbltickD1 (
             )
 );
 
-drop table tbltickd1;
 
 CREATE TABLE tblbyclM1 (
     bycl_id     CHAR(7)     NOT NULL PRIMARY KEY,
@@ -59,7 +57,6 @@ CREATE TABLE tblbyclM1 (
     )
 );
 
-drop table tblbyclm1;
 
 CREATE TABLE tblrtplM1 (
     rtpl_id CHAR(5)    NOT NULL PRIMARY KEY
@@ -70,7 +67,6 @@ CREATE TABLE tblrtplM1 (
         CHECK (avail >= 0)
 );
 
-drop table tblrtplm1;
 
 CREATE TABLE tblrackD1 (
     rack_id   CHAR(7)  NOT NULL PRIMARY KEY,
@@ -80,7 +76,6 @@ CREATE TABLE tblrackD1 (
     gubun     CHAR(2)  NOT NULL CHECK (gubun  IN ('GN',  'SD'))
 );
 
-drop table tblrackd1;
 
 CREATE TABLE tblrentT1 (
     rent_id      SERIAL         PRIMARY KEY,
@@ -97,7 +92,6 @@ CREATE TABLE tblrentT1 (
     fee          INT            NOT NULL
 );
 
-drop table tblrentt1;
 
 CREATE TABLE tblspclD1 (
     spcl_id        BIGSERIAL    PRIMARY KEY,
@@ -110,7 +104,6 @@ CREATE TABLE tblspclD1 (
     spcldate       TIMESTAMP    NOT NULL
 );
 
-drop table tblspcld1;
 
 CREATE TABLE tbldmlsD1 (
     dmls_id     BIGSERIAL      PRIMARY KEY,
@@ -131,7 +124,6 @@ CREATE TABLE tbldmlsD1 (
     claimdate   TIMESTAMP
 );
 
-drop table tbldmlsd1;
 
 CREATE TABLE tblfavoT1 (
     mebr_id VARCHAR(16) NOT NULL,
@@ -141,5 +133,4 @@ CREATE TABLE tblfavoT1 (
     FOREIGN KEY (rtpl_id) REFERENCES tblrtplM1(rtpl_id)
 );
 
-drop table tblfavot1;
 

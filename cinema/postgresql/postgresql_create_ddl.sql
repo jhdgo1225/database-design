@@ -117,3 +117,4 @@ CREATE TABLE tbl_mngr_m1(
     birth DATE NOT NULL,
     email VARCHAR(50) NOT NULL
 );
+

@@ -53,8 +53,8 @@ VALUES
     ('차주영1', '차주영', 'Cha Joo-young', 'KOR'),
     ('박해수1', '박해수', 'Park Hae-soo', 'KOR'),
     ('곽선영1', '곽선영', 'Kwak Sun-young', 'KOR'),
-    ('박성영1', '박성영', 'Park Seong-yeong', 'KOR'),  -- 확인 필요
-    ('김연우1', '김연우', 'Kim Yeon-woo', 'KOR'),  -- 확인 필요
+    ('박성영1', '박성영', 'Park Seong-yeong', 'KOR'),
+    ('김연우1', '김연우', 'Kim Yeon-woo', 'KOR'),
     ('이호산1', '이호산', 'Lee Ho-san', 'KOR'),
     ('안영미1', '안영미', 'Ahn Young-mi', 'KOR'),
     ('라미 말렉1', '라미 말렉', 'Rami Malek', 'USA'),
@@ -69,21 +69,21 @@ VALUES
     ('박해준1', '박해준', 'Park Hae-joon', 'KOR'),
     ('류경수1', '류경수', 'Ryu Kyung-soo', 'KOR'),
     ('채원빈1', '채원빈', 'Chae Won-bin', 'KOR'),
-    ('미나미데 료카1', '미나미데 료카', 'Ryoka Minamide', 'JPN'),  -- 확인 필요
-    ('네기시 토시에1', '네기시 토시에', 'Toshie Negishi', 'JPN'),  -- 확인 필요
-    ('콘도 하나1', '콘도 하나', 'Hana Kondo', 'JPN'),  -- 확인 필요
-    ('카지와라 젠1', '카지와라 젠', 'Zen Kajiwara', 'JPN'),  -- 확인 필요
-    ('우라베 후사코1', '우라베 후사코', 'Fusako Urabe', 'JPN'),  -- 확인 필요
-    ('키타로1', '키타로', 'Kitaro', 'JPN'),  -- 확인 필요
-    ('모리타 코코로1', '모리타 코코로', 'Kokoro Morita', 'JPN'),  -- 확인 필요
-    ('이노마타 레이오1', '이노마타 레이오', 'Reo Inomata', 'JPN'),  -- 확인 필요
-    ('쿠리하라 하야토1', '쿠리하라 하야토', 'Hayato Kurihara', 'JPN'),  -- 확인 필요
-    ('히다카 유키토1', '히다카 유키토', 'Yukito Hidaka', 'JPN'),  -- 확인 필요
-    ('하야시 유타1', '하야시 유타', 'Yuta Hayashi', 'JPN'),  -- 확인 필요
-    ('시나 펭1', '시나 펭', 'Sina Peng', 'CHN'),  -- 확인 필요
-    ('아라지1', '아라지', 'Araji', 'KOR'),  -- 확인 필요
+    ('미나미데 료카1', '미나미데 료카', 'Ryoka Minamide', 'JPN'),
+    ('네기시 토시에1', '네기시 토시에', 'Toshie Negishi', 'JPN'),
+    ('콘도 하나1', '콘도 하나', 'Hana Kondo', 'JPN'),
+    ('카지와라 젠1', '카지와라 젠', 'Zen Kajiwara', 'JPN'),
+    ('우라베 후사코1', '우라베 후사코', 'Fusako Urabe', 'JPN'),
+    ('키타로1', '키타로', 'Kitaro', 'JPN'),
+    ('모리타 코코로1', '모리타 코코로', 'Kokoro Morita', 'JPN'),
+    ('이노마타 레이오1', '이노마타 레이오', 'Reo Inomata', 'JPN'),
+    ('쿠리하라 하야토1', '쿠리하라 하야토', 'Hayato Kurihara', 'JPN'),
+    ('히다카 유키토1', '히다카 유키토', 'Yukito Hidaka', 'JPN'),
+    ('하야시 유타1', '하야시 유타', 'Yuta Hayashi', 'JPN'),
+    ('시나 펭1', '시나 펭', 'Sina Peng', 'CHN'),
+    ('아라지1', '아라지', 'Araji', 'KOR'),
     ('마동석1', '마동석', 'Ma Dong-seok', 'KOR'),
-    ('서현1', '서현', 'Seo Hyun', 'KOR'),  -- 확인 필요
+    ('서현1', '서현', 'Seo Hyun', 'KOR'),
     ('이다윗1', '이다윗', 'Lee Da-wit', 'KOR'),
     ('경수진1', '경수진', 'Kyung Su-jin', 'KOR'),
     ('정지소1', '정지소', 'Jung Ji-so', 'KOR');

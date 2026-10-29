@@ -1,0 +1,190 @@
+===== RUN 1 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.156..0.157 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.142..0.146 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.026..0.067 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 2.742 ms
+ Execution Time: 0.239 ms
+(14 rows)
+
+===== RUN 2 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.122..0.122 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.109..0.113 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.009..0.048 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 0.185 ms
+ Execution Time: 0.145 ms
+(14 rows)
+
+===== RUN 3 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.133..0.133 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.119..0.123 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.011..0.052 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 0.238 ms
+ Execution Time: 0.172 ms
+(14 rows)
+
+===== RUN 4 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.136..0.137 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.122..0.126 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.010..0.060 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 0.190 ms
+ Execution Time: 0.185 ms
+(14 rows)
+
+===== RUN 5 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.134..0.134 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.121..0.125 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.009..0.047 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 0.178 ms
+ Execution Time: 0.163 ms
+(14 rows)
+
+===== RUN 6 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.128..0.128 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.116..0.120 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.009..0.052 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 0.180 ms
+ Execution Time: 0.153 ms
+(14 rows)
+
+===== RUN 7 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.132..0.132 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.117..0.121 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.011..0.051 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 0.204 ms
+ Execution Time: 0.158 ms
+(14 rows)
+
+===== RUN 8 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.140..0.141 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.127..0.131 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.009..0.049 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 0.177 ms
+ Execution Time: 0.177 ms
+(14 rows)
+
+===== RUN 9 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.127..0.127 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.115..0.118 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.009..0.050 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 0.216 ms
+ Execution Time: 0.152 ms
+(14 rows)
+
+===== RUN 10 =====
+                                                                                                             QUERY PLAN                                                                                                             
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.13..8.14 rows=1 width=16) (actual time=0.132..0.132 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Sort  (cost=7.53..7.73 rows=80 width=15) (actual time=0.119..0.123 rows=80 loops=1)
+         Sort Key: mebr_id
+         Sort Method: quicksort  Memory: 27kB
+         Buffers: shared hit=5
+         ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..5.00 rows=80 width=15) (actual time=0.008..0.058 rows=80 loops=1)
+               Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=85
+   Memory: used=19kB  allocated=32kB
+ Planning Time: 0.177 ms
+ Execution Time: 0.157 ms
+(14 rows)
+

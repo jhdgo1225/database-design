@@ -9,7 +9,7 @@
 #
 # 사용법: sh estimation_response_time_and_resource.sh [before|after|both]   (기본: both)
 #   RUNS=10               쿼리당 반복 횟수
-#   OUT_DIR=results        로그 저장 위치. 기존 cinema_<before|after>_NN.log 는 덮어쓴다.
+#   OUT_DIR=cinema/results 로그 저장 위치(저장소 루트에서 실행하는 기준의 상대 경로). 기존 cinema_<before|after>_NN.log 는 덮어쓴다.
 #   DB=cinema_bench        측정용 DB. 매 실행마다 만들고 끝나면 지우므로 이름은 _bench 로 끝나야 한다.
 #   KEEP_DB=1              끝나고 측정용 DB 를 지우지 않음
 #   CONTAINER, WORKSPACE   컨테이너 이름 / 컨테이너 안에서 repo 가 마운트된 경로 (docker-compose.yml 의 ./:/workspace:ro)
@@ -23,7 +23,7 @@ set -u
 CONTAINER="${CONTAINER:-db-optimization-postgres}"
 DB="${DB:-cinema_bench}"
 RUNS="${RUNS:-10}"
-OUT_DIR="${OUT_DIR:-results}"
+OUT_DIR="${OUT_DIR:-cinema/results}"
 WORKSPACE="${WORKSPACE:-/workspace}"
 KEEP_DB="${KEEP_DB:-0}"
 MODE="${1:-both}"

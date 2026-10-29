@@ -1,0 +1,160 @@
+===== RUN 1 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.013..0.014 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.002..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.183 ms
+ Execution Time: 0.064 ms
+(11 rows)
+
+===== RUN 2 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.014..0.015 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.003..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.155 ms
+ Execution Time: 0.061 ms
+(11 rows)
+
+===== RUN 3 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.013..0.014 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.002..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.136 ms
+ Execution Time: 0.056 ms
+(11 rows)
+
+===== RUN 4 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.014..0.015 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.003..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.149 ms
+ Execution Time: 0.059 ms
+(11 rows)
+
+===== RUN 5 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.014..0.014 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.003..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.157 ms
+ Execution Time: 0.056 ms
+(11 rows)
+
+===== RUN 6 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.013..0.014 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.003..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.155 ms
+ Execution Time: 0.054 ms
+(11 rows)
+
+===== RUN 7 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.014..0.015 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.003..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.150 ms
+ Execution Time: 0.057 ms
+(11 rows)
+
+===== RUN 8 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.013..0.013 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.002..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.142 ms
+ Execution Time: 0.055 ms
+(11 rows)
+
+===== RUN 9 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.013..0.013 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.002..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.142 ms
+ Execution Time: 0.055 ms
+(11 rows)
+
+===== RUN 10 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.45..1.50 rows=5 width=12) (actual time=0.027..0.028 rows=5 loops=1)
+   Group Key: rating
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..1.30 rows=30 width=4) (actual time=0.003..0.004 rows=30 loops=1)
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=75
+   Memory: used=14kB  allocated=16kB
+ Planning Time: 0.170 ms
+ Execution Time: 0.069 ms
+(11 rows)
+

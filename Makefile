@@ -28,7 +28,7 @@ ORACLE_PASSWORD  ?= oracle
 ORACLE_PDB       ?= FREEPDB1
 
 .DEFAULT_GOAL := up
-.PHONY: all up start check-dbs wait-ready down stop restart re remove clean fclean status logs psql sh help \
+.PHONY: all up start check-dbs enable-pg-stat-statements wait-ready down stop restart re remove clean fclean status logs psql sh help \
 	oracle-up oracle-start oracle-wait-ready oracle-down oracle-stop oracle-restart oracle-re oracle-remove \
 	oracle-clean oracle-fclean oracle-status oracle-logs oracle-sqlplus oracle-sh oracle-help
 
@@ -42,12 +42,22 @@ up:
 		$(PG_COMPOSE) up -d; \
 	elif [ -z "$$(docker ps -q -f name=^/$(CONTAINER)$$)" ]; then \
 		echo "==> container '$(CONTAINER)' exists but is stopped. starting..."; \
-		$(PG_COMPOSE) start; \
+		$(PG_COMPOSE) up -d; \
 	else \
-		echo "==> container '$(CONTAINER)' is already running."; \
+		echo "==> container '$(CONTAINER)' is already running; applying Compose configuration..."; \
+		$(PG_COMPOSE) up -d; \
 	fi
 	@$(MAKE) --no-print-directory wait-ready
 	@$(MAKE) --no-print-directory check-dbs
+
+## install pg_stat_statements in every project database after the server
+## preload setting has been applied by docker-compose.yml.
+enable-pg-stat-statements:
+	@for db in $(DATABASES); do \
+		echo "==> enabling pg_stat_statements in '$$db'"; \
+		docker exec $(CONTAINER) psql -v ON_ERROR_STOP=1 -U $(PG_USER) -d "$$db" \
+			-c "CREATE EXTENSION IF NOT EXISTS pg_stat_statements;"; \
+	done
 
 wait-ready:
 	@echo "==> waiting for postgres to accept connections..."

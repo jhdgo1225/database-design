@@ -8,23 +8,21 @@
 # EXPLAIN (ANALYZE, BUFFERS, MEMORY, WAL, SETTINGS, SUMMARY) 로 실행해 로그에 저장한다.
 #
 # 사용법: sh estimation_response_time_and_resource.sh [before|after|both]   (기본: both)
-#   STATS=analyze|natural  통계 상태 (기본 analyze)
-#       analyze : 적재 직후 전체 ANALYZE. 전/후가 같은 통계 상태에서 비교된다.
-#       natural : ANALYZE 없이 autovacuum 이 tbl_scrn_m1, tbl_bytk_d1 을 분석할 때까지 대기 (소형 테이블은 미분석)
-#   RUNS=10                쿼리당 반복 횟수
+#   RUNS=10               쿼리당 반복 횟수
 #   OUT_DIR=results        로그 저장 위치. 기존 cinema_<before|after>_NN.log 는 덮어쓴다.
 #   DB=cinema_bench        측정용 DB. 매 실행마다 만들고 끝나면 지우므로 이름은 _bench 로 끝나야 한다.
 #   KEEP_DB=1              끝나고 측정용 DB 를 지우지 않음
 #   CONTAINER, WORKSPACE   컨테이너 이름 / 컨테이너 안에서 repo 가 마운트된 경로 (docker-compose.yml 의 ./:/workspace:ro)
 #
-# 출력: ${OUT_DIR}/cinema_<before|after>_NN.log (NN = 쿼리 번호), cinema_<before|after>_meta.txt (통계 상태, 서버 설정)
+# 스키마를 적재한 직후 전체 ANALYZE 를 실행하므로 전/후 모두 모든 테이블에 통계가 있는 상태에서 측정한다.
+#
+# 출력: ${OUT_DIR}/cinema_<before|after>_NN.log (NN = 쿼리 번호), cinema_<before|after>_meta.txt (테이블별 통계 상태, 서버 설정)
 
 set -u
 
 CONTAINER="${CONTAINER:-db-optimization-postgres}"
 DB="${DB:-cinema_bench}"
 RUNS="${RUNS:-10}"
-STATS="${STATS:-analyze}"
 OUT_DIR="${OUT_DIR:-results}"
 WORKSPACE="${WORKSPACE:-/workspace}"
 KEEP_DB="${KEEP_DB:-0}"
@@ -44,7 +42,6 @@ die() { echo "ERROR: $*" >&2; exit 1; }
 psql_in() { docker exec -i "$CONTAINER" psql -X -q -v ON_ERROR_STOP=1 -U postgres "$@"; }
 
 case "$MODE" in before|after|both) ;; *) die "사용법: sh $0 [before|after|both]" ;; esac
-case "$STATS" in analyze|natural) ;; *) die "STATS 는 analyze 또는 natural 이어야 합니다: $STATS" ;; esac
 # 매번 DROP/CREATE 하는 DB 이므로 실제 DB(cinema, library 등)를 지우지 않도록 이름으로 막는다.
 case "$DB" in *_bench) ;; *) die "DB 이름은 _bench 로 끝나야 합니다 (실제 DB 보호): $DB" ;; esac
 docker exec "$CONTAINER" test -d "$WORKSPACE/cinema/postgresql_denormalization" \
@@ -82,22 +79,13 @@ measure() {
   psql_in -d "$DB" -f "$WORKSPACE/$ddl" || die "$ddl 적용 실패"
   psql_in -d "$DB" -f "$WORKSPACE/$ins" || die "$ins 적용 실패"
 
-  waited=0
-  if [ "$STATS" = analyze ]; then
-    psql_in -d "$DB" -c "ANALYZE" || die "ANALYZE 실패"
-  else
-    echo "    autovacuum 의 자동 분석을 기다리는 중..."
-    until [ "$(psql_in -d "$DB" -At -c "SELECT count(*) FROM pg_stat_user_tables WHERE relname IN ('tbl_scrn_m1', 'tbl_bytk_d1') AND last_autoanalyze IS NOT NULL")" = 2 ]; do
-      [ "$waited" -ge 180 ] && die "autovacuum 분석 대기 시간(180초) 초과"
-      sleep 5
-      waited=$((waited + 5))
-    done
-  fi
+  # 전/후가 같은 통계 상태에서 비교되도록 모든 테이블을 분석한다.
+  psql_in -d "$DB" -c "ANALYZE" || die "ANALYZE 실패"
 
   {
     echo "date: $(date '+%Y-%m-%d %H:%M:%S %z')"
     echo "phase: $phase"
-    echo "stats: $STATS (waited=${waited}s)  runs: $RUNS  db: $DB"
+    echo "stats: analyze  runs: $RUNS  db: $DB"
     psql_in -d "$DB" -At -c "SELECT version()"
     psql_in -d "$DB" -At -c "SELECT name || '=' || setting FROM pg_settings WHERE name IN ('shared_buffers','work_mem','jit','max_parallel_workers_per_gather','TimeZone') ORDER BY 1"
     psql_in -d "$DB" -At -F '=' -c "SELECT relname, CASE WHEN last_analyze IS NOT NULL OR last_autoanalyze IS NOT NULL THEN 'analyzed' ELSE 'NO-STATS' END FROM pg_stat_user_tables ORDER BY 1"
@@ -118,7 +106,7 @@ measure() {
   done
 }
 
-echo "컨테이너: $CONTAINER / 측정용 DB: $DB / 통계: $STATS / 반복: ${RUNS}회 / 로그: $OUT_DIR (같은 이름의 기존 로그는 덮어씁니다)"
+echo "컨테이너: $CONTAINER / 측정용 DB: $DB / 반복: ${RUNS}회 / 로그: $OUT_DIR (같은 이름의 기존 로그는 덮어씁니다)"
 case "$MODE" in
   before) measure before ;;
   after)  measure after ;;

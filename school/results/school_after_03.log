@@ -1,0 +1,340 @@
+===== RUN 1 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.171..0.175 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.107..0.133 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.082..0.095 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.002..0.010 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.063..0.063 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.028..0.051 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.018..0.018 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.004..0.009 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.525 ms
+ Execution Time: 0.205 ms
+(29 rows)
+
+===== RUN 2 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.176..0.179 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.113..0.139 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.089..0.102 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.002..0.010 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.071..0.071 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.029..0.052 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.017..0.017 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.004..0.009 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.499 ms
+ Execution Time: 0.208 ms
+(29 rows)
+
+===== RUN 3 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.174..0.178 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.107..0.134 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.083..0.096 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.002..0.011 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.063..0.063 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.030..0.054 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.018..0.018 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.004..0.009 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.517 ms
+ Execution Time: 0.207 ms
+(29 rows)
+
+===== RUN 4 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.173..0.177 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.105..0.133 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.082..0.095 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.001..0.010 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.062..0.062 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.029..0.053 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.017..0.017 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.003..0.009 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.524 ms
+ Execution Time: 0.209 ms
+(29 rows)
+
+===== RUN 5 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.165..0.169 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.102..0.129 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.079..0.092 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.002..0.010 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.060..0.060 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.028..0.051 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.017..0.017 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.003..0.009 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.490 ms
+ Execution Time: 0.195 ms
+(29 rows)
+
+===== RUN 6 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.164..0.168 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.101..0.127 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.078..0.091 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.001..0.010 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.060..0.060 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.028..0.051 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.017..0.017 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.003..0.009 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.509 ms
+ Execution Time: 0.198 ms
+(29 rows)
+
+===== RUN 7 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.171..0.175 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.107..0.134 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.082..0.095 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.002..0.010 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.062..0.062 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.029..0.053 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.018..0.018 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.004..0.010 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.496 ms
+ Execution Time: 0.206 ms
+(29 rows)
+
+===== RUN 8 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.179..0.182 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.115..0.142 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.090..0.104 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.001..0.010 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.068..0.069 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.036..0.059 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.018..0.018 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.004..0.009 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.517 ms
+ Execution Time: 0.211 ms
+(29 rows)
+
+===== RUN 9 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.180..0.184 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.113..0.141 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.087..0.100 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.002..0.010 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.067..0.067 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.033..0.057 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.020..0.020 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.005..0.011 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.593 ms
+ Execution Time: 0.212 ms
+(29 rows)
+
+===== RUN 10 =====
+                                                                                                                                          QUERY PLAN                                                                                                                                           
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18.81..18.99 rows=72 width=135) (actual time=0.186..0.190 rows=55 loops=1)
+   Sort Key: t.room_code, t.weekday, t.period
+   Sort Method: quicksort  Memory: 29kB
+   Buffers: shared hit=12
+   ->  Hash Join  (cost=10.80..16.59 rows=72 width=135) (actual time=0.114..0.141 rows=55 loops=1)
+         Hash Cond: ((o.prof_id)::text = (p.person_id)::text)
+         Buffers: shared hit=6
+         ->  Hash Join  (cost=7.45..11.42 rows=72 width=39) (actual time=0.088..0.101 rows=55 loops=1)
+               Hash Cond: (t.offe_id = o.offe_id)
+               Buffers: shared hit=4
+               ->  Seq Scan on tbl_sche_d2 t  (cost=0.00..3.55 rows=155 width=28) (actual time=0.002..0.010 rows=155 loops=1)
+                     Buffers: shared hit=2
+               ->  Hash  (cost=6.76..6.76 rows=55 width=39) (actual time=0.068..0.069 rows=55 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                     Buffers: shared hit=2
+                     ->  Seq Scan on tbl_subj_d2 o  (cost=0.00..6.76 rows=55 width=39) (actual time=0.030..0.054 rows=55 loops=1)
+                           Filter: (semester = ((to_char((CURRENT_DATE)::timestamp with time zone, 'YYYY'::text) || CASE WHEN ((EXTRACT(month FROM CURRENT_DATE) >= '3'::numeric) AND (EXTRACT(month FROM CURRENT_DATE) <= '8'::numeric)) THEN '01'::text ELSE '02'::text END))::character(6))
+                           Rows Removed by Filter: 64
+                           Buffers: shared hit=2
+         ->  Hash  (cost=2.60..2.60 rows=60 width=20) (actual time=0.020..0.020 rows=60 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 12kB
+               Buffers: shared hit=2
+               ->  Seq Scan on tbl_pers_m2 p  (cost=0.00..2.60 rows=60 width=20) (actual time=0.005..0.011 rows=60 loops=1)
+                     Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=331
+   Memory: used=93kB  allocated=128kB
+ Planning Time: 0.527 ms
+ Execution Time: 0.224 ms
+(29 rows)
+

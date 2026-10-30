@@ -1,3 +1,6 @@
+-- [수정 2026-10-30] 학기 비교를 (...)::CHAR(6) 으로 맞춤. semester 컬럼이 CHAR(6) 인데 text 와 비교하면 컬럼이
+--                   (semester)::text 로 변환되어 통계를 쓰지 못한다. (tbl_ 쿼리 1~5번, 한글 테이블명 초안은 그대로)
+
 -- 1번
 SELECT
     p.교수ID      AS 교수번호,
@@ -54,7 +57,7 @@ WHERE p.prof_id = '200230503'
         WHEN EXTRACT(MONTH FROM CURRENT_DATE) BETWEEN 3 AND 8 THEN '01'
         ELSE '02'
     END
-)
+)::CHAR(6)
 ORDER BY
     t.weekday,
     t.period;
@@ -121,7 +124,7 @@ WHERE s.stud_id = '2021305050'
         WHEN EXTRACT(MONTH FROM CURRENT_DATE) BETWEEN 3 AND 8 THEN '01'
         ELSE '02'
     END
-)
+)::CHAR(6)
 ORDER BY
     t.weekday,
     t.period;
@@ -182,7 +185,7 @@ WHERE o.semester = (
         WHEN EXTRACT(MONTH FROM CURRENT_DATE) BETWEEN 3 AND 8 THEN '01'
         ELSE '02'
     END
-)
+)::CHAR(6)
 ORDER BY
     r.building,
     r.roomno,
@@ -219,7 +222,7 @@ WHERE o.semester = (
         WHEN EXTRACT(MONTH FROM CURRENT_DATE) BETWEEN 3 AND 8 THEN '01'
         ELSE '02'
     END
-)
+)::CHAR(6)
 GROUP BY s.weekday, p.rank
 ORDER BY
     s.weekday,
@@ -298,7 +301,7 @@ WHERE o.semester = (
         WHEN EXTRACT(MONTH FROM CURRENT_DATE) BETWEEN 3 AND 8 THEN '01'
         ELSE '02'
     END
-)
+)::CHAR(6)
 
 GROUP BY s.weekday, r.building
 ORDER BY s.weekday, r.building;

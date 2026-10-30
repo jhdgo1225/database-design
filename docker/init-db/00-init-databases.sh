@@ -28,14 +28,15 @@ for db in $DATABASES; do
   $PSQL -c "CREATE DATABASE \"${db}\";"
 
   # library is split into mysql/postgresql/postgresql_denormalized/migration
-  # subfolders and cinema into mysql/postgresql/postgresql_denormalization/migration;
+  # subfolders, cinema into mysql/postgresql/postgresql_denormalization/migration
+  # and school into mysql/postgresql/postgresql_denormalization;
   # every other DB keeps its flat postgresql_*.sql layout. Only the original
   # (normalized) PostgreSQL schema is loaded here; the denormalized variants
   # are applied by hand.
   if [ "$db" = "library" ]; then
     ddl_path="$SQL_ROOT/$db/postgresql/create_ddl.sql"
     insert_path="$SQL_ROOT/$db/postgresql/insert_data.sql"
-  elif [ "$db" = "cinema" ]; then
+  elif [ "$db" = "cinema" ] || [ "$db" = "school" ]; then
     ddl_path="$SQL_ROOT/$db/postgresql/postgresql_create_ddl.sql"
     insert_path="$SQL_ROOT/$db/postgresql/postgresql_insert_data.sql"
   else

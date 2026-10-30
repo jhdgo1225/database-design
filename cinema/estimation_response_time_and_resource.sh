@@ -7,9 +7,9 @@
 # 쿼리는 각 information_system.sql 에서 읽으므로 SQL 파일과 항상 일치한다.
 # EXPLAIN (ANALYZE, BUFFERS, MEMORY, WAL, SETTINGS, SUMMARY) 로 실행해 로그에 저장한다.
 #
-# 사용법: sh estimation_response_time_and_resource.sh [before|after|both]   (기본: both)
+# 사용법: sh cinema/estimation_response_time_and_resource.sh [before|after|both]   (기본: both, 어느 디렉터리에서 실행해도 됨)
 #   RUNS=10               쿼리당 반복 횟수
-#   OUT_DIR=cinema/results 로그 저장 위치(저장소 루트에서 실행하는 기준의 상대 경로). 기존 cinema_<before|after>_NN.log 는 덮어쓴다.
+#   OUT_DIR=cinema/results 로그 저장 위치(기본: 이 스크립트가 있는 폴더의 results). 기존 cinema_<before|after>_NN.log 는 덮어쓴다.
 #   DB=cinema_bench        측정용 DB. 매 실행마다 만들고 끝나면 지우므로 이름은 _bench 로 끝나야 한다.
 #   KEEP_DB=1              끝나고 측정용 DB 를 지우지 않음
 #   CONTAINER, WORKSPACE   컨테이너 이름 / 컨테이너 안에서 repo 가 마운트된 경로 (docker-compose.yml 의 ./:/workspace:ro)
@@ -23,11 +23,12 @@ set -u
 CONTAINER="${CONTAINER:-db-optimization-postgres}"
 DB="${DB:-cinema_bench}"
 RUNS="${RUNS:-10}"
-OUT_DIR="${OUT_DIR:-cinema/results}"
 WORKSPACE="${WORKSPACE:-/workspace}"
 KEEP_DB="${KEEP_DB:-0}"
 MODE="${1:-both}"
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+PROJECT=$(basename "$SCRIPT_DIR")   # cinema (컨테이너 안에서는 $WORKSPACE/$PROJECT)
+OUT_DIR="${OUT_DIR:-$SCRIPT_DIR/results}"
 
 EXPLAIN_OPTS='EXPLAIN (
     ANALYZE,                         -- 실제 쿼리 실행 및 실제 실행 시간
@@ -44,8 +45,8 @@ psql_in() { docker exec -i "$CONTAINER" psql -X -q -v ON_ERROR_STOP=1 -U postgre
 case "$MODE" in before|after|both) ;; *) die "사용법: sh $0 [before|after|both]" ;; esac
 # 매번 DROP/CREATE 하는 DB 이므로 실제 DB(cinema, library 등)를 지우지 않도록 이름으로 막는다.
 case "$DB" in *_bench) ;; *) die "DB 이름은 _bench 로 끝나야 합니다 (실제 DB 보호): $DB" ;; esac
-docker exec "$CONTAINER" test -d "$WORKSPACE/cinema/postgresql_denormalization" \
-  || die "컨테이너 '$CONTAINER' 에서 $WORKSPACE/cinema 를 찾을 수 없습니다. 컨테이너가 실행 중인지, repo 가 마운트되어 있는지 확인하세요."
+docker exec "$CONTAINER" test -d "$WORKSPACE/$PROJECT/postgresql_denormalization" \
+  || die "컨테이너 '$CONTAINER' 에서 $WORKSPACE/$PROJECT 를 찾을 수 없습니다. 컨테이너가 실행 중인지, repo 가 마운트되어 있는지 확인하세요."
 mkdir -p "$OUT_DIR"
 
 TMP_ROOT=$(mktemp -d)
@@ -55,13 +56,13 @@ measure() {
   phase=$1
   case "$phase" in
     before)
-      ddl=cinema/postgresql/postgresql_create_ddl.sql
-      ins=cinema/postgresql/postgresql_insert_data.sql
-      sqlfile=cinema/postgresql/postgresql_information_system.sql ;;
+      ddl=postgresql/postgresql_create_ddl.sql
+      ins=postgresql/postgresql_insert_data.sql
+      sqlfile=postgresql/postgresql_information_system.sql ;;
     after)
-      ddl=cinema/postgresql_denormalization/create_ddl.sql
-      ins=cinema/postgresql_denormalization/insert_data.sql
-      sqlfile=cinema/postgresql_denormalization/information_system.sql ;;
+      ddl=postgresql_denormalization/create_ddl.sql
+      ins=postgresql_denormalization/insert_data.sql
+      sqlfile=postgresql_denormalization/information_system.sql ;;
   esac
   prefix="$OUT_DIR/cinema_$phase"
   qdir="$TMP_ROOT/$phase"
@@ -76,8 +77,8 @@ measure() {
   psql_in -d postgres -At -c "SELECT 1 FROM pg_database WHERE datname = '$DB'" | grep -q 1 \
     || psql_in -d postgres -c "CREATE DATABASE \"$DB\"" || die "DB 생성 실패"
   psql_in -d "$DB" -c "SET client_min_messages = warning; DROP SCHEMA public CASCADE; CREATE SCHEMA public;" || die "스키마 초기화 실패"
-  psql_in -d "$DB" -f "$WORKSPACE/$ddl" || die "$ddl 적용 실패"
-  psql_in -d "$DB" -f "$WORKSPACE/$ins" || die "$ins 적용 실패"
+  psql_in -d "$DB" -f "$WORKSPACE/$PROJECT/$ddl" || die "$ddl 적용 실패"
+  psql_in -d "$DB" -f "$WORKSPACE/$PROJECT/$ins" || die "$ins 적용 실패"
 
   # 전/후가 같은 통계 상태에서 비교되도록 모든 테이블을 분석한다.
   psql_in -d "$DB" -c "ANALYZE" || die "ANALYZE 실패"

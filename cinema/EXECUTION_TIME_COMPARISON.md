@@ -31,7 +31,7 @@
 | 쿼리 | `cinema/postgresql/postgresql_information_system.sql`(전)과 `cinema/postgresql_denormalization/information_system.sql`(후)의 1~9번. 전체 줄 주석을 제거하고 `;` 단위로 분리해 그대로 실행 |
 | 실행 방식 | `EXPLAIN (ANALYZE, BUFFERS, MEMORY, WAL, SETTINGS, SUMMARY)`, 쿼리당 연속 10회. 첫 회를 버리지 않고 캐시 초기화도 하지 않음(전 구간 버퍼 hit) |
 | 시간 의존 쿼리 | "이번 달"은 `CURRENT_DATE`, 8·9번은 현재 시각 이후 상영만 대상이라 결과 행수가 날짜·시각에 따라 달라짐. 전(02:37:45)과 후(02:37:53)를 8초 간격으로 측정했고 두 쿼리 모두 76행으로 동일 |
-| 실행 명령 | `sh estimation_response_time_and_resource.sh` |
+| 실행 명령 | `sh cinema/estimation_response_time_and_resource.sh` |
 
 ## 집계 기준
 
@@ -104,5 +104,5 @@
 ## 재현
 
 ```sh
-sh estimation_response_time_and_resource.sh    # cinema/results/ 에 저장 (저장소 루트에서 실행)
+sh cinema/estimation_response_time_and_resource.sh    # cinema/results/ 에 저장
 ```

@@ -1,0 +1,930 @@
+===== RUN 1 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.629..79.635 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.628..79.633 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.531..79.071 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=3.022..46.037 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.009..13.314 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.974..2.978 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.222 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.445 ms
+ Execution Time: 79.833 ms
+(26 rows)
+
+===== RUN 2 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=77.882..77.889 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=77.881..77.886 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=75.647..76.551 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.849..44.158 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..12.781 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.812..2.813 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.153 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.286 ms
+ Execution Time: 78.082 ms
+(26 rows)
+
+===== RUN 3 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.489..79.493 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.488..79.490 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.451..78.969 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.827..45.883 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..13.522 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.792..2.793 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.179 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.380 ms
+ Execution Time: 79.648 ms
+(26 rows)
+
+===== RUN 4 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=74.904..74.907 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=74.903..74.905 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=73.862..74.345 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.809..43.018 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.012..12.467 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.757..2.758 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.004..1.162 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.967 ms
+ Execution Time: 75.081 ms
+(26 rows)
+
+===== RUN 5 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.606..79.608 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.605..79.607 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.501..79.017 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.759..45.774 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.007..13.293 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.721..2.722 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.124 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.343 ms
+ Execution Time: 79.751 ms
+(26 rows)
+
+===== RUN 6 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.133..79.136 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.131..79.134 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=77.886..78.481 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.857..45.626 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.006..12.936 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.823..2.824 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.181 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.406 ms
+ Execution Time: 79.314 ms
+(26 rows)
+
+===== RUN 7 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=80.535..80.538 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=80.531..80.533 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=79.464..79.994 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.786..46.603 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..13.487 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.749..2.750 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.126 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.225 ms
+ Execution Time: 80.710 ms
+(26 rows)
+
+===== RUN 8 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.836..79.839 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.835..79.837 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.731..79.248 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.805..46.301 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..13.100 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.768..2.769 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.153 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.290 ms
+ Execution Time: 80.001 ms
+(26 rows)
+
+===== RUN 9 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=80.103..80.105 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=80.101..80.103 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.996..79.511 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.932..46.228 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.010..13.413 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.884..2.885 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.152 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.431 ms
+ Execution Time: 80.296 ms
+(26 rows)
+
+===== RUN 10 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=80.809..80.815 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=80.808..80.810 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=79.697..80.266 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.930..46.723 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..13.468 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.893..2.894 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.158 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.265 ms
+ Execution Time: 80.981 ms
+(26 rows)
+
+===== RUN 11 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.058..79.061 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.057..79.059 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=77.939..78.465 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.793..45.536 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.006..13.333 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.750..2.751 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.134 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.338 ms
+ Execution Time: 79.227 ms
+(26 rows)
+
+===== RUN 12 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.564..79.567 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.563..79.565 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.513..79.029 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.876..45.825 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.007..13.183 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.833..2.833 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.174 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.283 ms
+ Execution Time: 79.735 ms
+(26 rows)
+
+===== RUN 13 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.502..79.505 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.501..79.503 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.387..78.921 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.881..45.842 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.007..13.131 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.834..2.835 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.146 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.445 ms
+ Execution Time: 79.714 ms
+(26 rows)
+
+===== RUN 14 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.757..79.760 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.756..79.759 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.614..79.136 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.791..45.981 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.006..13.243 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.757..2.757 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.161 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.267 ms
+ Execution Time: 79.958 ms
+(26 rows)
+
+===== RUN 15 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.327..79.330 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.326..79.328 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.295..78.798 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.917..45.784 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.009..13.099 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.866..2.867 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.004..1.180 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.520 ms
+ Execution Time: 79.526 ms
+(26 rows)
+
+===== RUN 16 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=82.399..82.401 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=82.398..82.400 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=81.291..81.813 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.775..47.862 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.007..13.958 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.735..2.735 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.123 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.359 ms
+ Execution Time: 82.569 ms
+(26 rows)
+
+===== RUN 17 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=78.754..78.758 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=78.752..78.756 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=77.545..78.158 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=3.136..45.616 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..12.834 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=3.094..3.095 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.208 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.312 ms
+ Execution Time: 78.939 ms
+(26 rows)
+
+===== RUN 18 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.884..79.888 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.882..79.886 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.573..79.225 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.852..46.093 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.006..13.244 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.813..2.814 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.117 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.402 ms
+ Execution Time: 80.077 ms
+(26 rows)
+
+===== RUN 19 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=81.879..81.881 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=81.878..81.879 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=80.779..81.276 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.803..47.083 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..13.460 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.768..2.769 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.134 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.263 ms
+ Execution Time: 82.042 ms
+(26 rows)
+
+===== RUN 20 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.521..79.525 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.520..79.523 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.383..78.930 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.863..45.673 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.010..13.142 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.822..2.823 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.125 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.309 ms
+ Execution Time: 79.722 ms
+(26 rows)
+
+===== RUN 21 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.800..79.803 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.799..79.801 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.621..79.143 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=3.130..45.911 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.006..13.155 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=3.087..3.087 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.188 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.326 ms
+ Execution Time: 80.000 ms
+(26 rows)
+
+===== RUN 22 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=83.034..83.040 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=83.033..83.038 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=81.928..82.452 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.917..48.803 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.008..14.553 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.875..2.878 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.149 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.273 ms
+ Execution Time: 83.211 ms
+(26 rows)
+
+===== RUN 23 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=79.146..79.148 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=79.145..79.147 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=78.106..78.593 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.951..45.873 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..13.360 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.908..2.909 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.269 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.273 ms
+ Execution Time: 79.300 ms
+(26 rows)
+
+===== RUN 24 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=77.859..77.862 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=77.858..77.860 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=76.777..77.275 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.857..45.400 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.007..13.028 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.805..2.805 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.174 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.424 ms
+ Execution Time: 78.030 ms
+(26 rows)
+
+===== RUN 25 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=78.122..78.124 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=78.120..78.123 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=77.033..77.537 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.887..45.056 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..13.303 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.848..2.849 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.145 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.268 ms
+ Execution Time: 78.331 ms
+(26 rows)
+
+===== RUN 26 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=86.919..86.922 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=86.918..86.921 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=85.874..86.392 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.777..51.355 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.006..15.007 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.740..2.741 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.103 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.230 ms
+ Execution Time: 87.086 ms
+(26 rows)
+
+===== RUN 27 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=75.897..75.900 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=75.896..75.898 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=74.890..75.379 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.861..43.641 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.010..12.473 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.815..2.815 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.146 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.449 ms
+ Execution Time: 76.060 ms
+(26 rows)
+
+===== RUN 28 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=77.694..77.697 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=77.692..77.695 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=76.675..77.187 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.954..44.888 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.009..12.943 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.912..2.912 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.200 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.331 ms
+ Execution Time: 77.873 ms
+(26 rows)
+
+===== RUN 29 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=77.721..77.725 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=77.719..77.724 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=76.669..77.184 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.817..44.833 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..13.040 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.781..2.784 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.142 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.264 ms
+ Execution Time: 77.881 ms
+(26 rows)
+
+===== RUN 30 =====
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=8176.98..8176.99 rows=5 width=66) (actual time=78.331..78.334 rows=5 loops=1)
+   Buffers: shared hit=2614
+   ->  Sort  (cost=8176.98..8189.52 rows=5015 width=66) (actual time=78.330..78.333 rows=5 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=2614
+         ->  HashAggregate  (cost=8043.53..8093.68 rows=5015 width=66) (actual time=77.287..77.787 rows=5013 loops=1)
+               Group Key: bh.book_id, bh.book_title, bh.book_author, bh.book_publisher
+               Batches: 1  Memory Usage: 1233kB
+               Buffers: shared hit=2611
+               ->  Hash Join  (cost=540.92..5737.47 rows=184485 width=58) (actual time=2.891..45.487 rows=184485 loops=1)
+                     Hash Cond: ((l.book_id = bh.book_id) AND (l.book_no = bh.book_no))
+                     Buffers: shared hit=2611
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=8) (actual time=0.005..13.071 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=353.17..353.17 rows=12517 width=62) (actual time=2.853..2.853 rows=12517 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1303kB
+                           Buffers: shared hit=228
+                           ->  Seq Scan on tbl_book_held_1 bh  (cost=0.00..353.17 rows=12517 width=62) (actual time=0.003..1.174 rows=12517 loops=1)
+                                 Buffers: shared hit=228
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=228
+   Memory: used=54kB  allocated=128kB
+ Planning Time: 2.312 ms
+ Execution Time: 78.487 ms
+(26 rows)
+

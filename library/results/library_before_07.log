@@ -1,0 +1,930 @@
+===== RUN 1 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.651..32.941 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.644..32.901 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.668..30.670 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.624..30.633 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.037..22.972 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.326 ms
+ Execution Time: 33.008 ms
+(26 rows)
+
+===== RUN 2 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.355..32.619 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.351..32.607 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.446..30.448 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.404..30.412 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.026..22.706 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.235 ms
+ Execution Time: 32.683 ms
+(26 rows)
+
+===== RUN 3 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.773..31.978 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.771..31.966 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.861..29.863 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.821..29.828 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.029..22.378 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.244 ms
+ Execution Time: 32.064 ms
+(26 rows)
+
+===== RUN 4 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.118..32.350 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.115..32.337 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.109..30.111 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.067..30.075 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.033..22.457 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.284 ms
+ Execution Time: 32.418 ms
+(26 rows)
+
+===== RUN 5 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.849..31.978 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.846..31.951 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.971..29.974 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.932..29.940 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.031..22.447 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.254 ms
+ Execution Time: 32.039 ms
+(26 rows)
+
+===== RUN 6 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.857..32.022 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.838..31.997 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.881..29.883 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.834..29.844 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.036..22.365 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.292 ms
+ Execution Time: 32.086 ms
+(26 rows)
+
+===== RUN 7 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.984..32.163 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.981..32.151 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.017..30.019 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.973..29.982 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.050..22.499 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.288 ms
+ Execution Time: 32.230 ms
+(26 rows)
+
+===== RUN 8 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.745..32.017 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.741..32.006 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.855..29.857 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.816..29.824 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.034..22.368 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.274 ms
+ Execution Time: 32.091 ms
+(26 rows)
+
+===== RUN 9 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.639..31.791 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.635..31.779 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.741..29.743 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.700..29.709 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.032..22.156 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.246 ms
+ Execution Time: 31.853 ms
+(26 rows)
+
+===== RUN 10 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.765..32.008 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.762..31.997 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.916..29.918 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.876..29.884 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.043..22.380 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.265 ms
+ Execution Time: 32.192 ms
+(26 rows)
+
+===== RUN 11 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.532..32.783 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.528..32.770 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.559..30.561 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.518..30.526 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.037..22.850 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.266 ms
+ Execution Time: 32.849 ms
+(26 rows)
+
+===== RUN 12 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.384..32.758 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.378..32.738 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.370..30.373 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.327..30.335 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.036..22.657 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.273 ms
+ Execution Time: 32.834 ms
+(26 rows)
+
+===== RUN 13 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.329..32.582 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.310..32.560 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.227..30.229 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.185..30.194 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.034..22.667 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.267 ms
+ Execution Time: 32.647 ms
+(26 rows)
+
+===== RUN 14 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.820..32.962 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.813..32.919 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.830..30.833 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.789..30.798 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.033..23.042 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.273 ms
+ Execution Time: 33.027 ms
+(26 rows)
+
+===== RUN 15 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.943..33.176 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.930..33.147 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.974..30.977 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.933..30.941 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.042..23.129 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.285 ms
+ Execution Time: 33.243 ms
+(26 rows)
+
+===== RUN 16 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=32.351..33.713 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=32.345..33.699 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=31.410..31.413 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=31.364..31.372 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.029..23.299 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.250 ms
+ Execution Time: 33.776 ms
+(26 rows)
+
+===== RUN 17 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=32.624..33.787 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=32.620..33.775 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=31.482..31.484 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=31.439..31.447 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.052..23.544 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.310 ms
+ Execution Time: 33.859 ms
+(26 rows)
+
+===== RUN 18 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.859..32.986 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.855..32.974 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.868..30.870 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.823..30.833 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.043..23.063 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.308 ms
+ Execution Time: 33.050 ms
+(26 rows)
+
+===== RUN 19 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.476..32.849 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.473..32.836 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.563..30.566 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.523..30.531 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.031..22.984 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.264 ms
+ Execution Time: 32.913 ms
+(26 rows)
+
+===== RUN 20 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.334..32.516 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.330..32.505 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.326..30.328 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.285..30.293 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.041..22.729 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.290 ms
+ Execution Time: 32.590 ms
+(26 rows)
+
+===== RUN 21 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.997..33.138 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.993..33.126 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=31.047..31.050 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=31.006..31.015 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.036..23.162 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.245 ms
+ Execution Time: 33.198 ms
+(26 rows)
+
+===== RUN 22 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.987..34.164 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.982..34.150 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.066..30.074 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.025..30.033 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.028..22.511 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.259 ms
+ Execution Time: 34.253 ms
+(26 rows)
+
+===== RUN 23 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=31.766..32.923 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=31.762..32.911 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=30.851..30.853 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=30.811..30.819 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.031..23.026 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.248 ms
+ Execution Time: 32.990 ms
+(26 rows)
+
+===== RUN 24 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.735..31.819 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.730..31.800 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.859..29.861 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.819..29.827 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.026..22.327 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.239 ms
+ Execution Time: 31.877 ms
+(26 rows)
+
+===== RUN 25 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.729..31.788 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.724..31.775 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.792..29.795 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.752..29.760 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.039..22.303 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.249 ms
+ Execution Time: 31.848 ms
+(26 rows)
+
+===== RUN 26 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.845..31.963 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.840..31.951 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.862..29.864 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.822..29.830 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.035..22.361 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.250 ms
+ Execution Time: 32.020 ms
+(26 rows)
+
+===== RUN 27 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.737..31.811 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.732..31.791 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.869..29.871 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.828..29.835 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.030..22.341 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.252 ms
+ Execution Time: 31.876 ms
+(26 rows)
+
+===== RUN 28 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.494..31.484 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.475..31.471 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.600..29.603 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.561..29.569 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.028..22.019 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.256 ms
+ Execution Time: 31.546 ms
+(26 rows)
+
+===== RUN 29 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.568..31.569 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.563..31.557 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.630..29.632 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.590..29.598 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.028..22.042 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.256 ms
+ Execution Time: 31.628 ms
+(26 rows)
+
+===== RUN 30 =====
+                                                                                 QUERY PLAN                                                                                  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=5442.30..5588.98 rows=1107 width=40) (actual time=30.706..31.726 rows=35 loops=1)
+   Group Key: (to_char(loan_date, 'YYYY-MM'::text))
+   Buffers: shared hit=2105
+   ->  Gather Merge  (cost=5442.30..5569.60 rows=1107 width=40) (actual time=30.691..31.711 rows=70 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2105
+         ->  Sort  (cost=4442.29..4445.06 rows=1107 width=40) (actual time=29.791..29.793 rows=35 loops=2)
+               Sort Key: (to_char(loan_date, 'YYYY-MM'::text))
+               Sort Method: quicksort  Memory: 26kB
+               Buffers: shared hit=2105
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               ->  Partial HashAggregate  (cost=4372.48..4386.32 rows=1107 width=40) (actual time=29.750..29.758 rows=35 loops=2)
+                     Group Key: to_char(loan_date, 'YYYY-MM'::text)
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2097
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..3940.70 rows=86356 width=32) (actual time=0.030..22.191 rows=73402 loops=2)
+                           Filter: ((loan_date >= '2022-01-01 00:00:00'::timestamp without time zone) AND (loan_date <= '2024-12-31 00:00:00'::timestamp without time zone))
+                           Rows Removed by Filter: 18840
+                           Buffers: shared hit=2097
+ Planning:
+   Buffers: shared hit=117
+   Memory: used=23kB  allocated=64kB
+ Planning Time: 0.252 ms
+ Execution Time: 31.787 ms
+(26 rows)
+

@@ -1,0 +1,870 @@
+===== RUN 1 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.166..40.303 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.162..40.298 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.051..38.052 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.029..38.034 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.012..29.053 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.250 ms
+ Execution Time: 40.353 ms
+(24 rows)
+
+===== RUN 2 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.217..40.375 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.214..40.371 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.153..38.153 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.120..38.124 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.012..29.130 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.264 ms
+ Execution Time: 40.428 ms
+(24 rows)
+
+===== RUN 3 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.132..40.323 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.129..40.319 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.193..38.194 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.174..38.179 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.010..29.172 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.228 ms
+ Execution Time: 40.376 ms
+(24 rows)
+
+===== RUN 4 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.100..40.239 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.096..40.234 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.212..38.213 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.192..38.197 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.010..29.238 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.230 ms
+ Execution Time: 40.287 ms
+(24 rows)
+
+===== RUN 5 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.931..40.046 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.928..40.042 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.046..38.047 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.027..38.031 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.010..29.051 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.235 ms
+ Execution Time: 40.110 ms
+(24 rows)
+
+===== RUN 6 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.852..39.892 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.847..39.887 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.922..37.923 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.902..37.907 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.009..28.896 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.243 ms
+ Execution Time: 39.974 ms
+(24 rows)
+
+===== RUN 7 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.996..40.123 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.993..40.119 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.089..38.090 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.070..38.075 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..29.096 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.241 ms
+ Execution Time: 40.179 ms
+(24 rows)
+
+===== RUN 8 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.809..39.879 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.806..39.876 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.935..37.935 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.914..37.919 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.017..28.903 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.228 ms
+ Execution Time: 39.929 ms
+(24 rows)
+
+===== RUN 9 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.983..40.026 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.964..40.020 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.062..38.063 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.042..38.047 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.010..29.002 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.270 ms
+ Execution Time: 40.083 ms
+(24 rows)
+
+===== RUN 10 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.069..40.235 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.065..40.230 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.114..38.115 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.093..38.098 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.009..29.159 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.243 ms
+ Execution Time: 40.290 ms
+(24 rows)
+
+===== RUN 11 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.854..39.981 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.851..39.977 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.904..37.905 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.882..37.886 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..28.860 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.266 ms
+ Execution Time: 40.029 ms
+(24 rows)
+
+===== RUN 12 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.948..39.975 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.945..39.971 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.006..38.006 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.987..37.992 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.010..28.987 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.237 ms
+ Execution Time: 40.024 ms
+(24 rows)
+
+===== RUN 13 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.860..39.919 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.856..39.914 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.958..37.959 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.939..37.943 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..28.977 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.234 ms
+ Execution Time: 39.971 ms
+(24 rows)
+
+===== RUN 14 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.125..40.318 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.121..40.314 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.175..38.176 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.156..38.160 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.010..29.211 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.232 ms
+ Execution Time: 40.367 ms
+(24 rows)
+
+===== RUN 15 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.983..40.057 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.979..40.052 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.065..38.066 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.044..38.048 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..29.045 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.255 ms
+ Execution Time: 40.106 ms
+(24 rows)
+
+===== RUN 16 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.879..40.018 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.876..40.014 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.976..37.977 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.957..37.962 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..28.952 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.235 ms
+ Execution Time: 40.066 ms
+(24 rows)
+
+===== RUN 17 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.864..39.941 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.861..39.937 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.982..37.982 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.962..37.967 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..28.988 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.230 ms
+ Execution Time: 39.986 ms
+(24 rows)
+
+===== RUN 18 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.067..40.194 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.064..40.190 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.205..38.206 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.184..38.188 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..29.155 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.235 ms
+ Execution Time: 40.249 ms
+(24 rows)
+
+===== RUN 19 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.872..39.954 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.869..39.950 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.977..37.978 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.959..37.964 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..28.975 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.250 ms
+ Execution Time: 40.004 ms
+(24 rows)
+
+===== RUN 20 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.281..40.437 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.277..40.433 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.400..38.401 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.380..38.384 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.009..29.363 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.274 ms
+ Execution Time: 40.487 ms
+(24 rows)
+
+===== RUN 21 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.350..40.525 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.347..40.521 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.317..38.318 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.297..38.301 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.010..29.247 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.225 ms
+ Execution Time: 40.575 ms
+(24 rows)
+
+===== RUN 22 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.244..40.447 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.241..40.443 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.288..38.289 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.269..38.273 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..29.186 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.268 ms
+ Execution Time: 40.502 ms
+(24 rows)
+
+===== RUN 23 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.001..40.074 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.998..40.070 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.106..38.107 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.088..38.092 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..29.052 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.249 ms
+ Execution Time: 40.125 ms
+(24 rows)
+
+===== RUN 24 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.128..40.270 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.124..40.266 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.241..38.242 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.222..38.227 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..29.219 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.232 ms
+ Execution Time: 40.317 ms
+(24 rows)
+
+===== RUN 25 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=39.149..40.245 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=39.146..40.241 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=38.283..38.284 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=38.264..38.268 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.008..29.267 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.233 ms
+ Execution Time: 40.296 ms
+(24 rows)
+
+===== RUN 26 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.883..40.034 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.879..40.030 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.984..37.985 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.965..37.969 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.009..28.980 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.246 ms
+ Execution Time: 40.128 ms
+(24 rows)
+
+===== RUN 27 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.825..39.856 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.821..39.852 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.907..37.907 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.888..37.892 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.009..28.903 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.266 ms
+ Execution Time: 39.908 ms
+(24 rows)
+
+===== RUN 28 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.848..39.944 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.844..39.939 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.956..37.957 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.938..37.942 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.014..28.915 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.225 ms
+ Execution Time: 39.992 ms
+(24 rows)
+
+===== RUN 29 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.793..39.954 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.790..39.950 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.915..37.916 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.897..37.902 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.009..28.944 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.250 ms
+ Execution Time: 40.006 ms
+(24 rows)
+
+===== RUN 30 =====
+                                                                                                                                                                                                     QUERY PLAN                                                                                                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7532.56..7704.15 rows=1107 width=40) (actual time=38.746..39.828 rows=4 loops=1)
+   Group Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+   Buffers: shared hit=2108
+   ->  Gather Merge  (cost=7532.56..7659.87 rows=1107 width=40) (actual time=38.743..39.825 rows=8 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2108
+         ->  Sort  (cost=6532.55..6535.32 rows=1107 width=40) (actual time=37.876..37.876 rows=4 loops=2)
+               Sort Key: (CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END)
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2108
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=6437.84..6476.58 rows=1107 width=40) (actual time=37.857..37.861 rows=4 loops=2)
+                     Group Key: CASE WHEN (EXTRACT(month FROM loan_date) = ANY ('{12,1,2}'::numeric[])) THEN 'Winter'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{3,4,5}'::numeric[])) THEN 'Spring'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{6,7,8}'::numeric[])) THEN 'Summer'::text WHEN (EXTRACT(month FROM loan_date) = ANY ('{9,10,11}'::numeric[])) THEN 'Autumn'::text ELSE NULL::text END
+                     Batches: 1  Memory Usage: 73kB
+                     Buffers: shared hit=2100
+                     Worker 0:  Batches: 1  Memory Usage: 73kB
+                     ->  Parallel Seq Scan on tbl_loan_1  (cost=0.00..5895.23 rows=108521 width=32) (actual time=0.009..28.886 rows=92242 loops=2)
+                           Buffers: shared hit=2100
+ Planning:
+   Buffers: shared hit=116
+   Memory: used=32kB  allocated=64kB
+ Planning Time: 0.261 ms
+ Execution Time: 39.878 ms
+(24 rows)
+

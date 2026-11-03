@@ -1,6 +1,8 @@
 -- # 1번: 대출 상위 5위의 도서 정보를 구하라
 -- [반정규화 영향] tbl_book_1은 사라졌지만 book_id를 tbl_book_held_1에 그대로 반정규화해두었으므로
--- 같은 책의 여러 보유 사본(book_held_id)을 book_id 기준으로 묶어 집계합니다.
+-- 같은 책의 여러 보유 사본((book_id, book_no))을 book_id 기준으로 묶어 집계합니다.
+-- 기본키가 (book_id, book_no)라서 book_id만 GROUP BY 하면 서지 컬럼이 함수적으로 결정되지 않으므로
+-- 서지 컬럼(제목/저자/출판사)도 GROUP BY 에 포함합니다. (같은 book_id의 사본은 서지 정보가 동일함이 보장됨)
 
 SELECT
     bh.book_id,
@@ -9,9 +11,12 @@ SELECT
     bh.book_publisher,
     COUNT(*) AS loan_count
 FROM tbl_loan_1 l
-JOIN tbl_book_held_1 bh ON l.book_held_id = bh.book_held_id
+JOIN tbl_book_held_1 bh ON l.book_id = bh.book_id AND l.book_no = bh.book_no
 GROUP BY
-    bh.book_id
+    bh.book_id,
+    bh.book_title,
+    bh.book_author,
+    bh.book_publisher
 ORDER BY loan_count DESC
 LIMIT 5;                      -- N개 만큼 행 출력
 -- FETCH FIRST 5 ROW ONLY;       -- N개 만큼 행 출력
@@ -61,7 +66,7 @@ SELECT
     bh.book_category_code,
     COUNT(*) AS loaned_book_count
 FROM tbl_loan_1 l
-JOIN tbl_book_held_1 bh ON l.book_held_id = bh.book_held_id
+JOIN tbl_book_held_1 bh ON l.book_id = bh.book_id AND l.book_no = bh.book_no
 WHERE l.actual_return_date IS NULL
 GROUP BY bh.book_category_code;
 
@@ -71,7 +76,7 @@ SELECT
     bh.book_category_code,
     COUNT(*) AS loan_count
 FROM tbl_loan_1 l
-JOIN tbl_book_held_1 bh ON l.book_held_id = bh.book_held_id
+JOIN tbl_book_held_1 bh ON l.book_id = bh.book_id AND l.book_no = bh.book_no
 GROUP BY bh.book_category_code
 ORDER BY loan_count DESC
 -- LIMIT 5;                      -- N개 만큼 행 출력

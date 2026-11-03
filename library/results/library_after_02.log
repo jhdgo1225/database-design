@@ -1,0 +1,900 @@
+===== RUN 1 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.614..75.618 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.612..75.615 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.971..73.922 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.987..49.083 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.634 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.953..2.954 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.052 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.032 ms
+ Execution Time: 75.849 ms
+(25 rows)
+
+===== RUN 2 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=83.254..83.260 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=83.252..83.255 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=80.492..81.559 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.735..52.073 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..13.052 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.698..2.699 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.091 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.998 ms
+ Execution Time: 83.537 ms
+(25 rows)
+
+===== RUN 3 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.641..75.646 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.640..75.642 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.838..73.787 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.724..48.924 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.004..12.804 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.691..2.691 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.081 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.997 ms
+ Execution Time: 75.882 ms
+(25 rows)
+
+===== RUN 4 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=85.891..85.897 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=85.890..85.892 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=83.240..84.229 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.724..51.512 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.004..13.006 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.686..2.687 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.054 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.977 ms
+ Execution Time: 86.145 ms
+(25 rows)
+
+===== RUN 5 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=78.981..78.987 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=78.980..78.983 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=76.110..77.331 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.694..49.385 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.004..12.769 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.660..2.661 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.008..1.048 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.003 ms
+ Execution Time: 79.253 ms
+(25 rows)
+
+===== RUN 6 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.014..75.018 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.012..75.015 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.363..73.358 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.707..48.496 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.006..12.671 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.671..2.672 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.005..1.066 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.032 ms
+ Execution Time: 75.245 ms
+(25 rows)
+
+===== RUN 7 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.661..75.666 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.660..75.663 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.959..73.898 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.731..49.077 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.004..12.931 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.694..2.694 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.102 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.995 ms
+ Execution Time: 75.891 ms
+(25 rows)
+
+===== RUN 8 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.769..75.773 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.767..75.770 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.984..73.937 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.700..48.950 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.799 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.665..2.665 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.074 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.029 ms
+ Execution Time: 75.995 ms
+(25 rows)
+
+===== RUN 9 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.913..75.917 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.912..75.914 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=73.241..74.178 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.765..49.073 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.696 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.725..2.726 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.071 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.005 ms
+ Execution Time: 76.152 ms
+(25 rows)
+
+===== RUN 10 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.543..75.548 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.542..75.544 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.912..73.858 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.701..48.974 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.826 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.666..2.666 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.080 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.022 ms
+ Execution Time: 75.785 ms
+(25 rows)
+
+===== RUN 11 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=76.605..76.609 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=76.603..76.605 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=73.903..74.844 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.744..49.444 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.006..13.124 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.710..2.710 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.005..1.116 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.009 ms
+ Execution Time: 76.814 ms
+(25 rows)
+
+===== RUN 12 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=74.905..74.910 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=74.904..74.906 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.291..73.240 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.655..48.474 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.608 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.620..2.620 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.043 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.002 ms
+ Execution Time: 75.148 ms
+(25 rows)
+
+===== RUN 13 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=85.226..85.230 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=85.225..85.227 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=82.540..83.555 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.760..51.654 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.006..12.939 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.721..2.722 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.066 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.015 ms
+ Execution Time: 85.510 ms
+(25 rows)
+
+===== RUN 14 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=88.559..88.564 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=88.558..88.560 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=85.835..86.871 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.851..55.528 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.087..13.356 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.728..2.729 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.108 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.011 ms
+ Execution Time: 88.798 ms
+(25 rows)
+
+===== RUN 15 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=76.186..76.191 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=76.185..76.187 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=73.475..74.499 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.671..49.170 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.004..12.771 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.603..2.604 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.039 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.995 ms
+ Execution Time: 76.428 ms
+(25 rows)
+
+===== RUN 16 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.787..75.791 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.786..75.788 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=73.098..74.045 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.725..48.998 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.007..12.811 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.689..2.689 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.079 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.998 ms
+ Execution Time: 76.023 ms
+(25 rows)
+
+===== RUN 17 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=76.179..76.183 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=76.177..76.179 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=73.609..74.543 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.799..49.276 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.703 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.759..2.759 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.108 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.973 ms
+ Execution Time: 76.414 ms
+(25 rows)
+
+===== RUN 18 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=74.615..74.620 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=74.614..74.617 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=71.978..72.935 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.664..48.139 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.457 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.625..2.626 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.005..1.043 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.979 ms
+ Execution Time: 74.853 ms
+(25 rows)
+
+===== RUN 19 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.160..75.165 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.159..75.161 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.422..73.374 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.728..48.685 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.745 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.693..2.693 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.062 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.011 ms
+ Execution Time: 75.397 ms
+(25 rows)
+
+===== RUN 20 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=76.189..76.193 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=76.187..76.190 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=73.401..74.356 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.973..49.247 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.006..12.919 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.933..2.933 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.164 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.979 ms
+ Execution Time: 76.450 ms
+(25 rows)
+
+===== RUN 21 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=81.641..81.645 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=81.640..81.642 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=79.063..80.020 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.667..51.150 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.008..12.800 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.633..2.633 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.076 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.995 ms
+ Execution Time: 81.903 ms
+(25 rows)
+
+===== RUN 22 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.259..75.264 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.258..75.260 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.617..73.568 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.718..48.609 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.618 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.678..2.679 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.047 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.077 ms
+ Execution Time: 75.498 ms
+(25 rows)
+
+===== RUN 23 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.506..75.510 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.504..75.506 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.715..73.669 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.751..48.911 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.710 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.712..2.713 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.062 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.999 ms
+ Execution Time: 75.749 ms
+(25 rows)
+
+===== RUN 24 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=83.565..83.569 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=83.564..83.566 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=80.975..81.932 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=3.275..51.673 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.007..12.908 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=3.236..3.236 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.005..1.303 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.290 ms
+ Execution Time: 83.820 ms
+(25 rows)
+
+===== RUN 25 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=75.046..75.051 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=75.045..75.047 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=72.432..73.374 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.683..48.579 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.614 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.645..2.645 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.058 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.980 ms
+ Execution Time: 75.290 ms
+(25 rows)
+
+===== RUN 26 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=80.648..80.652 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=80.646..80.649 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=78.019..78.961 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.671..50.116 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.920 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.634..2.635 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.005..1.061 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.979 ms
+ Execution Time: 80.948 ms
+(25 rows)
+
+===== RUN 27 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=80.430..80.434 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=80.428..80.431 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=77.741..78.677 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.668..50.119 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.992 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.634..2.634 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.056 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.985 ms
+ Execution Time: 80.688 ms
+(25 rows)
+
+===== RUN 28 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=77.317..77.321 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=77.316..77.318 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=74.630..75.614 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.643..49.855 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.004..12.975 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.604..2.605 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.035 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 1.004 ms
+ Execution Time: 77.616 ms
+(25 rows)
+
+===== RUN 29 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=81.858..81.862 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=81.857..81.859 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=79.084..80.077 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.730..51.178 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.004..13.180 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.696..2.696 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.078 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.995 ms
+ Execution Time: 82.104 ms
+(25 rows)
+
+===== RUN 30 =====
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=6431.58..6431.59 rows=5 width=113) (actual time=82.771..82.776 rows=5 loops=1)
+   Buffers: shared hit=2691
+   ->  Sort  (cost=6431.58..6456.62 rows=10015 width=113) (actual time=82.770..82.772 rows=6 loops=1)
+         Sort Key: (count(*)) DESC
+         Sort Method: quicksort  Memory: 1714kB
+         Buffers: shared hit=2691
+         ->  HashAggregate  (cost=6165.09..6265.24 rows=10015 width=113) (actual time=80.057..81.012 rows=10013 loops=1)
+               Group Key: m.member_no
+               Batches: 1  Memory Usage: 2193kB
+               Buffers: shared hit=2688
+               ->  Hash Join  (cost=530.34..5242.66 rows=184485 width=105) (actual time=2.832..51.329 rows=184485 loops=1)
+                     Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+                     Buffers: shared hit=2688
+                     ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4227.85 rows=184485 width=15) (actual time=0.005..12.900 rows=184485 loops=1)
+                           Buffers: shared hit=2383
+                     ->  Hash  (cost=405.15..405.15 rows=10015 width=105) (actual time=2.793..2.794 rows=10015 loops=1)
+                           Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                           Buffers: shared hit=305
+                           ->  Seq Scan on tbl_member_1 m  (cost=0.00..405.15 rows=10015 width=105) (actual time=0.004..1.120 rows=10015 loops=1)
+                                 Buffers: shared hit=305
+ Planning:
+   Buffers: shared hit=266
+   Memory: used=51kB  allocated=128kB
+ Planning Time: 0.973 ms
+ Execution Time: 83.049 ms
+(25 rows)
+

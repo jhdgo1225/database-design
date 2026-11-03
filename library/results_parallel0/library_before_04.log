@@ -1,0 +1,870 @@
+===== RUN 1 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.117..11.245 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.116..11.148 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.597..10.140 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.005..7.387 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.559..2.560 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.948 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.051 ms
+ Execution Time: 11.323 ms
+(24 rows)
+
+===== RUN 2 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.323..11.451 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.322..11.353 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.582..10.337 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.559 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.546..2.546 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.960 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.068 ms
+ Execution Time: 11.522 ms
+(24 rows)
+
+===== RUN 3 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.816..11.939 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.814..11.845 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.642..10.797 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.009..7.907 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.602..2.603 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..1.008 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.109 ms
+ Execution Time: 12.020 ms
+(24 rows)
+
+===== RUN 4 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.350..11.473 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.349..11.380 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.565..10.359 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.595 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.521..2.522 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.943 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.094 ms
+ Execution Time: 11.555 ms
+(24 rows)
+
+===== RUN 5 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.196..11.319 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.195..11.226 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.570..10.247 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.511 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.530..2.531 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.923 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.079 ms
+ Execution Time: 11.387 ms
+(24 rows)
+
+===== RUN 6 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.547..11.671 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.546..11.577 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.667..10.586 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.006..7.754 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.625..2.625 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.972 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.111 ms
+ Execution Time: 11.750 ms
+(24 rows)
+
+===== RUN 7 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.511..11.657 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.509..11.541 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.875..10.495 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.455 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.837..2.838 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.918 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.081 ms
+ Execution Time: 11.730 ms
+(24 rows)
+
+===== RUN 8 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.733..11.863 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.732..11.771 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.645..10.783 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.796 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.605..2.605 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.968 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.051 ms
+ Execution Time: 11.940 ms
+(24 rows)
+
+===== RUN 9 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.070..11.192 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.069..11.100 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.578..10.109 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.360 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.543..2.543 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.938 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.104 ms
+ Execution Time: 11.265 ms
+(24 rows)
+
+===== RUN 10 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.254..11.380 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.253..11.283 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.637..10.302 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.481 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.603..2.603 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.937 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.057 ms
+ Execution Time: 11.455 ms
+(24 rows)
+
+===== RUN 11 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.336..11.461 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.335..11.368 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.580..10.332 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.510 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.540..2.543 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.934 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.094 ms
+ Execution Time: 11.540 ms
+(24 rows)
+
+===== RUN 12 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.605..11.731 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.603..11.635 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.890..10.626 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.007..7.485 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.842..2.842 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..1.047 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.321 ms
+ Execution Time: 11.819 ms
+(24 rows)
+
+===== RUN 13 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=10.953..11.075 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=10.952..10.983 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.534..10.010 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.324 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.497..2.497 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.926 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.096 ms
+ Execution Time: 11.142 ms
+(24 rows)
+
+===== RUN 14 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.119..11.241 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.118..11.148 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.599..10.181 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.414 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.567..2.567 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.935 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.063 ms
+ Execution Time: 11.311 ms
+(24 rows)
+
+===== RUN 15 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.075..11.197 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.074..11.104 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.568..10.137 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.417 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.522..2.523 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.918 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.045 ms
+ Execution Time: 11.263 ms
+(24 rows)
+
+===== RUN 16 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.282..11.419 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.281..11.313 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.592..10.346 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.586 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.558..2.558 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.936 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.089 ms
+ Execution Time: 11.489 ms
+(24 rows)
+
+===== RUN 17 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.098..11.224 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.097..11.132 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.629..10.159 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.370 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.592..2.593 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.929 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.058 ms
+ Execution Time: 11.313 ms
+(24 rows)
+
+===== RUN 18 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.003..11.129 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.002..11.032 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.578..10.071 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.346 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.540..2.541 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.955 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.068 ms
+ Execution Time: 11.198 ms
+(24 rows)
+
+===== RUN 19 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.573..11.698 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.572..11.605 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.654..10.615 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.005..7.728 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.617..2.618 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.974 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.102 ms
+ Execution Time: 11.777 ms
+(24 rows)
+
+===== RUN 20 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=12.398..12.540 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=12.396..12.440 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.765..11.374 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.006..8.267 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.715..2.716 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..1.005 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.179 ms
+ Execution Time: 12.625 ms
+(24 rows)
+
+===== RUN 21 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.083..11.209 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.082..11.113 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.599..10.139 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.357 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.562..2.562 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.930 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.062 ms
+ Execution Time: 11.282 ms
+(24 rows)
+
+===== RUN 22 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.762..11.892 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.760..11.792 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.778..10.747 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.005..7.733 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.741..2.742 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..1.000 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.115 ms
+ Execution Time: 11.973 ms
+(24 rows)
+
+===== RUN 23 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.387..11.509 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.386..11.416 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.606..10.337 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.545 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.557..2.557 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.985 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.083 ms
+ Execution Time: 11.577 ms
+(24 rows)
+
+===== RUN 24 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=10.978..11.101 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=10.977..11.008 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.542..10.038 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.343 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.506..2.506 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.931 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.076 ms
+ Execution Time: 11.169 ms
+(24 rows)
+
+===== RUN 25 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.822..11.943 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.821..11.851 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.695..10.870 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.005..7.926 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.658..2.658 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.978 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.102 ms
+ Execution Time: 12.018 ms
+(24 rows)
+
+===== RUN 26 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.496..11.620 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.495..11.526 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.818..10.515 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.006..7.524 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.776..2.776 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..1.052 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.161 ms
+ Execution Time: 11.703 ms
+(24 rows)
+
+===== RUN 27 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.018..11.141 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.017..11.048 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.480..10.054 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.412 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.443..2.443 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.910 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.062 ms
+ Execution Time: 11.207 ms
+(24 rows)
+
+===== RUN 28 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.213..11.338 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.211..11.242 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.545..10.233 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.532 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.507..2.507 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.953 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.069 ms
+ Execution Time: 11.409 ms
+(24 rows)
+
+===== RUN 29 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.032..11.153 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.031..11.061 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.565..10.089 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.004..7.368 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.527..2.527 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.929 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.104 ms
+ Execution Time: 11.223 ms
+(24 rows)
+
+===== RUN 30 =====
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Unique  (cost=5415.90..5427.03 rows=636 width=113) (actual time=11.065..11.187 rows=631 loops=1)
+   Buffers: shared hit=2401
+   ->  Sort  (cost=5415.90..5417.49 rows=636 width=113) (actual time=11.064..11.094 rows=636 loops=1)
+         Sort Key: m.member_no, m.member_name, m.member_phone, m.member_addr, m.member_email, l.return_due_date
+         Sort Method: quicksort  Memory: 109kB
+         Buffers: shared hit=2401
+         ->  Hash Join  (cost=520.34..5386.28 rows=636 width=113) (actual time=2.625..10.112 rows=636 loops=1)
+               Hash Cond: ((l.member_no)::text = (m.member_no)::text)
+               Buffers: shared hit=2392
+               ->  Seq Scan on tbl_loan_1 l  (cost=0.00..4864.27 rows=636 width=23) (actual time=0.005..7.333 rows=636 loops=1)
+                     Filter: ((actual_return_date IS NULL) AND (return_due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 183849
+                     Buffers: shared hit=2097
+               ->  Hash  (cost=395.15..395.15 rows=10015 width=105) (actual time=2.580..2.580 rows=10015 loops=1)
+                     Buckets: 16384  Batches: 1  Memory Usage: 1480kB
+                     Buffers: shared hit=295
+                     ->  Seq Scan on tbl_member_1 m  (cost=0.00..395.15 rows=10015 width=105) (actual time=0.002..0.945 rows=10015 loops=1)
+                           Buffers: shared hit=295
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=300
+   Memory: used=46kB  allocated=128kB
+ Planning Time: 1.098 ms
+ Execution Time: 11.259 ms
+(24 rows)
+

@@ -1,0 +1,480 @@
+===== RUN 1 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.559..2.561 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.034 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.161 ms
+ Execution Time: 2.602 ms
+(11 rows)
+
+===== RUN 2 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.606..2.608 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.071 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.165 ms
+ Execution Time: 2.649 ms
+(11 rows)
+
+===== RUN 3 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.515..2.517 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.028 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.174 ms
+ Execution Time: 2.557 ms
+(11 rows)
+
+===== RUN 4 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.521..2.522 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.041 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.169 ms
+ Execution Time: 2.563 ms
+(11 rows)
+
+===== RUN 5 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.613..2.615 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.041 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.192 ms
+ Execution Time: 2.659 ms
+(11 rows)
+
+===== RUN 6 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.577..2.579 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.021 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.181 ms
+ Execution Time: 2.628 ms
+(11 rows)
+
+===== RUN 7 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.502..2.504 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..0.979 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.183 ms
+ Execution Time: 2.545 ms
+(11 rows)
+
+===== RUN 8 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.457..2.458 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..0.968 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.160 ms
+ Execution Time: 2.513 ms
+(11 rows)
+
+===== RUN 9 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.599..2.600 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.047 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.173 ms
+ Execution Time: 2.640 ms
+(11 rows)
+
+===== RUN 10 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.516..2.518 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.007..1.022 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.160 ms
+ Execution Time: 2.556 ms
+(11 rows)
+
+===== RUN 11 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.543..2.545 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.046 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.159 ms
+ Execution Time: 2.587 ms
+(11 rows)
+
+===== RUN 12 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.483..2.484 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..0.985 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.168 ms
+ Execution Time: 2.525 ms
+(11 rows)
+
+===== RUN 13 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.565..2.567 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.029 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.171 ms
+ Execution Time: 2.606 ms
+(11 rows)
+
+===== RUN 14 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.548..2.550 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.004..1.060 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.197 ms
+ Execution Time: 2.594 ms
+(11 rows)
+
+===== RUN 15 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.465..2.466 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.004..0.987 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.180 ms
+ Execution Time: 2.506 ms
+(11 rows)
+
+===== RUN 16 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.428..2.429 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..0.945 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.180 ms
+ Execution Time: 2.466 ms
+(11 rows)
+
+===== RUN 17 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.502..2.504 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..0.998 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.172 ms
+ Execution Time: 2.543 ms
+(11 rows)
+
+===== RUN 18 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.504..2.505 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.016 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.168 ms
+ Execution Time: 2.543 ms
+(11 rows)
+
+===== RUN 19 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.509..2.511 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.004..0.977 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.244 ms
+ Execution Time: 2.555 ms
+(11 rows)
+
+===== RUN 20 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.470..2.472 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..0.956 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.157 ms
+ Execution Time: 2.545 ms
+(11 rows)
+
+===== RUN 21 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.567..2.569 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.047 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.201 ms
+ Execution Time: 2.610 ms
+(11 rows)
+
+===== RUN 22 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.576..2.578 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.043 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.207 ms
+ Execution Time: 2.618 ms
+(11 rows)
+
+===== RUN 23 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.579..2.581 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.004..1.042 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.177 ms
+ Execution Time: 2.625 ms
+(11 rows)
+
+===== RUN 24 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.550..2.551 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.000 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.174 ms
+ Execution Time: 2.591 ms
+(11 rows)
+
+===== RUN 25 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.540..2.541 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.007..1.010 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.316 ms
+ Execution Time: 2.630 ms
+(11 rows)
+
+===== RUN 26 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.480..2.482 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..0.984 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.172 ms
+ Execution Time: 2.518 ms
+(11 rows)
+
+===== RUN 27 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.510..2.512 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..1.003 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.158 ms
+ Execution Time: 2.548 ms
+(11 rows)
+
+===== RUN 28 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.482..2.483 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.003..0.982 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.170 ms
+ Execution Time: 2.525 ms
+(11 rows)
+
+===== RUN 29 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.645..2.647 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.004..1.102 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.175 ms
+ Execution Time: 2.690 ms
+(11 rows)
+
+===== RUN 30 =====
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=415.76..415.89 rows=13 width=13) (actual time=2.438..2.440 rows=13 loops=1)
+   Group Key: book_category_code
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=228
+   ->  Seq Scan on tbl_book_held_1  (cost=0.00..353.17 rows=12517 width=5) (actual time=0.006..0.955 rows=12517 loops=1)
+         Buffers: shared hit=228
+ Planning:
+   Buffers: shared hit=107
+   Memory: used=15kB  allocated=16kB
+ Planning Time: 0.173 ms
+ Execution Time: 2.476 ms
+(11 rows)
+

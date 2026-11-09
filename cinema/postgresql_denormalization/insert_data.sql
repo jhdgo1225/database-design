@@ -5,7 +5,7 @@
 --   * tbl_bytk_d1 : thtr_id 추가(상영의 상영관), reserved_at = 기존 buydate, pay_method = 기존 btpy_id,
 --                   buy_method = 기존 method
 --   * tbl_part_d1 : (scmv_id, pers_id) 중복 1건 제거
---   * tbl_scrn_m1 : capacity(상영 정원) 추가 = 해당 상영관의 tbl_thtr_m1.seat
+--   * tbl_scrn_m1 : planned_capacity(희망 정원) 추가 = 해당 상영관의 tbl_thtr_m1.seat. capacity(이용 가능 정원)는 트리거가 계산하므로 INSERT 하지 않음
 
 INSERT INTO tbl_scmv_m1(scmv_id, title, summary, playtime, agerating, startdate, enddate, fee, status)
 VALUES
@@ -1908,7 +1908,7 @@ VALUES
     (10, 'J14', 'Y'),
     (10, 'J15', 'Y');
 
-INSERT INTO tbl_scrn_m1(scrn_id, scmv_id, thtr_id, capacity, scrndate, scrntime)
+INSERT INTO tbl_scrn_m1(scrn_id, scmv_id, thtr_id, planned_capacity, scrndate, scrntime)
 VALUES
     ('202610100101', '2026092601', 1, 200, '2026-10-10', '07:00:00'),
     ('202610100102', '2026092601', 1, 200, '2026-10-10', '10:00:00'),

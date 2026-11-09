@@ -92,6 +92,7 @@ CREATE TABLE tbl_bytk_d1(
            OR (pay_method IS NOT NULL AND pay_method = 'C' AND savings > 0 AND mileage > 0)),
     CHECK (buy_method = 'P' OR pay_method IS NOT NULL),             -- 온라인 예매는 결제수단 필수
     CHECK ((buydate IS NULL) = (pay_method IS NULL)),               -- 결제 시각과 결제수단은 함께 존재
+    UNIQUE (scrn_id, seatcode),   -- 같은 상영의 같은 좌석 중복 예매 방지. seatcode 가 NULL 인 전화 예약(좌석 미지정)은 여러 건 가능
     FOREIGN KEY (mebr_id) REFERENCES tbl_mebr_m1(mebr_id) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (scrn_id, thtr_id) REFERENCES tbl_scrn_m1(scrn_id, thtr_id) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (thtr_id, seatcode) REFERENCES tbl_seat_m1(thtr_id, seatcode) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -126,10 +127,13 @@ CREATE TABLE tbl_like_d1(
 --   ① trg_calc_scrn_capacity : 상영 INSERT/UPDATE 시 planned_capacity 검증 + capacity 계산
 --   ② trg_apply_seat_change  : 좌석 상태 변경 시 예정 상영의 capacity 재계산 (예매와 충돌하면 거부)
 --   ③ trg_protect_thtr_seat  : 상영관 총 좌석수를 예정 상영의 희망 정원보다 작게 줄이는 변경 거부
+--   ④ trg_check_bytk         : 예매 INSERT/UPDATE 시 이용 불가 좌석(예정 상영)과 정원 초과 예매 거부
 --
 --   동시성: tbl_thtr_m1 의 해당 행을 잠가 상영관 단위로 직렬화한다.
 --           (상영 쪽 FOR SHARE, 좌석 쪽 FOR NO KEY UPDATE)
 --           두 트리거의 잠금 순서는 "상영 행 -> 상영관 행" 으로 같다. (좌석 쪽이 예정 상영 행을 먼저 잠근다)
+--           예매 트리거(④)는 "좌석 행(FOR SHARE) -> 상영 행(FOR NO KEY UPDATE)" 순서로 잠근다.
+--           좌석 변경이 "좌석 행 -> 상영 행 -> 상영관 행" 순서이므로 세 경로 모두 앞쪽 자원부터 잠가 순환 대기가 없다.
 --   시간대: scrndate/scrntime 에 시간대가 없으므로 LOCALTIMESTAMP 로 비교한다.
 --           DB 서버 시간대 = 극장 현지 시간이라고 가정한다.
 -- =====================================================================
@@ -139,6 +143,7 @@ CREATE FUNCTION fn_calc_scrn_capacity() RETURNS trigger AS $$
 DECLARE
     v_total INT;    -- 상영관 총 좌석수
     v_avail INT;    -- 현재 이용 가능 좌석수
+    v_booked BIGINT; -- 이 상영의 예매 수
 BEGIN
     SELECT seat INTO v_total
     FROM tbl_thtr_m1
@@ -171,6 +176,16 @@ BEGIN
     ELSE
         -- 지난·상영 중 상영의 다른 컬럼 수정: 기존 capacity 유지 (직접 쓴 값 무시)
         NEW.capacity := OLD.capacity;
+    END IF;
+
+    -- 정원이 줄어드는 UPDATE 는 이미 예매된 수보다 작아질 수 없다 (예매 수 <= 정원 규칙의 반대쪽 구멍)
+    IF TG_OP = 'UPDATE' AND NEW.capacity < OLD.capacity THEN
+        SELECT COUNT(*) INTO v_booked FROM tbl_bytk_d1 WHERE scrn_id = NEW.scrn_id;
+        IF v_booked > NEW.capacity THEN
+            RAISE EXCEPTION '상영 %에 이미 예매가 %건 있어 정원을 %(으)로 줄일 수 없습니다.',
+                NEW.scrn_id, v_booked, NEW.capacity
+                USING ERRCODE = 'check_violation';
+        END IF;
     END IF;
 
     RETURN NEW;
@@ -286,3 +301,68 @@ CREATE TRIGGER trg_protect_thtr_seat
     FOR EACH ROW
     WHEN (NEW.seat < OLD.seat)
     EXECUTE FUNCTION fn_protect_thtr_seat();
+
+-- ④ 예매 쪽: 예정 상영에서 이용 불가 좌석 예매 거부, 모든 상영에서 정원 초과 예매 거부
+--    * 이용 불가 좌석 검사는 "지금의 좌석 상태" 를 보므로 예정 상영에만 적용한다. (지난·상영 중 상영은 과거 기록)
+--    * 정원 검사는 그 상영 자체의 값(capacity)과 비교하므로 지난 상영에도 적용한다.
+--    * 좌석 행을 FOR SHARE 로 잠가 같은 좌석을 이용 불가로 바꾸는 변경과 직렬화하고,
+--      상영 행을 FOR NO KEY UPDATE 로 잠가 같은 상영의 동시 예매와 정원 변경을 직렬화한다.
+--    * 없는 상영·좌석은 여기서 거부하지 않고 외래키가 거부하게 둔다.
+CREATE FUNCTION fn_check_bytk() RETURNS trigger AS $$
+DECLARE
+    v_upcoming BOOLEAN;
+    v_status   CHAR(1);
+    v_cap      INT;
+    v_cnt      BIGINT;
+BEGIN
+    SELECT (scrndate + scrntime) > LOCALTIMESTAMP INTO v_upcoming
+    FROM tbl_scrn_m1
+    WHERE scrn_id = NEW.scrn_id;
+
+    IF NOT FOUND THEN
+        RETURN NEW;
+    END IF;
+
+    -- (1) 예정 상영: 이용 불가 좌석은 예매할 수 없다 (좌석을 새로 지정하거나 바꿀 때만 검사)
+    IF v_upcoming AND NEW.seatcode IS NOT NULL
+       AND (TG_OP = 'INSERT'
+            OR NEW.seatcode IS DISTINCT FROM OLD.seatcode
+            OR NEW.scrn_id  IS DISTINCT FROM OLD.scrn_id
+            OR NEW.thtr_id  IS DISTINCT FROM OLD.thtr_id) THEN
+        SELECT status INTO v_status
+        FROM tbl_seat_m1
+        WHERE thtr_id = NEW.thtr_id AND seatcode = NEW.seatcode
+        FOR SHARE;
+
+        IF FOUND AND v_status <> 'Y' THEN
+            RAISE EXCEPTION '상영관 %의 좌석 %는 이용 불가라서 예매할 수 없습니다.', NEW.thtr_id, NEW.seatcode
+                USING ERRCODE = 'check_violation';
+        END IF;
+    END IF;
+
+    -- (2) 정원 초과 예매 거부 (결제 전 전화 예약 등 모든 예매 행을 센다)
+    IF TG_OP = 'INSERT' OR NEW.scrn_id IS DISTINCT FROM OLD.scrn_id THEN
+        SELECT capacity INTO v_cap
+        FROM tbl_scrn_m1
+        WHERE scrn_id = NEW.scrn_id
+        FOR NO KEY UPDATE;
+
+        SELECT COUNT(*) INTO v_cnt
+        FROM tbl_bytk_d1
+        WHERE scrn_id = NEW.scrn_id AND bytk_id <> NEW.bytk_id;
+
+        IF v_cnt + 1 > v_cap THEN
+            RAISE EXCEPTION '상영 %의 예매가 정원(%)을 넘습니다. 현재 예매 %건', NEW.scrn_id, v_cap, v_cnt
+                USING ERRCODE = 'check_violation';
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_check_bytk
+    BEFORE INSERT OR UPDATE OF scrn_id, thtr_id, seatcode
+    ON tbl_bytk_d1
+    FOR EACH ROW
+    EXECUTE FUNCTION fn_check_bytk();

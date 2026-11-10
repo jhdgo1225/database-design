@@ -1,0 +1,570 @@
+===== RUN 1 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1396kB
+               Worker 0:  Sort Method: quicksort  Memory: 1437kB
+               Worker 1:  Sort Method: quicksort  Memory: 1436kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.400 ms
+ Execution Time: 73.876 ms
+(14 rows)
+
+===== RUN 2 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1398kB
+               Worker 0:  Sort Method: quicksort  Memory: 1434kB
+               Worker 1:  Sort Method: quicksort  Memory: 1436kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.396 ms
+ Execution Time: 73.262 ms
+(14 rows)
+
+===== RUN 3 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1396kB
+               Worker 0:  Sort Method: quicksort  Memory: 1436kB
+               Worker 1:  Sort Method: quicksort  Memory: 1437kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.371 ms
+ Execution Time: 73.563 ms
+(14 rows)
+
+===== RUN 4 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1401kB
+               Worker 0:  Sort Method: quicksort  Memory: 1436kB
+               Worker 1:  Sort Method: quicksort  Memory: 1431kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.367 ms
+ Execution Time: 74.165 ms
+(14 rows)
+
+===== RUN 5 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1395kB
+               Worker 0:  Sort Method: quicksort  Memory: 1426kB
+               Worker 1:  Sort Method: quicksort  Memory: 1447kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.393 ms
+ Execution Time: 74.062 ms
+(14 rows)
+
+===== RUN 6 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1395kB
+               Worker 0:  Sort Method: quicksort  Memory: 1431kB
+               Worker 1:  Sort Method: quicksort  Memory: 1442kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.380 ms
+ Execution Time: 73.802 ms
+(14 rows)
+
+===== RUN 7 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1400kB
+               Worker 0:  Sort Method: quicksort  Memory: 1431kB
+               Worker 1:  Sort Method: quicksort  Memory: 1437kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.393 ms
+ Execution Time: 73.725 ms
+(14 rows)
+
+===== RUN 8 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1398kB
+               Worker 0:  Sort Method: quicksort  Memory: 1428kB
+               Worker 1:  Sort Method: quicksort  Memory: 1442kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.371 ms
+ Execution Time: 73.476 ms
+(14 rows)
+
+===== RUN 9 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1395kB
+               Worker 0:  Sort Method: quicksort  Memory: 1437kB
+               Worker 1:  Sort Method: quicksort  Memory: 1436kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.393 ms
+ Execution Time: 74.241 ms
+(14 rows)
+
+===== RUN 10 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1393kB
+               Worker 0:  Sort Method: quicksort  Memory: 1425kB
+               Worker 1:  Sort Method: quicksort  Memory: 1451kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.405 ms
+ Execution Time: 75.493 ms
+(14 rows)
+
+===== RUN 11 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1396kB
+               Worker 0:  Sort Method: quicksort  Memory: 1436kB
+               Worker 1:  Sort Method: quicksort  Memory: 1437kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.373 ms
+ Execution Time: 72.745 ms
+(14 rows)
+
+===== RUN 12 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1401kB
+               Worker 0:  Sort Method: quicksort  Memory: 1426kB
+               Worker 1:  Sort Method: quicksort  Memory: 1442kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.377 ms
+ Execution Time: 74.037 ms
+(14 rows)
+
+===== RUN 13 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1393kB
+               Worker 0:  Sort Method: quicksort  Memory: 1442kB
+               Worker 1:  Sort Method: quicksort  Memory: 1434kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.426 ms
+ Execution Time: 73.501 ms
+(14 rows)
+
+===== RUN 14 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1392kB
+               Worker 0:  Sort Method: quicksort  Memory: 1426kB
+               Worker 1:  Sort Method: quicksort  Memory: 1451kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.397 ms
+ Execution Time: 75.145 ms
+(14 rows)
+
+===== RUN 15 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1401kB
+               Worker 0:  Sort Method: quicksort  Memory: 1434kB
+               Worker 1:  Sort Method: quicksort  Memory: 1433kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.420 ms
+ Execution Time: 73.887 ms
+(14 rows)
+
+===== RUN 16 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1396kB
+               Worker 0:  Sort Method: quicksort  Memory: 1437kB
+               Worker 1:  Sort Method: quicksort  Memory: 1436kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.378 ms
+ Execution Time: 73.661 ms
+(14 rows)
+
+===== RUN 17 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1398kB
+               Worker 0:  Sort Method: quicksort  Memory: 1439kB
+               Worker 1:  Sort Method: quicksort  Memory: 1431kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.382 ms
+ Execution Time: 73.908 ms
+(14 rows)
+
+===== RUN 18 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1393kB
+               Worker 0:  Sort Method: quicksort  Memory: 1436kB
+               Worker 1:  Sort Method: quicksort  Memory: 1440kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.394 ms
+ Execution Time: 74.281 ms
+(14 rows)
+
+===== RUN 19 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1393kB
+               Worker 0:  Sort Method: quicksort  Memory: 1436kB
+               Worker 1:  Sort Method: quicksort  Memory: 1439kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.408 ms
+ Execution Time: 73.680 ms
+(14 rows)
+
+===== RUN 20 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1396kB
+               Worker 0:  Sort Method: quicksort  Memory: 1439kB
+               Worker 1:  Sort Method: quicksort  Memory: 1434kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.410 ms
+ Execution Time: 74.608 ms
+(14 rows)
+
+===== RUN 21 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1390kB
+               Worker 0:  Sort Method: quicksort  Memory: 1439kB
+               Worker 1:  Sort Method: quicksort  Memory: 1439kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.389 ms
+ Execution Time: 73.805 ms
+(14 rows)
+
+===== RUN 22 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1398kB
+               Worker 0:  Sort Method: quicksort  Memory: 1445kB
+               Worker 1:  Sort Method: quicksort  Memory: 1425kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.399 ms
+ Execution Time: 74.047 ms
+(14 rows)
+
+===== RUN 23 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1395kB
+               Worker 0:  Sort Method: quicksort  Memory: 1439kB
+               Worker 1:  Sort Method: quicksort  Memory: 1434kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.392 ms
+ Execution Time: 73.948 ms
+(14 rows)
+
+===== RUN 24 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1398kB
+               Worker 0:  Sort Method: quicksort  Memory: 1433kB
+               Worker 1:  Sort Method: quicksort  Memory: 1437kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.411 ms
+ Execution Time: 74.307 ms
+(14 rows)
+
+===== RUN 25 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1398kB
+               Worker 0:  Sort Method: quicksort  Memory: 1434kB
+               Worker 1:  Sort Method: quicksort  Memory: 1437kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.390 ms
+ Execution Time: 73.899 ms
+(14 rows)
+
+===== RUN 26 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1398kB
+               Worker 0:  Sort Method: quicksort  Memory: 1437kB
+               Worker 1:  Sort Method: quicksort  Memory: 1433kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.445 ms
+ Execution Time: 73.733 ms
+(14 rows)
+
+===== RUN 27 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1396kB
+               Worker 0:  Sort Method: quicksort  Memory: 1437kB
+               Worker 1:  Sort Method: quicksort  Memory: 1436kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.389 ms
+ Execution Time: 74.483 ms
+(14 rows)
+
+===== RUN 28 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1400kB
+               Worker 0:  Sort Method: quicksort  Memory: 1431kB
+               Worker 1:  Sort Method: quicksort  Memory: 1437kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.435 ms
+ Execution Time: 74.203 ms
+(14 rows)
+
+===== RUN 29 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1406kB
+               Worker 0:  Sort Method: quicksort  Memory: 1429kB
+               Worker 1:  Sort Method: quicksort  Memory: 1433kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.407 ms
+ Execution Time: 73.011 ms
+(14 rows)
+
+===== RUN 30 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual rows=1 loops=1)
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1396kB
+               Worker 0:  Sort Method: quicksort  Memory: 1436kB
+               Worker 1:  Sort Method: quicksort  Memory: 1437kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+ Planning Time: 0.416 ms
+ Execution Time: 74.427 ms
+(14 rows)
+

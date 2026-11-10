@@ -1,0 +1,117 @@
+===== RUN 1 =====
+                                                                                                                                        QUERY PLAN                                                                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=37643.32..37659.02 rows=6281 width=108) (actual time=366.133..366.136 rows=28 loops=1)
+   Sort Key: (CASE "예매정보_1"."요일" WHEN 'Monday'::text THEN 1 WHEN 'Tuesday'::text THEN 2 WHEN 'Wednesday'::text THEN 3 WHEN 'Thursday'::text THEN 4 WHEN 'Friday'::text THEN 5 WHEN 'Saturday'::text THEN 6 WHEN 'Sunday'::text THEN 7 ELSE NULL::integer END), "예매정보_1"."시간대"
+   Sort Method: quicksort  Memory: 26kB
+   Buffers: shared hit=3586, temp read=989 written=990
+   CTE 예매정보
+     ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..17434.72 rows=62812 width=83) (actual time=41.596..90.068 rows=62810 loops=1)
+           Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+           Rows Removed by Filter: 252212
+           Buffers: shared hit=3580
+   ->  Nested Loop  (cost=18854.49..19812.37 rows=6281 width=108) (actual time=354.407..366.097 rows=28 loops=1)
+         Buffers: shared hit=3580, temp read=989 written=990
+         ->  Aggregate  (cost=8725.02..8725.03 rows=1 width=8) (actual time=206.276..206.277 rows=1 loops=1)
+               Buffers: shared hit=3580, temp written=374
+               ->  Sort  (cost=8410.96..8567.99 rows=62812 width=50) (actual time=199.536..202.401 rows=62810 loops=1)
+                     Sort Key: "예매정보"."회원id"
+                     Sort Method: quicksort  Memory: 1537kB
+                     Buffers: shared hit=3580, temp written=374
+                     ->  CTE Scan on "예매정보"  (cost=0.00..1256.24 rows=62812 width=50) (actual time=41.600..106.135 rows=62810 loops=1)
+                           Buffers: shared hit=3580, temp written=374
+         ->  GroupAggregate  (cost=10129.46..10820.39 rows=6281 width=72) (actual time=148.123..159.793 rows=28 loops=1)
+               Group Key: "예매정보_1"."요일", "예매정보_1"."시간대"
+               Buffers: temp read=989 written=616
+               ->  Sort  (cost=10129.46..10286.49 rows=62812 width=114) (actual time=147.906..152.236 rows=62810 loops=1)
+                     Sort Key: "예매정보_1"."요일", "예매정보_1"."시간대", "예매정보_1"."회원id"
+                     Sort Method: external sort  Disk: 2456kB
+                     Buffers: temp read=989 written=616
+                     ->  CTE Scan on "예매정보" "예매정보_1"  (cost=0.00..1256.24 rows=62812 width=114) (actual time=0.029..5.620 rows=62810 loops=1)
+                           Buffers: temp read=375 written=1
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=124
+   Memory: used=101kB  allocated=128kB
+ Planning Time: 0.455 ms
+ Execution Time: 366.762 ms
+(34 rows)
+
+===== RUN 2 =====
+                                                                                                                                        QUERY PLAN                                                                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=37643.32..37659.02 rows=6281 width=108) (actual time=370.899..370.902 rows=28 loops=1)
+   Sort Key: (CASE "예매정보_1"."요일" WHEN 'Monday'::text THEN 1 WHEN 'Tuesday'::text THEN 2 WHEN 'Wednesday'::text THEN 3 WHEN 'Thursday'::text THEN 4 WHEN 'Friday'::text THEN 5 WHEN 'Saturday'::text THEN 6 WHEN 'Sunday'::text THEN 7 ELSE NULL::integer END), "예매정보_1"."시간대"
+   Sort Method: quicksort  Memory: 26kB
+   Buffers: shared hit=3586, temp read=989 written=990
+   CTE 예매정보
+     ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..17434.72 rows=62812 width=83) (actual time=42.111..90.812 rows=62810 loops=1)
+           Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+           Rows Removed by Filter: 252212
+           Buffers: shared hit=3580
+   ->  Nested Loop  (cost=18854.49..19812.37 rows=6281 width=108) (actual time=359.124..370.862 rows=28 loops=1)
+         Buffers: shared hit=3580, temp read=989 written=990
+         ->  Aggregate  (cost=8725.02..8725.03 rows=1 width=8) (actual time=209.683..209.683 rows=1 loops=1)
+               Buffers: shared hit=3580, temp written=374
+               ->  Sort  (cost=8410.96..8567.99 rows=62812 width=50) (actual time=202.097..205.142 rows=62810 loops=1)
+                     Sort Key: "예매정보"."회원id"
+                     Sort Method: quicksort  Memory: 1537kB
+                     Buffers: shared hit=3580, temp written=374
+                     ->  CTE Scan on "예매정보"  (cost=0.00..1256.24 rows=62812 width=50) (actual time=42.114..107.201 rows=62810 loops=1)
+                           Buffers: shared hit=3580, temp written=374
+         ->  GroupAggregate  (cost=10129.46..10820.39 rows=6281 width=72) (actual time=149.430..161.155 rows=28 loops=1)
+               Group Key: "예매정보_1"."요일", "예매정보_1"."시간대"
+               Buffers: temp read=989 written=616
+               ->  Sort  (cost=10129.46..10286.49 rows=62812 width=114) (actual time=149.200..153.556 rows=62810 loops=1)
+                     Sort Key: "예매정보_1"."요일", "예매정보_1"."시간대", "예매정보_1"."회원id"
+                     Sort Method: external sort  Disk: 2456kB
+                     Buffers: temp read=989 written=616
+                     ->  CTE Scan on "예매정보" "예매정보_1"  (cost=0.00..1256.24 rows=62812 width=114) (actual time=0.039..6.069 rows=62810 loops=1)
+                           Buffers: temp read=375 written=1
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=124
+   Memory: used=101kB  allocated=128kB
+ Planning Time: 0.432 ms
+ Execution Time: 371.603 ms
+(34 rows)
+
+===== RUN 3 =====
+                                                                                                                                        QUERY PLAN                                                                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=37643.32..37659.02 rows=6281 width=108) (actual time=368.506..368.508 rows=28 loops=1)
+   Sort Key: (CASE "예매정보_1"."요일" WHEN 'Monday'::text THEN 1 WHEN 'Tuesday'::text THEN 2 WHEN 'Wednesday'::text THEN 3 WHEN 'Thursday'::text THEN 4 WHEN 'Friday'::text THEN 5 WHEN 'Saturday'::text THEN 6 WHEN 'Sunday'::text THEN 7 ELSE NULL::integer END), "예매정보_1"."시간대"
+   Sort Method: quicksort  Memory: 26kB
+   Buffers: shared hit=3586, temp read=989 written=990
+   CTE 예매정보
+     ->  Seq Scan on tbl_bytk_d1 tk  (cost=0.00..17434.72 rows=62812 width=83) (actual time=40.871..90.186 rows=62810 loops=1)
+           Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+           Rows Removed by Filter: 252212
+           Buffers: shared hit=3580
+   ->  Nested Loop  (cost=18854.49..19812.37 rows=6281 width=108) (actual time=356.504..368.463 rows=28 loops=1)
+         Buffers: shared hit=3580, temp read=989 written=990
+         ->  Aggregate  (cost=8725.02..8725.03 rows=1 width=8) (actual time=207.829..207.829 rows=1 loops=1)
+               Buffers: shared hit=3580, temp written=374
+               ->  Sort  (cost=8410.96..8567.99 rows=62812 width=50) (actual time=201.109..204.003 rows=62810 loops=1)
+                     Sort Key: "예매정보"."회원id"
+                     Sort Method: quicksort  Memory: 1537kB
+                     Buffers: shared hit=3580, temp written=374
+                     ->  CTE Scan on "예매정보"  (cost=0.00..1256.24 rows=62812 width=50) (actual time=40.875..106.598 rows=62810 loops=1)
+                           Buffers: shared hit=3580, temp written=374
+         ->  GroupAggregate  (cost=10129.46..10820.39 rows=6281 width=72) (actual time=148.667..160.609 rows=28 loops=1)
+               Group Key: "예매정보_1"."요일", "예매정보_1"."시간대"
+               Buffers: temp read=989 written=616
+               ->  Sort  (cost=10129.46..10286.49 rows=62812 width=114) (actual time=148.451..152.902 rows=62810 loops=1)
+                     Sort Key: "예매정보_1"."요일", "예매정보_1"."시간대", "예매정보_1"."회원id"
+                     Sort Method: external sort  Disk: 2456kB
+                     Buffers: temp read=989 written=616
+                     ->  CTE Scan on "예매정보" "예매정보_1"  (cost=0.00..1256.24 rows=62812 width=114) (actual time=0.038..5.843 rows=62810 loops=1)
+                           Buffers: temp read=375 written=1
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=124
+   Memory: used=101kB  allocated=128kB
+ Planning Time: 0.470 ms
+ Execution Time: 369.255 ms
+(34 rows)
+

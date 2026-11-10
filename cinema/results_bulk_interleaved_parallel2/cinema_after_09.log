@@ -1,0 +1,111 @@
+===== RUN 1 =====
+                                                                  QUERY PLAN                                                                   
+-----------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=20912.88..24063.09 rows=105007 width=54) (actual time=63.807..68.612 rows=5490 loops=1)
+   Group Key: sc.thtr_id, sc.scrndate, sc.scrntime, mv.title, sc.capacity
+   Buffers: shared hit=4358
+   ->  Sort  (cost=20912.88..21175.39 rows=105007 width=42) (actual time=63.793..65.270 rows=26353 loops=1)
+         Sort Key: sc.thtr_id, sc.scrndate, sc.scrntime, mv.title, sc.capacity
+         Sort Method: quicksort  Memory: 2416kB
+         Buffers: shared hit=4358
+         ->  Hash Join  (cost=466.92..8924.73 rows=105007 width=42) (actual time=39.613..52.341 rows=26353 loops=1)
+               Hash Cond: (sc.scmv_id = mv.scmv_id)
+               Buffers: shared hit=4344
+               ->  Hash Right Join  (cost=453.94..8632.34 rows=105007 width=35) (actual time=39.544..48.701 rows=26353 loops=1)
+                     Hash Cond: (b.scrn_id = sc.scrn_id)
+                     Buffers: shared hit=4338
+                     ->  Seq Scan on tbl_bytk_d1 b  (cost=0.00..7351.22 rows=315022 width=17) (actual time=0.003..19.101 rows=315022 loops=1)
+                           Buffers: shared hit=4201
+                     ->  Hash  (cost=392.99..392.99 rows=4876 width=44) (actual time=2.302..2.303 rows=5490 loops=1)
+                           Buckets: 8192  Batches: 1  Memory Usage: 472kB
+                           Buffers: shared hit=137
+                           ->  Seq Scan on tbl_scrn_m1 sc  (cost=0.00..392.99 rows=4876 width=44) (actual time=0.888..1.572 rows=5490 loops=1)
+                                 Filter: ((scrndate + scrntime) > LOCALTIMESTAMP)
+                                 Rows Removed by Filter: 9138
+                                 Buffers: shared hit=137
+               ->  Hash  (cost=9.10..9.10 rows=310 width=29) (actual time=0.063..0.063 rows=310 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 27kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tbl_scmv_m1 mv  (cost=0.00..9.10 rows=310 width=29) (actual time=0.003..0.027 rows=310 loops=1)
+                           Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=334
+   Memory: used=82kB  allocated=128kB
+ Planning Time: 1.468 ms
+ Execution Time: 68.892 ms
+(32 rows)
+
+===== RUN 2 =====
+                                                                  QUERY PLAN                                                                   
+-----------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=20912.88..24063.09 rows=105007 width=54) (actual time=66.102..70.899 rows=5490 loops=1)
+   Group Key: sc.thtr_id, sc.scrndate, sc.scrntime, mv.title, sc.capacity
+   Buffers: shared hit=4358
+   ->  Sort  (cost=20912.88..21175.39 rows=105007 width=42) (actual time=66.088..67.595 rows=26353 loops=1)
+         Sort Key: sc.thtr_id, sc.scrndate, sc.scrntime, mv.title, sc.capacity
+         Sort Method: quicksort  Memory: 2416kB
+         Buffers: shared hit=4358
+         ->  Hash Join  (cost=466.92..8924.73 rows=105007 width=42) (actual time=40.190..54.214 rows=26353 loops=1)
+               Hash Cond: (sc.scmv_id = mv.scmv_id)
+               Buffers: shared hit=4344
+               ->  Hash Right Join  (cost=453.94..8632.34 rows=105007 width=35) (actual time=40.107..50.422 rows=26353 loops=1)
+                     Hash Cond: (b.scrn_id = sc.scrn_id)
+                     Buffers: shared hit=4338
+                     ->  Seq Scan on tbl_bytk_d1 b  (cost=0.00..7351.22 rows=315022 width=17) (actual time=0.003..19.715 rows=315022 loops=1)
+                           Buffers: shared hit=4201
+                     ->  Hash  (cost=392.99..392.99 rows=4876 width=44) (actual time=2.533..2.536 rows=5490 loops=1)
+                           Buckets: 8192  Batches: 1  Memory Usage: 472kB
+                           Buffers: shared hit=137
+                           ->  Seq Scan on tbl_scrn_m1 sc  (cost=0.00..392.99 rows=4876 width=44) (actual time=0.830..1.568 rows=5490 loops=1)
+                                 Filter: ((scrndate + scrntime) > LOCALTIMESTAMP)
+                                 Rows Removed by Filter: 9138
+                                 Buffers: shared hit=137
+               ->  Hash  (cost=9.10..9.10 rows=310 width=29) (actual time=0.072..0.072 rows=310 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 27kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tbl_scmv_m1 mv  (cost=0.00..9.10 rows=310 width=29) (actual time=0.003..0.026 rows=310 loops=1)
+                           Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=334
+   Memory: used=82kB  allocated=128kB
+ Planning Time: 1.503 ms
+ Execution Time: 71.256 ms
+(32 rows)
+
+===== RUN 3 =====
+                                                                  QUERY PLAN                                                                   
+-----------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=20912.88..24063.09 rows=105007 width=54) (actual time=65.981..70.753 rows=5490 loops=1)
+   Group Key: sc.thtr_id, sc.scrndate, sc.scrntime, mv.title, sc.capacity
+   Buffers: shared hit=4358
+   ->  Sort  (cost=20912.88..21175.39 rows=105007 width=42) (actual time=65.968..67.453 rows=26353 loops=1)
+         Sort Key: sc.thtr_id, sc.scrndate, sc.scrntime, mv.title, sc.capacity
+         Sort Method: quicksort  Memory: 2416kB
+         Buffers: shared hit=4358
+         ->  Hash Join  (cost=466.92..8924.73 rows=105007 width=42) (actual time=41.243..54.242 rows=26353 loops=1)
+               Hash Cond: (sc.scmv_id = mv.scmv_id)
+               Buffers: shared hit=4344
+               ->  Hash Right Join  (cost=453.94..8632.34 rows=105007 width=35) (actual time=41.170..50.570 rows=26353 loops=1)
+                     Hash Cond: (b.scrn_id = sc.scrn_id)
+                     Buffers: shared hit=4338
+                     ->  Seq Scan on tbl_bytk_d1 b  (cost=0.00..7351.22 rows=315022 width=17) (actual time=0.004..20.008 rows=315022 loops=1)
+                           Buffers: shared hit=4201
+                     ->  Hash  (cost=392.99..392.99 rows=4876 width=44) (actual time=2.375..2.375 rows=5490 loops=1)
+                           Buckets: 8192  Batches: 1  Memory Usage: 472kB
+                           Buffers: shared hit=137
+                           ->  Seq Scan on tbl_scrn_m1 sc  (cost=0.00..392.99 rows=4876 width=44) (actual time=0.882..1.621 rows=5490 loops=1)
+                                 Filter: ((scrndate + scrntime) > LOCALTIMESTAMP)
+                                 Rows Removed by Filter: 9138
+                                 Buffers: shared hit=137
+               ->  Hash  (cost=9.10..9.10 rows=310 width=29) (actual time=0.066..0.067 rows=310 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 27kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tbl_scmv_m1 mv  (cost=0.00..9.10 rows=310 width=29) (actual time=0.003..0.028 rows=310 loops=1)
+                           Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=334
+   Memory: used=82kB  allocated=128kB
+ Planning Time: 1.552 ms
+ Execution Time: 71.040 ms
+(32 rows)
+

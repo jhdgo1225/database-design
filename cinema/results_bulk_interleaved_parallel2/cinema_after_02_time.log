@@ -1,0 +1,240 @@
+===== RUN 1 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.148 ms
+ Execution Time: 1.371 ms
+(3 rows)
+
+===== RUN 2 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.147 ms
+ Execution Time: 1.394 ms
+(3 rows)
+
+===== RUN 3 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.154 ms
+ Execution Time: 1.355 ms
+(3 rows)
+
+===== RUN 4 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.202 ms
+ Execution Time: 1.360 ms
+(3 rows)
+
+===== RUN 5 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.158 ms
+ Execution Time: 1.381 ms
+(3 rows)
+
+===== RUN 6 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.162 ms
+ Execution Time: 1.390 ms
+(3 rows)
+
+===== RUN 7 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.173 ms
+ Execution Time: 1.407 ms
+(3 rows)
+
+===== RUN 8 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.154 ms
+ Execution Time: 1.369 ms
+(3 rows)
+
+===== RUN 9 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.159 ms
+ Execution Time: 1.340 ms
+(3 rows)
+
+===== RUN 10 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.160 ms
+ Execution Time: 1.364 ms
+(3 rows)
+
+===== RUN 11 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.151 ms
+ Execution Time: 1.389 ms
+(3 rows)
+
+===== RUN 12 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.151 ms
+ Execution Time: 1.376 ms
+(3 rows)
+
+===== RUN 13 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.149 ms
+ Execution Time: 1.373 ms
+(3 rows)
+
+===== RUN 14 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.184 ms
+ Execution Time: 1.513 ms
+(3 rows)
+
+===== RUN 15 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.153 ms
+ Execution Time: 1.366 ms
+(3 rows)
+
+===== RUN 16 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.180 ms
+ Execution Time: 1.345 ms
+(3 rows)
+
+===== RUN 17 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.160 ms
+ Execution Time: 1.371 ms
+(3 rows)
+
+===== RUN 18 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.154 ms
+ Execution Time: 1.373 ms
+(3 rows)
+
+===== RUN 19 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.156 ms
+ Execution Time: 1.347 ms
+(3 rows)
+
+===== RUN 20 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.151 ms
+ Execution Time: 1.366 ms
+(3 rows)
+
+===== RUN 21 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.155 ms
+ Execution Time: 1.352 ms
+(3 rows)
+
+===== RUN 22 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.163 ms
+ Execution Time: 1.385 ms
+(3 rows)
+
+===== RUN 23 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.203 ms
+ Execution Time: 1.363 ms
+(3 rows)
+
+===== RUN 24 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.180 ms
+ Execution Time: 1.368 ms
+(3 rows)
+
+===== RUN 25 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.190 ms
+ Execution Time: 1.374 ms
+(3 rows)
+
+===== RUN 26 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.158 ms
+ Execution Time: 1.354 ms
+(3 rows)
+
+===== RUN 27 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.148 ms
+ Execution Time: 1.369 ms
+(3 rows)
+
+===== RUN 28 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.150 ms
+ Execution Time: 1.353 ms
+(3 rows)
+
+===== RUN 29 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.147 ms
+ Execution Time: 1.364 ms
+(3 rows)
+
+===== RUN 30 =====
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual rows=20030 loops=1)
+ Planning Time: 0.167 ms
+ Execution Time: 1.364 ms
+(3 rows)
+

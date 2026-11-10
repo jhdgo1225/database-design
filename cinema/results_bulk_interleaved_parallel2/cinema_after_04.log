@@ -1,0 +1,87 @@
+===== RUN 1 =====
+                                                                                                                    QUERY PLAN                                                                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=21897.40..23643.98 rows=80 width=64) (actual time=81.122..93.455 rows=30 loops=1)
+   Group Key: sc.thtr_id, sc.capacity
+   Buffers: shared hit=4344, temp read=479 written=480
+   ->  Sort  (cost=21897.40..22188.13 rows=116292 width=36) (actual time=80.627..86.778 rows=85403 loops=1)
+         Sort Key: sc.thtr_id, sc.capacity, sc.scrndate
+         Sort Method: external merge  Disk: 3832kB
+         Buffers: shared hit=4344, temp read=479 written=480
+         ->  Hash Right Join  (cost=753.05..8931.45 rows=116292 width=36) (actual time=34.780..59.850 rows=85403 loops=1)
+               Hash Cond: (b.scrn_id = sc.scrn_id)
+               Buffers: shared hit=4338
+               ->  Seq Scan on tbl_bytk_d1 b  (cost=0.00..7351.22 rows=315022 width=24) (actual time=0.004..20.148 rows=315022 loops=1)
+                     Buffers: shared hit=4201
+               ->  Hash  (cost=685.55..685.55 rows=5400 width=25) (actual time=4.713..4.713 rows=5400 loops=1)
+                     Buckets: 8192  Batches: 1  Memory Usage: 365kB
+                     Buffers: shared hit=137
+                     ->  Seq Scan on tbl_scrn_m1 sc  (cost=0.00..685.55 rows=5400 width=25) (actual time=1.211..3.963 rows=5400 loops=1)
+                           Filter: ((scrndate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (scrndate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                           Rows Removed by Filter: 9228
+                           Buffers: shared hit=137
+ Planning:
+   Buffers: shared hit=289
+   Memory: used=64kB  allocated=128kB
+ Planning Time: 1.405 ms
+ Execution Time: 93.816 ms
+(24 rows)
+
+===== RUN 2 =====
+                                                                                                                    QUERY PLAN                                                                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=21897.40..23643.98 rows=80 width=64) (actual time=78.321..90.620 rows=30 loops=1)
+   Group Key: sc.thtr_id, sc.capacity
+   Buffers: shared hit=4344, temp read=479 written=480
+   ->  Sort  (cost=21897.40..22188.13 rows=116292 width=36) (actual time=77.836..83.935 rows=85403 loops=1)
+         Sort Key: sc.thtr_id, sc.capacity, sc.scrndate
+         Sort Method: external merge  Disk: 3832kB
+         Buffers: shared hit=4344, temp read=479 written=480
+         ->  Hash Right Join  (cost=753.05..8931.45 rows=116292 width=36) (actual time=33.652..57.285 rows=85403 loops=1)
+               Hash Cond: (b.scrn_id = sc.scrn_id)
+               Buffers: shared hit=4338
+               ->  Seq Scan on tbl_bytk_d1 b  (cost=0.00..7351.22 rows=315022 width=24) (actual time=0.003..19.169 rows=315022 loops=1)
+                     Buffers: shared hit=4201
+               ->  Hash  (cost=685.55..685.55 rows=5400 width=25) (actual time=4.692..4.693 rows=5400 loops=1)
+                     Buckets: 8192  Batches: 1  Memory Usage: 365kB
+                     Buffers: shared hit=137
+                     ->  Seq Scan on tbl_scrn_m1 sc  (cost=0.00..685.55 rows=5400 width=25) (actual time=1.270..4.023 rows=5400 loops=1)
+                           Filter: ((scrndate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (scrndate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                           Rows Removed by Filter: 9228
+                           Buffers: shared hit=137
+ Planning:
+   Buffers: shared hit=289
+   Memory: used=64kB  allocated=128kB
+ Planning Time: 1.390 ms
+ Execution Time: 90.960 ms
+(24 rows)
+
+===== RUN 3 =====
+                                                                                                                    QUERY PLAN                                                                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=21897.40..23643.98 rows=80 width=64) (actual time=79.271..91.602 rows=30 loops=1)
+   Group Key: sc.thtr_id, sc.capacity
+   Buffers: shared hit=4344, temp read=479 written=480
+   ->  Sort  (cost=21897.40..22188.13 rows=116292 width=36) (actual time=78.785..84.902 rows=85403 loops=1)
+         Sort Key: sc.thtr_id, sc.capacity, sc.scrndate
+         Sort Method: external merge  Disk: 3832kB
+         Buffers: shared hit=4344, temp read=479 written=480
+         ->  Hash Right Join  (cost=753.05..8931.45 rows=116292 width=36) (actual time=34.331..58.141 rows=85403 loops=1)
+               Hash Cond: (b.scrn_id = sc.scrn_id)
+               Buffers: shared hit=4338
+               ->  Seq Scan on tbl_bytk_d1 b  (cost=0.00..7351.22 rows=315022 width=24) (actual time=0.003..19.397 rows=315022 loops=1)
+                     Buffers: shared hit=4201
+               ->  Hash  (cost=685.55..685.55 rows=5400 width=25) (actual time=4.653..4.653 rows=5400 loops=1)
+                     Buckets: 8192  Batches: 1  Memory Usage: 365kB
+                     Buffers: shared hit=137
+                     ->  Seq Scan on tbl_scrn_m1 sc  (cost=0.00..685.55 rows=5400 width=25) (actual time=1.224..3.989 rows=5400 loops=1)
+                           Filter: ((scrndate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (scrndate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                           Rows Removed by Filter: 9228
+                           Buffers: shared hit=137
+ Planning:
+   Buffers: shared hit=289
+   Memory: used=64kB  allocated=128kB
+ Planning Time: 1.393 ms
+ Execution Time: 91.973 ms
+(24 rows)
+

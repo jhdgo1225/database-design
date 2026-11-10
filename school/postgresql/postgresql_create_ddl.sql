@@ -72,6 +72,10 @@ CREATE TABLE tbl_sche_d1 (
     ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
+-- 같은 학기(offe_id 앞 6자리) 안에서 한 강의실의 같은 요일·교시에는 한 과목만 배정할 수 있다.
+CREATE UNIQUE INDEX uq_sche_room_slot
+  ON tbl_sche_d1 (SUBSTRING(offe_id FROM 1 FOR 6), room_id, weekday, period);
+
 
 CREATE TABLE tbl_enrl_t1 (
   enrl_id CHAR(18) NOT NULL PRIMARY KEY

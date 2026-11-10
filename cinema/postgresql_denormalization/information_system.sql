@@ -1,6 +1,6 @@
 -- 반정규화 구조(create_ddl.sql) 기준 정보시스템 쿼리.
 -- 원본: cinema/postgresql/postgresql_information_system.sql
--- 별칭(AS ...)은 원본과 동일하게 유지했으나, v2.1.0 에서 capacity 의미가 "이용 가능 정원"으로 바뀌어 4·5·8·9번의 좌석수 별칭만 "정원"/"정원합계"로 바꿨습니다.
+-- 별칭(AS ...)은 원본과 동일하게 유지했으나, v2.1.0 에서 capacity 의미가 "이용 가능 좌석 수"로 바뀌어 4·5·8·9번의 좌석수 별칭만 `이용가능좌석수`/`이용가능좌석수합계`로 바꿨습니다. (별칭은 따옴표 없이 쓰려고 붙여 썼습니다.)
 -- [반정규화 영향] 표시가 있는 쿼리만 원본과 달라졌습니다.
 
 -- 1번: 현재 등급별 회원 수를 구하라
@@ -25,10 +25,10 @@ WHERE tk.buydate >= DATE_TRUNC('month', CURRENT_DATE)::date
 
 -- 4번: 이번 달 우리 영화관의 이용률을 계산하려고 한다.
 --     * 상영관별 이용률은 ‘인원/좌석수 X 상영횟수 X 일수’
--- [반정규화 영향] 정원(이용 가능 좌석 수)을 tbl_scrn_m1.capacity 에서 바로 읽으므로 tbl_thtr_m1 조인이 사라집니다. (조인 2개 -> 1개)
+-- [반정규화 영향] 이용 가능 좌석 수를 tbl_scrn_m1.capacity 에서 바로 읽으므로 tbl_thtr_m1 조인이 사라집니다. (조인 2개 -> 1개)
 SELECT
     sc.thtr_id AS 상영관ID,
-    sc.capacity AS 정원,
+    sc.capacity AS 이용가능좌석수,
     COUNT(DISTINCT sc.scrndate) AS 상영일수,
     COUNT(sc.scrn_id) AS 상영횟수,
     COUNT(b.mebr_id) AS 총관람인원,
@@ -45,12 +45,12 @@ GROUP BY sc.thtr_id, sc.capacity
 ORDER BY sc.thtr_id;
 
 -- 5번: 영화별 이용률을 구하라
--- [반정규화 영향] 정원(이용 가능 좌석 수)을 tbl_scrn_m1.capacity 에서 바로 읽으므로 tbl_thtr_m1 조인이 사라집니다. (조인 3개 -> 2개)
+-- [반정규화 영향] 이용 가능 좌석 수를 tbl_scrn_m1.capacity 에서 바로 읽으므로 tbl_thtr_m1 조인이 사라집니다. (조인 3개 -> 2개)
 SELECT
     mv.title AS 영화제목,
     COUNT(DISTINCT sc.scrndate) AS 상영일수,
     COUNT(sc.scrn_id) AS 상영횟수,
-    SUM(sc.capacity) AS 정원합계,
+    SUM(sc.capacity) AS 이용가능좌석수합계,
     COUNT(b.mebr_id) AS 총관람인원,
     ROUND(
         (COUNT(b.mebr_id)::numeric / NULLIF(SUM(sc.capacity), 0)) * 100,
@@ -123,12 +123,12 @@ WHERE	mv.status='S';
 
 -- 8번: 현재 상영관별 예매 가능한 좌석 수를 상영관, 상영횟수별로 구하라(전화 예매 고려)
 -- [참고] 전화 예약은 결제 전이라도 좌석을 점유하므로 결제 여부와 무관하게 tbl_bytk_d1 의 모든 행을 센다.
--- [반정규화 영향] 정원(이용 가능 좌석 수)을 tbl_scrn_m1.capacity 에서 바로 읽으므로 tbl_thtr_m1 조인이 사라집니다. (조인 2개 -> 1개)
+-- [반정규화 영향] 이용 가능 좌석 수를 tbl_scrn_m1.capacity 에서 바로 읽으므로 tbl_thtr_m1 조인이 사라집니다. (조인 2개 -> 1개)
 SELECT
     sc.thtr_id AS 상영관ID,
     sc.scrndate AS 상영일자,
     sc.scrntime AS 상영시간,
-    sc.capacity AS 정원,
+    sc.capacity AS 이용가능좌석수,
     COUNT(b.bytk_id) AS 예매좌석수,
     (sc.capacity - COUNT(b.bytk_id)) AS 예매가능좌석수
 FROM tbl_scrn_m1 AS sc
@@ -139,13 +139,13 @@ GROUP BY sc.thtr_id, sc.scrndate, sc.scrntime, sc.capacity
 ORDER BY sc.thtr_id, sc.scrndate, sc.scrntime;
 
 -- 9번: 영화 제목을 포함한 상영관별 예매 가능 좌석 수
--- [반정규화 영향] 정원(이용 가능 좌석 수)을 tbl_scrn_m1.capacity 에서 바로 읽으므로 tbl_thtr_m1 조인이 사라집니다. (조인 3개 -> 2개)
+-- [반정규화 영향] 이용 가능 좌석 수를 tbl_scrn_m1.capacity 에서 바로 읽으므로 tbl_thtr_m1 조인이 사라집니다. (조인 3개 -> 2개)
 SELECT
     mv.title AS 영화제목,
     sc.thtr_id AS 상영관ID,
     sc.scrndate AS 상영일자,
     sc.scrntime AS 상영시간,
-    sc.capacity AS 정원,
+    sc.capacity AS 이용가능좌석수,
     COUNT(b.bytk_id) AS 예매좌석수,
     (sc.capacity - COUNT(b.bytk_id)) AS 예매가능좌석수
 FROM tbl_scrn_m1 AS sc

@@ -180,22 +180,36 @@ WITH base AS (
         dow,
         day,
         timeslot
+),
+-- 데이터 기간 안에서 요일마다 날짜가 며칠이었는지. 같은 요일의 이용 시간을 합쳤기 때문에 하루 평균으로 나누려고 쓴다.
+days AS (
+    SELECT
+        EXTRACT(DOW FROM g.d)::INT AS dow,
+        COUNT(*)                   AS day_cnt
+    FROM generate_series(
+             (SELECT DATE_TRUNC('day', MIN(rentdate)) FROM tblrentT1),
+             (SELECT DATE_TRUNC('day', MAX(rentdate)) FROM tblrentT1),
+             INTERVAL '1 day'
+         ) AS g(d)
+    GROUP BY EXTRACT(DOW FROM g.d)::INT
 )
 SELECT
-    station         AS 대여소명,
-    day             AS 요일,
-    timeslot        AS 시간대,
+    b.station       AS 대여소명,
+    b.day           AS 요일,
+    b.timeslot      AS 시간대,
     CEIL(
-            (total_time_sec/3600.0)
-                / CASE timeslot
+            (b.total_time_sec/3600.0) / d.day_cnt
+                / CASE b.timeslot
                       WHEN '심야' THEN 5
                       WHEN '오전' THEN 7
                       WHEN '오후' THEN 6
                       ELSE 6
                 END
     )                AS "적정 자전거 댓수"
-FROM base
+FROM base b
+JOIN days d
+  ON d.dow = b.dow
 ORDER BY
-    station,
-    CASE dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 END,
-    CASE timeslot WHEN '심야' THEN 1 WHEN '오전' THEN 2 WHEN '오후' THEN 3 ELSE 4 END;
+    b.station,
+    CASE b.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 END,
+    CASE b.timeslot WHEN '심야' THEN 1 WHEN '오전' THEN 2 WHEN '오후' THEN 3 ELSE 4 END;

@@ -91,9 +91,11 @@ WITH stats AS (
   JOIN tblrtplM1 rt
     ON r.rtpl_id = rt.rtpl_id
   GROUP BY
-    rt.space,
-    r.rentdate,
-    r.time
+    대여소명,
+    dow_key,
+    요일,
+    timeslot_key,
+    시간대
 )
 SELECT
   대여소명,
@@ -141,8 +143,8 @@ SELECT
   || EXTRACT(SECOND FROM SUM(e.time))::INT              || '초'
     AS 총이용시간,
 
-  ROUND(SUM(e.dist)::numeric, 2)                         AS 총이동거리,
-  ROUND(SUM(e.carbon)::numeric, 2)                       AS 총탄소저감량
+  ROUND(SUM(e.dist), 2)                                  AS 총이동거리,
+  ROUND(SUM(e.carbon), 2)                                AS 총탄소저감량
 
 FROM events e
 GROUP BY
@@ -174,8 +176,10 @@ WITH base AS (
              JOIN tblrtplM1 rt
                   ON r.rtpl_id = rt.rtpl_id
     GROUP BY
-        rt.space,
-        r.rentdate
+        station,
+        dow,
+        day,
+        timeslot
 )
 SELECT
     station         AS 대여소명,

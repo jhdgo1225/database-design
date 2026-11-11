@@ -88,9 +88,11 @@ WITH stats AS (
   JOIN tblrtplM1 rt
     ON r.rtpl_id = rt.rtpl_id
   GROUP BY
-    rt.space,
-    r.rentdate,
-    r.time
+    대여소명,
+    dow_key,
+    요일,
+    timeslot_key,
+    시간대
 )
 SELECT
   대여소명,
@@ -169,8 +171,10 @@ WITH base AS (
     JOIN tblrtplM1 rt
       ON r.rtpl_id = rt.rtpl_id
     GROUP BY
-        rt.space,
-        r.rentdate
+        station,
+        dow,
+        day,
+        timeslot
 )
 SELECT
     station         AS 대여소명,

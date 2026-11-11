@@ -11,6 +11,10 @@
 #   계획 메모리         EXPLAIN (MEMORY) 의 Planning 메모리 used / allocated (kB)
 #   노드 메모리         실행 노드의 Memory Usage(해시, 집계)와 Sort 의 Memory 를 모두 더한 값 (kB). 노드가 동시에 쓰는 양의 상한에 가깝다.
 #   디스크              Sort 의 Disk, 집계의 Disk Usage 를 더한 값 (kB)
+#   계획 버퍼 hit       계획을 세우는 동안 읽은 카탈로그·통계 블록 수 (Planning 의 Buffers)
+#   JIT                 JIT 컴파일에 쓴 시간(ms). JIT 가 켜지지 않은 쿼리는 0
+#   워커 / 반환 행 수   Gather 노드마다 실제로 띄운 병렬 워커 수의 합 / 최상위 노드가 돌려준 행 수
+#   (읽기 전용이라 shared dirtied/written, WAL 은 나오지 않고, track_io_timing 이 꺼져 있어 I/O 시간도 없다.)
 #
 # 사용법: sh bicycle_rental/summarize_estimation_result.sh [결과 폴더]   (기본: 이 스크립트가 있는 폴더의 results)
 #   SKIP=0   각 시간 로그에서 앞쪽 N회를 제외한다.
@@ -67,15 +71,24 @@ res_stat() {
       nr++
       v["hit", nr] = hit; v["rd", nr] = rd; v["tr", nr] = tr; v["tw", nr] = tw
       v["mu", nr] = mu; v["ma", nr] = ma; v["nm", nr] = nm; v["dk", nr] = dk
+      v["ph", nr] = ph; v["jit", nr] = jit; v["wk", nr] = wk; v["rw", nr] = rw
       if (nr == 1) top1 = top
     }
     /^===== RUN/ {
       flush(); run++
-      hit = rd = tr = tw = mu = ma = nm = dk = 0; gotbuf = 0; inplan = 0; gotsep = 0; top = ""
+      hit = rd = tr = tw = mu = ma = nm = dk = ph = jit = wk = rw = 0; gotbuf = 0; inplan = 0; gotsep = 0; top = ""
       next
     }
-    /^-----+/ && !gotsep { gotsep = 1; getline; top = $0; sub(/^ +/, "", top); sub(/  \(cost.*/, "", top); sub(/ +$/, "", top); gsub(/ /, "_", top); next }
+    /^-----+/ && !gotsep {
+      gotsep = 1; getline; top = $0
+      # 최상위 노드가 돌려준 행 수 (actual time=a..b rows=N)
+      if (match(top, /actual time=[0-9.]+\.\.[0-9.]+ rows=[0-9]+/)) { s = substr(top, RSTART, RLENGTH); sub(/.*rows=/, "", s); rw = s }
+      sub(/^ +/, "", top); sub(/  \(cost.*/, "", top); sub(/ +$/, "", top); gsub(/ /, "_", top); next
+    }
     /^ *Planning:/ { inplan = 1; next }
+    /^ *Buffers: shared/ && inplan { if (match($0, /hit=[0-9]+/)) ph = substr($0, RSTART + 4, RLENGTH - 4); next }
+    /Timing: Generation/ { if (match($0, /Total [0-9.]+ ms/)) jit = substr($0, RSTART + 6, RLENGTH - 9); next }
+    /Workers Launched:/ { if (match($0, /Launched: [0-9]+/)) wk += substr($0, RSTART + 10, RLENGTH - 10); next }
     /^ *Buffers: shared/ && !inplan && !gotbuf {
       gotbuf = 1; seg = ""
       for (i = 1; i <= NF; i++) {
@@ -101,8 +114,8 @@ res_stat() {
     }
     END {
       flush()
-      if (nr == 0) { print "0 0 0 0 0 0 0 0 -"; exit }
-      printf "%.0f %.0f %.0f %.0f %.0f %.0f %.0f %.0f %s\n", med("hit"), med("rd"), med("tr"), med("tw"), med("mu"), med("ma"), med("nm"), med("dk"), top1
+      if (nr == 0) { print "0 0 0 0 0 0 0 0 0 0 0 0 -"; exit }
+      printf "%.0f %.0f %.0f %.0f %.0f %.0f %.0f %.0f %.0f %.1f %.0f %.0f %s\n", med("hit"), med("rd"), med("tr"), med("tw"), med("mu"), med("ma"), med("nm"), med("dk"), med("ph"), med("jit"), med("wk"), med("rw"), top1
     }' "$1"
 }
 
@@ -127,7 +140,17 @@ printf '%s\n' "-----+------------+---------+---------------+----------------+---
 for l in "$DIR"/bicycle_[0-9][0-9].log; do
   n=$(basename "$l" .log | sed 's/^bicycle_//')
   res_stat "$l" | awk -v n="$n" '{
-    printf "%-4s | %10d | %7d | %6d/%-6d | %6d/%-7d | %9d | %7d | %s\n", n, $1, $2, $3, $4, $5, $6, $7, $8, $9
+    printf "%-4s | %10d | %7d | %6d/%-6d | %6d/%-7d | %9d | %7d | %s\n", n, $1, $2, $3, $4, $5, $6, $7, $8, $13
+  }'
+done
+echo
+echo "[그 밖의 항목] 계획 버퍼는 블록 수, JIT 는 컴파일 시간(ms), 워커는 Gather 노드마다 띄운 병렬 워커 수의 합"
+printf '%-4s | %10s | %9s | %6s | %s\n' "쿼리" "계획 버퍼 hit" "JIT (ms)" "워커" "반환 행 수"
+printf '%s\n' "-----+------------+-----------+--------+-----------"
+for l in "$DIR"/bicycle_[0-9][0-9].log; do
+  n=$(basename "$l" .log | sed 's/^bicycle_//')
+  res_stat "$l" | awk -v n="$n" '{
+    printf "%-4s | %10d | %9.1f | %6d | %d\n", n, $9, $10, $11, $12
   }'
 done
 echo

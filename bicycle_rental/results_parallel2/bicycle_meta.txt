@@ -1,0 +1,31 @@
+date: 2026-11-12 02:43:50 +0900
+schema: bicycle_rental/postgresql
+stats: analyze  runs: 30  res_runs: 3  warmup: 3  db: bicycle_rental_bench  bulk: 1  parallel: 2
+PostgreSQL 17.10 (Debian 17.10-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+jit=on
+max_parallel_workers_per_gather=2
+shared_buffers=16384
+TimeZone=Etc/UTC
+work_mem=4096
+current_date=2026-11-11
+rows tblmebrM1=20030
+rows tbltickD1=7701
+rows tblbyclM1=2530
+rows tblrtplM1=420
+rows tblrackD1=3589
+rows tblrentT1=332776
+rows tblspclD1=15216
+rows tbldmlsD1=4313
+rows tblfavoT1=49282
+rent_period=2025-11-11 ~ 2026-11-10
+size_total=76 MB
+size_rent=62 MB
+tblbyclm1=analyzed
+tbldmlsd1=analyzed
+tblfavot1=analyzed
+tblmebrm1=analyzed
+tblrackd1=analyzed
+tblrentt1=analyzed
+tblrtplm1=analyzed
+tblspcld1=analyzed
+tbltickd1=analyzed

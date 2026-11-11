@@ -1,0 +1,93 @@
+===== RUN 1 =====
+                                                               QUERY PLAN                                                                
+-----------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=134468.46..134568.46 rows=40000 width=147) (actual time=1343.329..1457.498 rows=281898 loops=1)
+   Sort Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+   Sort Method: external merge  Disk: 18320kB
+   Buffers: shared hit=10917, temp read=11519 written=15833
+   ->  HashAggregate  (cost=109903.90..128400.92 rows=40000 width=147) (actual time=342.579..830.999 rows=281898 loops=1)
+         Group Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+         Planned Partitions: 4  Batches: 69  Memory Usage: 8369kB  Disk Usage: 45232kB
+         Buffers: shared hit=10914, temp read=9229 written=13536
+         ->  Append  (cost=0.00..24224.25 rows=665473 width=70) (actual time=6.149..182.372 rows=665473 loops=1)
+               Buffers: shared hit=10914
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..10448.64 rows=332776 width=70) (actual time=6.148..71.119 rows=332776 loops=1)
+                     Buffers: shared hit=5457
+               ->  Seq Scan on tblrentt1 r_1  (cost=0.00..10448.25 rows=332697 width=70) (actual time=0.040..65.879 rows=332697 loops=1)
+                     Filter: (retrtpl_id IS NOT NULL)
+                     Rows Removed by Filter: 79
+                     Buffers: shared hit=5457
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=259
+   Memory: used=109kB  allocated=256kB
+ Planning Time: 0.581 ms
+ JIT:
+   Functions: 13
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 0.732 ms (Deform 0.247 ms), Inlining 0.000 ms, Optimization 0.413 ms, Emission 8.167 ms, Total 9.312 ms
+ Execution Time: 1477.790 ms
+(26 rows)
+
+===== RUN 2 =====
+                                                               QUERY PLAN                                                                
+-----------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=134468.46..134568.46 rows=40000 width=147) (actual time=1374.019..1490.653 rows=281898 loops=1)
+   Sort Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+   Sort Method: external merge  Disk: 18320kB
+   Buffers: shared hit=10917, temp read=11519 written=15833
+   ->  HashAggregate  (cost=109903.90..128400.92 rows=40000 width=147) (actual time=341.919..844.447 rows=281898 loops=1)
+         Group Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+         Planned Partitions: 4  Batches: 69  Memory Usage: 8369kB  Disk Usage: 45232kB
+         Buffers: shared hit=10914, temp read=9229 written=13536
+         ->  Append  (cost=0.00..24224.25 rows=665473 width=70) (actual time=6.154..181.411 rows=665473 loops=1)
+               Buffers: shared hit=10914
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..10448.64 rows=332776 width=70) (actual time=6.154..70.716 rows=332776 loops=1)
+                     Buffers: shared hit=5457
+               ->  Seq Scan on tblrentt1 r_1  (cost=0.00..10448.25 rows=332697 width=70) (actual time=0.035..65.439 rows=332697 loops=1)
+                     Filter: (retrtpl_id IS NOT NULL)
+                     Rows Removed by Filter: 79
+                     Buffers: shared hit=5457
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=259
+   Memory: used=109kB  allocated=256kB
+ Planning Time: 0.494 ms
+ JIT:
+   Functions: 13
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 0.740 ms (Deform 0.253 ms), Inlining 0.000 ms, Optimization 0.432 ms, Emission 8.227 ms, Total 9.399 ms
+ Execution Time: 1511.192 ms
+(26 rows)
+
+===== RUN 3 =====
+                                                               QUERY PLAN                                                                
+-----------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=134468.46..134568.46 rows=40000 width=147) (actual time=1438.800..1554.776 rows=281898 loops=1)
+   Sort Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+   Sort Method: external merge  Disk: 18320kB
+   Buffers: shared hit=10917, temp read=11519 written=15833
+   ->  HashAggregate  (cost=109903.90..128400.92 rows=40000 width=147) (actual time=351.098..887.052 rows=281898 loops=1)
+         Group Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+         Planned Partitions: 4  Batches: 69  Memory Usage: 8369kB  Disk Usage: 45232kB
+         Buffers: shared hit=10914, temp read=9229 written=13536
+         ->  Append  (cost=0.00..24224.25 rows=665473 width=70) (actual time=6.104..183.820 rows=665473 loops=1)
+               Buffers: shared hit=10914
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..10448.64 rows=332776 width=70) (actual time=6.103..70.256 rows=332776 loops=1)
+                     Buffers: shared hit=5457
+               ->  Seq Scan on tblrentt1 r_1  (cost=0.00..10448.25 rows=332697 width=70) (actual time=0.036..67.718 rows=332697 loops=1)
+                     Filter: (retrtpl_id IS NOT NULL)
+                     Rows Removed by Filter: 79
+                     Buffers: shared hit=5457
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=259
+   Memory: used=109kB  allocated=256kB
+ Planning Time: 0.488 ms
+ JIT:
+   Functions: 13
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 0.739 ms (Deform 0.241 ms), Inlining 0.000 ms, Optimization 0.433 ms, Emission 8.204 ms, Total 9.376 ms
+ Execution Time: 1575.360 ms
+(26 rows)
+

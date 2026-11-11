@@ -1,0 +1,1230 @@
+===== RUN 1 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.847 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1415.308 ms
+(36 rows)
+
+===== RUN 2 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.793 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1442.269 ms
+(36 rows)
+
+===== RUN 3 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.836 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1417.929 ms
+(36 rows)
+
+===== RUN 4 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.800 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1413.030 ms
+(36 rows)
+
+===== RUN 5 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.838 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1415.719 ms
+(36 rows)
+
+===== RUN 6 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.807 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1415.386 ms
+(36 rows)
+
+===== RUN 7 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.849 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1418.243 ms
+(36 rows)
+
+===== RUN 8 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.790 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1411.285 ms
+(36 rows)
+
+===== RUN 9 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.792 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1418.164 ms
+(36 rows)
+
+===== RUN 10 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.827 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1433.104 ms
+(36 rows)
+
+===== RUN 11 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.795 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1411.466 ms
+(36 rows)
+
+===== RUN 12 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.875 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1423.278 ms
+(36 rows)
+
+===== RUN 13 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.795 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1417.751 ms
+(36 rows)
+
+===== RUN 14 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.807 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1415.741 ms
+(36 rows)
+
+===== RUN 15 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.788 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1416.145 ms
+(36 rows)
+
+===== RUN 16 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.809 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1429.730 ms
+(36 rows)
+
+===== RUN 17 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.772 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1418.214 ms
+(36 rows)
+
+===== RUN 18 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.811 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1436.008 ms
+(36 rows)
+
+===== RUN 19 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.809 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1420.634 ms
+(36 rows)
+
+===== RUN 20 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.813 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1411.190 ms
+(36 rows)
+
+===== RUN 21 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.804 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1414.372 ms
+(36 rows)
+
+===== RUN 22 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.799 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1410.353 ms
+(36 rows)
+
+===== RUN 23 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.809 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1411.048 ms
+(36 rows)
+
+===== RUN 24 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.836 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1455.674 ms
+(36 rows)
+
+===== RUN 25 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.828 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1440.248 ms
+(36 rows)
+
+===== RUN 26 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.843 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1428.724 ms
+(36 rows)
+
+===== RUN 27 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.799 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1413.928 ms
+(36 rows)
+
+===== RUN 28 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 1.065 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1412.929 ms
+(36 rows)
+
+===== RUN 29 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.801 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1411.524 ms
+(36 rows)
+
+===== RUN 30 =====
+                                                                                                                                                                                                                                                                                                                                                                   QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=199270.07..200102.01 rows=332776 width=125) (actual rows=11006 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1072kB
+   ->  Hash Join  (cost=97990.47..147135.04 rows=332776 width=125) (actual rows=11006 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         ->  GroupAggregate  (cost=78677.21..107795.11 rows=332776 width=129) (actual rows=11006 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               ->  Sort  (cost=78677.21..79509.15 rows=332776 width=105) (actual rows=332776 loops=1)
+                     Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                     Sort Method: external merge  Disk: 21504kB
+                     ->  Hash Join  (cost=15.45..28817.18 rows=332776 width=105) (actual rows=332776 loops=1)
+                           Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                           ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=30) (actual rows=332776 loops=1)
+                           ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                 ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=19310.76..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=19298.26..19310.76 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=19298.26..19308.76 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=9616.70..9616.71 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..8784.76 rows=332776 width=8) (actual rows=332776 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.793 ms
+ JIT:
+   Functions: 38
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+ Execution Time: 1411.807 ms
+(36 rows)
+

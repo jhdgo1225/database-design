@@ -1,4 +1,4 @@
---- 1번
+-- 1번
 SELECT
   rt.space       AS 대여소명,
   DATE_FORMAT(tr.rentdate, '%Y-%m') AS 년월,
@@ -13,7 +13,7 @@ ORDER BY
   rt.space,
   년월;
 
---- 2번
+-- 2번
 SELECT
   r.bycl_id AS 자전거번호,
   DATE_FORMAT(r.rentdate, '%Y-%m') AS 년월,
@@ -30,7 +30,7 @@ ORDER BY
   r.bycl_id,
   년월;
 
---- 3번
+-- 3번
 SELECT
   DATE_FORMAT(occurdate, '%Y-%m')              AS 년월,
   SUM(CASE WHEN dmlsflag = 'DM' THEN 1 ELSE 0 END) AS 파손건수,
@@ -41,7 +41,7 @@ GROUP BY
 ORDER BY
   년월;
 
---- 4번
+-- 4번
 SELECT
   rt.space                         AS 대여소명,
   DATE_FORMAT(r.returndate, '%Y-%m') AS 년월,
@@ -56,7 +56,7 @@ ORDER BY
   rt.space,
   년월;
 
---- 5번
+-- 5번
 WITH stats AS (
   SELECT
     rt.space                                      AS 대여소명,
@@ -104,7 +104,7 @@ ORDER BY
   dow_key,       -- 월→…→일 순
   timeslot_key;  -- 심야→오전→오후→야간 순
 
---- 6번
+-- 6번
 WITH events AS (
   SELECT
     r.mebr_id,
@@ -147,7 +147,7 @@ ORDER BY
   e.mebr_id,
   e.region_code;
 
---- 7번
+-- 7번
 WITH base AS (
     SELECT
         rt.space                                          AS station,

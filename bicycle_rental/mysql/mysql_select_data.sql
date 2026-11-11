@@ -66,6 +66,7 @@ select spcl_id as `보충/수거ID`,
 from tblspcld1;
 
 select dmls_id as `파손/분실ID`,
+       rent_id as `파손/분실 발생 대여ID`,
        bycl_id as `파손/분실 자전거`,
        mebr_id as 회원아이디,
        dmlsflag as `파손/분실 여부`,

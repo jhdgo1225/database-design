@@ -1,0 +1,84 @@
+===== RUN 1 =====
+                                                              QUERY PLAN                                                              
+--------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual time=656.966..751.998 rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   Buffers: shared hit=5466, temp read=1874 written=1880
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual time=656.958..722.600 rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         Buffers: shared hit=5466, temp read=1874 written=1880
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual time=0.130..141.878 rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               Buffers: shared hit=5463
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual time=0.004..21.464 rows=332776 loops=1)
+                     Buffers: shared hit=5457
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.092..0.093 rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.003..0.033 rows=420 loops=1)
+                           Buffers: shared hit=6
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=319
+   Memory: used=52kB  allocated=128kB
+ Planning Time: 0.625 ms
+ Execution Time: 753.311 ms
+(23 rows)
+
+===== RUN 2 =====
+                                                              QUERY PLAN                                                              
+--------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual time=660.553..755.591 rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   Buffers: shared hit=5466, temp read=1874 written=1880
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual time=660.546..726.185 rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         Buffers: shared hit=5466, temp read=1874 written=1880
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual time=0.151..143.672 rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               Buffers: shared hit=5463
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual time=0.005..22.397 rows=332776 loops=1)
+                     Buffers: shared hit=5457
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.095..0.096 rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.003..0.035 rows=420 loops=1)
+                           Buffers: shared hit=6
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=319
+   Memory: used=52kB  allocated=128kB
+ Planning Time: 0.687 ms
+ Execution Time: 756.896 ms
+(23 rows)
+
+===== RUN 3 =====
+                                                              QUERY PLAN                                                              
+--------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual time=662.050..757.699 rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   Buffers: shared hit=5466, temp read=1874 written=1880
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual time=662.042..728.078 rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         Buffers: shared hit=5466, temp read=1874 written=1880
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual time=0.128..142.433 rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               Buffers: shared hit=5463
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual time=0.004..21.657 rows=332776 loops=1)
+                     Buffers: shared hit=5457
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.095..0.095 rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.002..0.035 rows=420 loops=1)
+                           Buffers: shared hit=6
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=319
+   Memory: used=52kB  allocated=128kB
+ Planning Time: 0.640 ms
+ Execution Time: 759.033 ms
+(23 rows)
+

@@ -1,0 +1,540 @@
+===== RUN 1 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.619 ms
+ Execution Time: 687.937 ms
+(13 rows)
+
+===== RUN 2 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.626 ms
+ Execution Time: 693.677 ms
+(13 rows)
+
+===== RUN 3 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.607 ms
+ Execution Time: 691.120 ms
+(13 rows)
+
+===== RUN 4 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.628 ms
+ Execution Time: 690.561 ms
+(13 rows)
+
+===== RUN 5 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.593 ms
+ Execution Time: 691.046 ms
+(13 rows)
+
+===== RUN 6 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.630 ms
+ Execution Time: 690.410 ms
+(13 rows)
+
+===== RUN 7 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.582 ms
+ Execution Time: 691.502 ms
+(13 rows)
+
+===== RUN 8 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.623 ms
+ Execution Time: 694.764 ms
+(13 rows)
+
+===== RUN 9 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.602 ms
+ Execution Time: 687.432 ms
+(13 rows)
+
+===== RUN 10 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.627 ms
+ Execution Time: 699.605 ms
+(13 rows)
+
+===== RUN 11 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.602 ms
+ Execution Time: 700.035 ms
+(13 rows)
+
+===== RUN 12 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.625 ms
+ Execution Time: 690.420 ms
+(13 rows)
+
+===== RUN 13 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.612 ms
+ Execution Time: 689.035 ms
+(13 rows)
+
+===== RUN 14 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.587 ms
+ Execution Time: 690.862 ms
+(13 rows)
+
+===== RUN 15 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.628 ms
+ Execution Time: 689.805 ms
+(13 rows)
+
+===== RUN 16 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.601 ms
+ Execution Time: 689.587 ms
+(13 rows)
+
+===== RUN 17 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.635 ms
+ Execution Time: 693.017 ms
+(13 rows)
+
+===== RUN 18 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.594 ms
+ Execution Time: 691.467 ms
+(13 rows)
+
+===== RUN 19 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.619 ms
+ Execution Time: 689.648 ms
+(13 rows)
+
+===== RUN 20 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.614 ms
+ Execution Time: 689.065 ms
+(13 rows)
+
+===== RUN 21 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.594 ms
+ Execution Time: 697.291 ms
+(13 rows)
+
+===== RUN 22 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.599 ms
+ Execution Time: 689.916 ms
+(13 rows)
+
+===== RUN 23 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.639 ms
+ Execution Time: 694.450 ms
+(13 rows)
+
+===== RUN 24 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.601 ms
+ Execution Time: 689.790 ms
+(13 rows)
+
+===== RUN 25 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.595 ms
+ Execution Time: 692.628 ms
+(13 rows)
+
+===== RUN 26 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.615 ms
+ Execution Time: 689.573 ms
+(13 rows)
+
+===== RUN 27 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.605 ms
+ Execution Time: 690.124 ms
+(13 rows)
+
+===== RUN 28 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.634 ms
+ Execution Time: 692.269 ms
+(13 rows)
+
+===== RUN 29 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.589 ms
+ Execution Time: 689.571 ms
+(13 rows)
+
+===== RUN 30 =====
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=53549.53..61036.99 rows=332776 width=61) (actual rows=5220 loops=1)
+   Group Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+   ->  Sort  (cost=53549.53..54381.47 rows=332776 width=57) (actual rows=332697 loops=1)
+         Sort Key: rt.space, (to_char(r.returndate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 14992kB
+         ->  Hash Join  (cost=15.45..10514.50 rows=332776 width=57) (actual rows=332697 loops=1)
+               Hash Cond: (r.retrtpl_id = rt.rtpl_id)
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..8784.76 rows=332776 width=18) (actual rows=332776 loops=1)
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.595 ms
+ Execution Time: 693.595 ms
+(13 rows)
+

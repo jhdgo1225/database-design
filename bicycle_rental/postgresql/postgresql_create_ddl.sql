@@ -98,6 +98,7 @@ CREATE TABLE tblrentT1 (
     bycl_id      CHAR(7)        NOT NULL REFERENCES tblbyclM1(bycl_id),
     rentdate     TIMESTAMP      NOT NULL,
     time         INTERVAL       NOT NULL,
+    fixhour      SMALLINT       NOT NULL CHECK (fixhour IN (1, 2)),  -- 고정 대여 시간(선불로 정한 1시간 또는 2시간). 넘으면 10분마다 초과 요금
     dist         NUMERIC(6,2)   NOT NULL,
     kcal         NUMERIC(7,2)   NOT NULL,
     carbon       NUMERIC(6,3)   NOT NULL,

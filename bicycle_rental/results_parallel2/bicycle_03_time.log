@@ -1,0 +1,390 @@
+===== RUN 1 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.354 ms
+ Execution Time: 1.988 ms
+(8 rows)
+
+===== RUN 2 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.354 ms
+ Execution Time: 2.137 ms
+(8 rows)
+
+===== RUN 3 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.325 ms
+ Execution Time: 2.093 ms
+(8 rows)
+
+===== RUN 4 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.288 ms
+ Execution Time: 2.101 ms
+(8 rows)
+
+===== RUN 5 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.291 ms
+ Execution Time: 2.014 ms
+(8 rows)
+
+===== RUN 6 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.289 ms
+ Execution Time: 1.970 ms
+(8 rows)
+
+===== RUN 7 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.269 ms
+ Execution Time: 1.991 ms
+(8 rows)
+
+===== RUN 8 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.278 ms
+ Execution Time: 1.994 ms
+(8 rows)
+
+===== RUN 9 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.274 ms
+ Execution Time: 2.245 ms
+(8 rows)
+
+===== RUN 10 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.273 ms
+ Execution Time: 2.042 ms
+(8 rows)
+
+===== RUN 11 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.284 ms
+ Execution Time: 1.961 ms
+(8 rows)
+
+===== RUN 12 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.270 ms
+ Execution Time: 1.952 ms
+(8 rows)
+
+===== RUN 13 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.406 ms
+ Execution Time: 2.015 ms
+(8 rows)
+
+===== RUN 14 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.271 ms
+ Execution Time: 2.270 ms
+(8 rows)
+
+===== RUN 15 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.269 ms
+ Execution Time: 1.965 ms
+(8 rows)
+
+===== RUN 16 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.275 ms
+ Execution Time: 2.033 ms
+(8 rows)
+
+===== RUN 17 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.265 ms
+ Execution Time: 1.981 ms
+(8 rows)
+
+===== RUN 18 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.259 ms
+ Execution Time: 1.952 ms
+(8 rows)
+
+===== RUN 19 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.281 ms
+ Execution Time: 2.001 ms
+(8 rows)
+
+===== RUN 20 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.277 ms
+ Execution Time: 2.096 ms
+(8 rows)
+
+===== RUN 21 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.518 ms
+ Execution Time: 2.096 ms
+(8 rows)
+
+===== RUN 22 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.360 ms
+ Execution Time: 2.222 ms
+(8 rows)
+
+===== RUN 23 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.375 ms
+ Execution Time: 2.037 ms
+(8 rows)
+
+===== RUN 24 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.305 ms
+ Execution Time: 2.003 ms
+(8 rows)
+
+===== RUN 25 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.291 ms
+ Execution Time: 2.038 ms
+(8 rows)
+
+===== RUN 26 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.283 ms
+ Execution Time: 2.074 ms
+(8 rows)
+
+===== RUN 27 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.284 ms
+ Execution Time: 1.995 ms
+(8 rows)
+
+===== RUN 28 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.469 ms
+ Execution Time: 2.177 ms
+(8 rows)
+
+===== RUN 29 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.318 ms
+ Execution Time: 2.083 ms
+(8 rows)
+
+===== RUN 30 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=403.30..521.47 rows=4278 width=48) (actual rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   ->  Sort  (cost=403.30..414.08 rows=4313 width=35) (actual rows=4313 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 327kB
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..142.91 rows=4313 width=35) (actual rows=4313 loops=1)
+ Planning Time: 0.355 ms
+ Execution Time: 2.222 ms
+(8 rows)
+

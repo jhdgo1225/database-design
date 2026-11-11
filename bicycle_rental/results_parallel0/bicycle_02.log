@@ -1,0 +1,66 @@
+===== RUN 1 =====
+                                                                       QUERY PLAN                                                                       
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=16.85..61123.57 rows=208905 width=72) (actual time=0.094..304.127 rows=29288 loops=1)
+   Group Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+   Buffers: shared hit=332839
+   ->  Incremental Sort  (cost=16.85..45048.93 rows=332776 width=56) (actual time=0.085..255.877 rows=332776 loops=1)
+         Sort Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+         Presorted Key: bycl_id
+         Full-sort Groups: 2404  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+         Pre-sorted Groups: 2335  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+         Buffers: shared hit=332839
+         ->  Index Scan using idx_rent_bycl on tblrentt1 r  (cost=0.30..29067.81 rows=332776 width=56) (actual time=0.042..186.506 rows=332776 loops=1)
+               Buffers: shared hit=332833
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=232
+   Memory: used=49kB  allocated=64kB
+ Planning Time: 0.392 ms
+ Execution Time: 305.008 ms
+(17 rows)
+
+===== RUN 2 =====
+                                                                       QUERY PLAN                                                                       
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=16.85..61123.57 rows=208905 width=72) (actual time=0.104..302.817 rows=29288 loops=1)
+   Group Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+   Buffers: shared hit=332839
+   ->  Incremental Sort  (cost=16.85..45048.93 rows=332776 width=56) (actual time=0.095..254.573 rows=332776 loops=1)
+         Sort Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+         Presorted Key: bycl_id
+         Full-sort Groups: 2404  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+         Pre-sorted Groups: 2335  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+         Buffers: shared hit=332839
+         ->  Index Scan using idx_rent_bycl on tblrentt1 r  (cost=0.30..29067.81 rows=332776 width=56) (actual time=0.051..185.340 rows=332776 loops=1)
+               Buffers: shared hit=332833
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=232
+   Memory: used=49kB  allocated=64kB
+ Planning Time: 0.438 ms
+ Execution Time: 303.694 ms
+(17 rows)
+
+===== RUN 3 =====
+                                                                       QUERY PLAN                                                                       
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=16.85..61123.57 rows=208905 width=72) (actual time=0.095..301.257 rows=29288 loops=1)
+   Group Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+   Buffers: shared hit=332839
+   ->  Incremental Sort  (cost=16.85..45048.93 rows=332776 width=56) (actual time=0.087..253.088 rows=332776 loops=1)
+         Sort Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+         Presorted Key: bycl_id
+         Full-sort Groups: 2404  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+         Pre-sorted Groups: 2335  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+         Buffers: shared hit=332839
+         ->  Index Scan using idx_rent_bycl on tblrentt1 r  (cost=0.30..29067.81 rows=332776 width=56) (actual time=0.043..183.964 rows=332776 loops=1)
+               Buffers: shared hit=332833
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=232
+   Memory: used=49kB  allocated=64kB
+ Planning Time: 0.418 ms
+ Execution Time: 302.126 ms
+(17 rows)
+

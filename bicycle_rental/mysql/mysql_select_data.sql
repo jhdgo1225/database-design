@@ -50,6 +50,7 @@ select rent_id as 대여ID,
            FLOOR((TIME_TO_SEC(time) % 3600) / 60), '분 ',
            ROUND(TIME_TO_SEC(time) % 60), '초'
        ) as 이용시간,
+       fixhour as "고정 대여 시간",
        dist as 거리,
        kcal as 칼로리소모량,
        carbon as 탄소저감,

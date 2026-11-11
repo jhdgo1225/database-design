@@ -61,9 +61,9 @@ erDiagram
         CHAR(7) bycl_id FK
         TIMESTAMP rentdate
         INTERVAL time
-        REAL dist
-        REAL kcal
-        REAL carbon
+        NUMERIC(6,2) dist
+        NUMERIC(7,2) kcal
+        NUMERIC(6,3) carbon
         CHAR(5) retrtpl_id FK "반납 대여소, NULL 허용"
         TIMESTAMP returndate "NULL 허용"
         INT fee
@@ -111,7 +111,7 @@ erDiagram
     tblrtplM1 |o..o{ tblrentT1 : "반납 대여소"
     tblrtplM1 ||..o{ tblspclD1 : "작업 대여소"
 
-    tblbyclM1 |o..o{ tblrackD1 : "거치"
+    tblbyclM1 |o..o| tblrackD1 : "거치"
     tblbyclM1 ||..o{ tblrentT1 : "대여됨"
     tblbyclM1 ||..o{ tblspclD1 : "특별 처리"
     tblbyclM1 ||..o{ tbldmlsD1 : "파손/분실 대상"
@@ -142,4 +142,5 @@ erDiagram
 
 - tblfavoT1은 회원과 대여소의 다대다 관계를 풀어주는 연결 테이블입니다.
 - tblrentT1이 tblrtplM1을 두 번 참조합니다(rtpl_id, retrtpl_id).
-- tblrackD1.bycl_id에는 UNIQUE가 없어서, DDL만 보면 한 자전거가 여러 거치대에 들어갈 수 있습니다. ERD에서도 1:N으로 그렸습니다.
+- tblrackD1.bycl_id는 UNIQUE라서 한 자전거는 거치대 하나에만 들어갑니다(빈 거치대는 NULL이라 여러 개 가능). 그래서 자전거와 거치대는 0..1 대 0..1 관계로 그렸습니다.
+- 미반납 대여(returndate가 NULL)는 자전거마다, 회원마다 하나뿐입니다. 부분 유니크 인덱스(uq_rent_open_bycl, uq_rent_open_mebr)로 막습니다.

@@ -86,7 +86,7 @@ CREATE TABLE tblrackD1 (
     rack_id   CHAR(7)  NOT NULL PRIMARY KEY,
     rtpl_id   CHAR(5)  NOT NULL REFERENCES tblrtplM1(rtpl_id),
     status    CHAR(3)  NOT NULL CHECK (status IN ('AVL', 'DMG')),
-    bycl_id   CHAR(7)  NULL     REFERENCES tblbyclM1(bycl_id),
+    bycl_id   CHAR(7)  NULL     UNIQUE REFERENCES tblbyclM1(bycl_id),  -- 한 자전거는 거치대 하나에만 (NULL은 여러 개 가능)
     gubun     CHAR(2)  NOT NULL CHECK (gubun  IN ('GN',  'SD'))
 );
 
@@ -98,9 +98,9 @@ CREATE TABLE tblrentT1 (
     bycl_id      CHAR(7)        NOT NULL REFERENCES tblbyclM1(bycl_id),
     rentdate     TIMESTAMP      NOT NULL,
     time         INTERVAL       NOT NULL,
-    dist         REAL           NOT NULL,
-    kcal         REAL           NOT NULL,
-    carbon       REAL           NOT NULL,
+    dist         NUMERIC(6,2)   NOT NULL,
+    kcal         NUMERIC(7,2)   NOT NULL,
+    carbon       NUMERIC(6,3)   NOT NULL,
     retrtpl_id   CHAR(5)        REFERENCES tblrtplM1(rtpl_id),
     returndate   TIMESTAMP,
     fee          INT            NOT NULL
@@ -152,3 +152,22 @@ CREATE TABLE tblfavoT1 (
 );
 
 
+-- 인덱스
+-- 미반납 대여(returndate IS NULL)는 자전거와 회원마다 하나뿐이다.
+CREATE UNIQUE INDEX uq_rent_open_bycl ON tblrentT1 (bycl_id) WHERE returndate IS NULL;
+CREATE UNIQUE INDEX uq_rent_open_mebr ON tblrentT1 (mebr_id) WHERE returndate IS NULL;
+
+-- FK 컬럼 인덱스. PostgreSQL은 FK에 인덱스를 자동으로 만들지 않는다.
+-- tblrackD1.bycl_id는 UNIQUE, tblfavoT1.mebr_id는 복합 PK가 이미 인덱스 역할을 한다.
+CREATE INDEX idx_tick_mebr  ON tbltickD1 (mebr_id);
+CREATE INDEX idx_rack_rtpl  ON tblrackD1 (rtpl_id);
+CREATE INDEX idx_rent_mebr  ON tblrentT1 (mebr_id);
+CREATE INDEX idx_rent_rtpl  ON tblrentT1 (rtpl_id);
+CREATE INDEX idx_rent_bycl  ON tblrentT1 (bycl_id);
+CREATE INDEX idx_rent_retrtpl ON tblrentT1 (retrtpl_id);
+CREATE INDEX idx_spcl_bycl  ON tblspclD1 (bycl_id);
+CREATE INDEX idx_spcl_rtpl  ON tblspclD1 (rtpl_id);
+CREATE INDEX idx_dmls_rent  ON tbldmlsD1 (rent_id);
+CREATE INDEX idx_dmls_bycl  ON tbldmlsD1 (bycl_id);
+CREATE INDEX idx_dmls_mebr  ON tbldmlsD1 (mebr_id);
+CREATE INDEX idx_favo_rtpl  ON tblfavoT1 (rtpl_id);

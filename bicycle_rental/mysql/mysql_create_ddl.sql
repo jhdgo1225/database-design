@@ -26,6 +26,20 @@ CREATE TABLE tbltickD1 (
   enddate   DATETIME   NOT NULL,
   points    INT         NOT NULL,
   paymethod VARCHAR(4)  NOT NULL,
+  -- 이용권 코드(ticket)에서 뽑아낸 값. 코드가 바뀌면 같이 바뀌고, 직접 넣을 수 없다.
+  -- 코드 구성: 기간(3자리) + 시간(1자리) + 금액(3자리) + A/N, PRE는 PRE + 시간(1자리) + A/N
+  -- 마지막 A/N은 의미가 정해지지 않아 아직 분리하지 않았다.
+  periodday INT GENERATED ALWAYS AS (
+              CASE WHEN ticket LIKE 'PRE%' THEN NULL
+                   ELSE CAST(SUBSTRING(ticket, 1, 3) AS UNSIGNED) END
+            ) STORED,
+  usehour   INT GENERATED ALWAYS AS (
+              CAST(SUBSTRING(ticket, 4, 1) AS UNSIGNED)
+            ) STORED,
+  price     INT GENERATED ALWAYS AS (   -- 금액 3자리를 100원 단위로 읽음
+              CASE WHEN ticket LIKE 'PRE%' THEN NULL
+                   ELSE CAST(SUBSTRING(ticket, 5, 3) AS UNSIGNED) * 100 END
+            ) STORED,
   FOREIGN KEY (mebr_id) REFERENCES tblmebrM1(mebr_id),
   CONSTRAINT chk_ticket_format CHECK (
     ticket REGEXP '^PRE[12][AN]$' OR
@@ -74,6 +88,7 @@ CREATE TABLE tblrackD1 (
     status    CHAR(3)  NOT NULL CHECK (status IN ('AVL', 'DMG')),
     bycl_id   CHAR(7)  NULL,
     gubun     CHAR(2)  NOT NULL CHECK (gubun  IN ('GN',  'SD')),
+    UNIQUE (bycl_id),  -- 한 자전거는 거치대 하나에만 (NULL은 여러 개 가능)
     FOREIGN KEY (rtpl_id) REFERENCES tblrtplM1(rtpl_id),
     FOREIGN KEY (bycl_id) REFERENCES tblbyclM1(bycl_id)
 );
@@ -85,9 +100,9 @@ CREATE TABLE tblrentT1 (
     bycl_id      CHAR(7)        NOT NULL,
     rentdate     DATETIME       NOT NULL,
     time         TIME           NOT NULL,
-    dist         REAL           NOT NULL,
-    kcal         REAL           NOT NULL,
-    carbon       REAL           NOT NULL,
+    dist         DECIMAL(6,2)   NOT NULL,
+    kcal         DECIMAL(7,2)   NOT NULL,
+    carbon       DECIMAL(6,3)   NOT NULL,
     retrtpl_id   CHAR(5),
     returndate   DATETIME,
     fee          INT            NOT NULL,
@@ -101,15 +116,19 @@ CREATE TABLE tblspclD1 (
     spcl_id        BIGINT AUTO_INCREMENT PRIMARY KEY,
     bycl_id        CHAR(7)      NOT NULL,
     spclgubun      CHAR(2)      NOT NULL CHECK (spclgubun IN ('SP', 'CL')),
-    collectreason  CHAR(2) CHECK (collectreason IN ('SP', 'DM', 'RP')),
+    collectreason  CHAR(2) CHECK (collectreason IN ('DM', 'RP')),
     rtpl_id        CHAR(5)      NOT NULL,
     spcldate       DATETIME    NOT NULL,
     FOREIGN KEY (bycl_id) REFERENCES tblbyclM1(bycl_id),
-    FOREIGN KEY (rtpl_id) REFERENCES tblrtplM1(rtpl_id)
+    FOREIGN KEY (rtpl_id) REFERENCES tblrtplM1(rtpl_id),
+    -- 수거(CL)일 때만 수거 사유가 있고, 보충(SP)은 NULL
+    CHECK ((spclgubun = 'CL' AND collectreason IS NOT NULL)
+        OR (spclgubun = 'SP' AND collectreason IS NULL))
 );
 
 CREATE TABLE tbldmlsD1 (
     dmls_id     BIGINT AUTO_INCREMENT PRIMARY KEY,
+    rent_id     INT            NOT NULL,
     bycl_id     CHAR(7)        NOT NULL,
     mebr_id     VARCHAR(16)    NOT NULL,
     dmlsflag    CHAR(2)        NOT NULL CHECK (dmlsflag IN ('DM', 'LS')),
@@ -122,6 +141,7 @@ CREATE TABLE tbldmlsD1 (
     confirm     CHAR(1)        NOT NULL DEFAULT 'N' CHECK (confirm IN ('Y', 'N')),
     amount      INT,
     claimdate   DATETIME,
+    FOREIGN KEY (rent_id) REFERENCES tblrentT1(rent_id),
     FOREIGN KEY (bycl_id) REFERENCES tblbyclM1(bycl_id),
     FOREIGN KEY (mebr_id) REFERENCES tblmebrM1(mebr_id)
 );
@@ -133,3 +153,12 @@ CREATE TABLE tblfavoT1 (
     FOREIGN KEY (mebr_id) REFERENCES tblmebrM1(mebr_id),
     FOREIGN KEY (rtpl_id) REFERENCES tblrtplM1(rtpl_id)
 );
+
+
+-- 인덱스
+-- 미반납 대여(returndate IS NULL)는 자전거와 회원마다 하나뿐이다.
+-- MySQL은 부분 인덱스가 없어서 함수 기반 인덱스로 대신한다(8.0.13 이상). 반납된 대여는 NULL이 되어 중복을 허용한다.
+CREATE UNIQUE INDEX uq_rent_open_bycl ON tblrentT1 ((CASE WHEN returndate IS NULL THEN bycl_id END));
+CREATE UNIQUE INDEX uq_rent_open_mebr ON tblrentT1 ((CASE WHEN returndate IS NULL THEN mebr_id END));
+
+-- FK 컬럼 인덱스는 InnoDB가 자동으로 만들어서 따로 추가하지 않는다.

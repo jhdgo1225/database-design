@@ -1,0 +1,39 @@
+===== RUN 1 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual time=0.007..1.653 rows=20030 loops=1)
+   Buffers: shared hit=427
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=84
+   Memory: used=7kB  allocated=32kB
+ Planning Time: 0.156 ms
+ Execution Time: 2.263 ms
+(8 rows)
+
+===== RUN 2 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual time=0.006..1.663 rows=20030 loops=1)
+   Buffers: shared hit=427
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=84
+   Memory: used=7kB  allocated=32kB
+ Planning Time: 0.150 ms
+ Execution Time: 2.277 ms
+(8 rows)
+
+===== RUN 3 =====
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ Seq Scan on tbl_mebr_m1  (cost=0.00..627.30 rows=20030 width=14) (actual time=0.005..1.608 rows=20030 loops=1)
+   Buffers: shared hit=427
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=84
+   Memory: used=7kB  allocated=32kB
+ Planning Time: 0.140 ms
+ Execution Time: 2.205 ms
+(8 rows)
+

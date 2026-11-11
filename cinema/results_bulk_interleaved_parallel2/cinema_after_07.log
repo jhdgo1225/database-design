@@ -1,0 +1,84 @@
+===== RUN 1 =====
+                                                                          QUERY PLAN                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=418.33..1236.32 rows=6551 width=52) (actual time=2.097..5.862 rows=6121 loops=1)
+   Hash Cond: ((mb.mebr_id)::text = (lk.mebr_id)::text)
+   Buffers: shared hit=565
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=34) (actual time=0.003..1.388 rows=20030 loops=1)
+         Buffers: shared hit=427
+   ->  Hash  (cost=336.44..336.44 rows=6551 width=29) (actual time=2.074..2.078 rows=6121 loops=1)
+         Buckets: 8192  Batches: 1  Memory Usage: 435kB
+         Buffers: shared hit=138
+         ->  Nested Loop  (cost=0.41..336.44 rows=6551 width=29) (actual time=0.012..1.195 rows=6121 loops=1)
+               Buffers: shared hit=138
+               ->  Seq Scan on tbl_scmv_m1 mv  (cost=0.00..9.88 rows=34 width=29) (actual time=0.005..0.031 rows=34 loops=1)
+                     Filter: (status = 'S'::bpchar)
+                     Rows Removed by Filter: 276
+                     Buffers: shared hit=6
+               ->  Index Only Scan using tbl_like_d1_pkey on tbl_like_d1 lk  (cost=0.41..7.67 rows=193 width=22) (actual time=0.006..0.019 rows=180 loops=34)
+                     Index Cond: (scmv_id = mv.scmv_id)
+                     Heap Fetches: 0
+                     Buffers: shared hit=132
+ Planning:
+   Buffers: shared hit=363
+   Memory: used=78kB  allocated=128kB
+ Planning Time: 1.521 ms
+ Execution Time: 6.075 ms
+(23 rows)
+
+===== RUN 2 =====
+                                                                          QUERY PLAN                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=418.33..1236.32 rows=6551 width=52) (actual time=1.941..5.624 rows=6121 loops=1)
+   Hash Cond: ((mb.mebr_id)::text = (lk.mebr_id)::text)
+   Buffers: shared hit=565
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=34) (actual time=0.004..1.349 rows=20030 loops=1)
+         Buffers: shared hit=427
+   ->  Hash  (cost=336.44..336.44 rows=6551 width=29) (actual time=1.915..1.916 rows=6121 loops=1)
+         Buckets: 8192  Batches: 1  Memory Usage: 435kB
+         Buffers: shared hit=138
+         ->  Nested Loop  (cost=0.41..336.44 rows=6551 width=29) (actual time=0.013..1.215 rows=6121 loops=1)
+               Buffers: shared hit=138
+               ->  Seq Scan on tbl_scmv_m1 mv  (cost=0.00..9.88 rows=34 width=29) (actual time=0.005..0.033 rows=34 loops=1)
+                     Filter: (status = 'S'::bpchar)
+                     Rows Removed by Filter: 276
+                     Buffers: shared hit=6
+               ->  Index Only Scan using tbl_like_d1_pkey on tbl_like_d1 lk  (cost=0.41..7.67 rows=193 width=22) (actual time=0.006..0.019 rows=180 loops=34)
+                     Index Cond: (scmv_id = mv.scmv_id)
+                     Heap Fetches: 0
+                     Buffers: shared hit=132
+ Planning:
+   Buffers: shared hit=363
+   Memory: used=78kB  allocated=128kB
+ Planning Time: 1.498 ms
+ Execution Time: 5.836 ms
+(23 rows)
+
+===== RUN 3 =====
+                                                                          QUERY PLAN                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=418.33..1236.32 rows=6551 width=52) (actual time=1.927..5.785 rows=6121 loops=1)
+   Hash Cond: ((mb.mebr_id)::text = (lk.mebr_id)::text)
+   Buffers: shared hit=565
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=34) (actual time=0.002..1.399 rows=20030 loops=1)
+         Buffers: shared hit=427
+   ->  Hash  (cost=336.44..336.44 rows=6551 width=29) (actual time=1.904..1.906 rows=6121 loops=1)
+         Buckets: 8192  Batches: 1  Memory Usage: 435kB
+         Buffers: shared hit=138
+         ->  Nested Loop  (cost=0.41..336.44 rows=6551 width=29) (actual time=0.012..1.211 rows=6121 loops=1)
+               Buffers: shared hit=138
+               ->  Seq Scan on tbl_scmv_m1 mv  (cost=0.00..9.88 rows=34 width=29) (actual time=0.004..0.033 rows=34 loops=1)
+                     Filter: (status = 'S'::bpchar)
+                     Rows Removed by Filter: 276
+                     Buffers: shared hit=6
+               ->  Index Only Scan using tbl_like_d1_pkey on tbl_like_d1 lk  (cost=0.41..7.67 rows=193 width=22) (actual time=0.006..0.019 rows=180 loops=34)
+                     Index Cond: (scmv_id = mv.scmv_id)
+                     Heap Fetches: 0
+                     Buffers: shared hit=132
+ Planning:
+   Buffers: shared hit=363
+   Memory: used=78kB  allocated=128kB
+ Planning Time: 1.465 ms
+ Execution Time: 5.991 ms
+(23 rows)
+

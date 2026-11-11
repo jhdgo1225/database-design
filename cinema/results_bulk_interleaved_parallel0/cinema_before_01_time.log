@@ -1,0 +1,330 @@
+===== RUN 1 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.158 ms
+ Execution Time: 2.694 ms
+(6 rows)
+
+===== RUN 2 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.138 ms
+ Execution Time: 2.543 ms
+(6 rows)
+
+===== RUN 3 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.131 ms
+ Execution Time: 2.519 ms
+(6 rows)
+
+===== RUN 4 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.136 ms
+ Execution Time: 2.420 ms
+(6 rows)
+
+===== RUN 5 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.160 ms
+ Execution Time: 2.470 ms
+(6 rows)
+
+===== RUN 6 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.204 ms
+ Execution Time: 2.563 ms
+(6 rows)
+
+===== RUN 7 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.173 ms
+ Execution Time: 2.548 ms
+(6 rows)
+
+===== RUN 8 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.157 ms
+ Execution Time: 2.628 ms
+(6 rows)
+
+===== RUN 9 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.151 ms
+ Execution Time: 2.462 ms
+(6 rows)
+
+===== RUN 10 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.245 ms
+ Execution Time: 2.512 ms
+(6 rows)
+
+===== RUN 11 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.184 ms
+ Execution Time: 2.573 ms
+(6 rows)
+
+===== RUN 12 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.137 ms
+ Execution Time: 2.455 ms
+(6 rows)
+
+===== RUN 13 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.145 ms
+ Execution Time: 2.491 ms
+(6 rows)
+
+===== RUN 14 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.148 ms
+ Execution Time: 2.460 ms
+(6 rows)
+
+===== RUN 15 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.142 ms
+ Execution Time: 2.455 ms
+(6 rows)
+
+===== RUN 16 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.152 ms
+ Execution Time: 2.404 ms
+(6 rows)
+
+===== RUN 17 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.158 ms
+ Execution Time: 2.438 ms
+(6 rows)
+
+===== RUN 18 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.155 ms
+ Execution Time: 2.447 ms
+(6 rows)
+
+===== RUN 19 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.135 ms
+ Execution Time: 2.443 ms
+(6 rows)
+
+===== RUN 20 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.151 ms
+ Execution Time: 2.634 ms
+(6 rows)
+
+===== RUN 21 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.159 ms
+ Execution Time: 2.439 ms
+(6 rows)
+
+===== RUN 22 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.139 ms
+ Execution Time: 2.424 ms
+(6 rows)
+
+===== RUN 23 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.140 ms
+ Execution Time: 2.456 ms
+(6 rows)
+
+===== RUN 24 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.129 ms
+ Execution Time: 2.447 ms
+(6 rows)
+
+===== RUN 25 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.158 ms
+ Execution Time: 2.667 ms
+(6 rows)
+
+===== RUN 26 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.132 ms
+ Execution Time: 2.491 ms
+(6 rows)
+
+===== RUN 27 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.144 ms
+ Execution Time: 2.420 ms
+(6 rows)
+
+===== RUN 28 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.142 ms
+ Execution Time: 2.544 ms
+(6 rows)
+
+===== RUN 29 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.157 ms
+ Execution Time: 2.420 ms
+(6 rows)
+
+===== RUN 30 =====
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=727.45..727.50 rows=5 width=12) (actual rows=5 loops=1)
+   Group Key: mbrt_id
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on tbl_mebr_m1 mb  (cost=0.00..627.30 rows=20030 width=4) (actual rows=20030 loops=1)
+ Planning Time: 0.142 ms
+ Execution Time: 2.462 ms
+(6 rows)
+

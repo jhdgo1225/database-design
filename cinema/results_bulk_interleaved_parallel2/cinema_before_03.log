@@ -1,0 +1,78 @@
+===== RUN 1 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual time=77.947..78.406 rows=1 loops=1)
+   Buffers: shared hit=3694
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual time=58.628..74.004 rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=3694
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual time=57.158..58.249 rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1420kB
+               Buffers: shared hit=3694
+               Worker 0:  Sort Method: quicksort  Memory: 1426kB
+               Worker 1:  Sort Method: quicksort  Memory: 1423kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual time=14.927..23.861 rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+                     Buffers: shared hit=3580
+ Planning:
+   Buffers: shared hit=129
+   Memory: used=21kB  allocated=32kB
+ Planning Time: 0.401 ms
+ Execution Time: 78.470 ms
+(21 rows)
+
+===== RUN 2 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual time=78.694..78.841 rows=1 loops=1)
+   Buffers: shared hit=3694
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual time=59.420..74.535 rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=3694
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual time=57.411..58.513 rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1426kB
+               Buffers: shared hit=3694
+               Worker 0:  Sort Method: quicksort  Memory: 1420kB
+               Worker 1:  Sort Method: quicksort  Memory: 1422kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual time=14.951..23.885 rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+                     Buffers: shared hit=3580
+ Planning:
+   Buffers: shared hit=129
+   Memory: used=21kB  allocated=32kB
+ Planning Time: 0.394 ms
+ Execution Time: 78.907 ms
+(21 rows)
+
+===== RUN 3 =====
+                                                                                                                QUERY PLAN                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19052.26..19052.27 rows=1 width=16) (actual time=78.178..78.450 rows=1 loops=1)
+   Buffers: shared hit=3694
+   ->  Gather Merge  (cost=11422.71..18738.20 rows=62812 width=15) (actual time=58.772..74.143 rows=62810 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=3694
+         ->  Sort  (cost=10422.69..10488.12 rows=26172 width=15) (actual time=56.940..58.155 rows=20937 loops=3)
+               Sort Key: mebr_id
+               Sort Method: quicksort  Memory: 1425kB
+               Buffers: shared hit=3694
+               Worker 0:  Sort Method: quicksort  Memory: 1420kB
+               Worker 1:  Sort Method: quicksort  Memory: 1423kB
+               ->  Parallel Seq Scan on tbl_bytk_d1 tk  (cost=0.00..8502.22 rows=26172 width=15) (actual time=14.921..23.780 rows=20937 loops=3)
+                     Filter: ((buydate >= (date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone))::date) AND (buydate < ((date_trunc('month'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval))::date))
+                     Rows Removed by Filter: 84071
+                     Buffers: shared hit=3580
+ Planning:
+   Buffers: shared hit=129
+   Memory: used=21kB  allocated=32kB
+ Planning Time: 0.399 ms
+ Execution Time: 78.550 ms
+(21 rows)
+

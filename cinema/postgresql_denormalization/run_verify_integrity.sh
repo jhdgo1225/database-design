@@ -3,10 +3,10 @@
 #
 #   1) 측정용 임시 DB 를 만들고 create_ddl.sql + insert_data.sql 을 적재
 #   2) verify_integrity.sql 의 케이스 실행 (결과 열 PASS / FAIL)
-#        C01~C14 정원 규칙 / X01~X07 입력 위반 / P01~P02 정상 입력 / S01 총 좌석수 변경
+#        C01~C14 이용 가능 좌석 수 규칙 / X01~X07 입력 위반 / P01~P02 정상 입력 / S01 총 좌석 수 변경
 #        K01~K10 기존 제약 점검 / D01~D05 중복 예매 방지 / B01~B07 예매 규칙
 #   3) 동시성 케이스 실행 (세션 2개씩): C15 상영 INSERT 와 좌석 변경의 직렬화, C16 데드락, C18 동시 중복 예매,
-#        C19 동시 예매로 정원 초과 시도, C20 좌석 상태 변경과 예매의 경쟁
+#        C19 동시 예매로 이용 가능 좌석 수 초과 시도, C20 좌석 상태 변경과 예매의 경쟁
 #   4) STRESS=1 이면 C17 (pgbench 로 상영 수정·좌석 변경·예매·취소를 섞어 데드락 발생 여부) 실행
 #   5) PASS / FAIL / ERROR 건수를 요약하고, 하나라도 FAIL 이거나 ERROR 면 종료 코드 1
 #
@@ -60,10 +60,10 @@ echo "$OUT"
 EXTRA=""
 
 # C15 동시성: 세션 A 가 예정 상영을 INSERT 한 채 3초간 커밋을 미루는 동안 세션 B 가 좌석을 N 으로 바꾼다.
-#             B 가 기다렸다가 A 의 상영을 보고 정원을 149 로 계산해야 한다.
+#             B 가 기다렸다가 A 의 상영을 보고 이용 가능 좌석 수를 149 로 계산해야 한다.
 reset_state
 echo
-echo "== C15  동시성: 상영 INSERT 미커밋 중 좌석 변경 -> 좌석 변경이 대기, 최종 정원 149"
+echo "== C15  동시성: 상영 INSERT 미커밋 중 좌석 변경 -> 좌석 변경이 대기, 최종 이용 가능 좌석 수 149"
 ( psql_db -c "BEGIN; INSERT INTO tbl_scrn_m1(scrn_id, scmv_id, thtr_id, planned_capacity, scrndate, scrntime) VALUES ('V00000000099','2026092601',6,150,CURRENT_DATE+30,'10:00'); SELECT pg_sleep(3); COMMIT;" >/dev/null ) &
 sleep 1
 START=$(date +%s)
@@ -72,14 +72,14 @@ ELAPSED=$(( $(date +%s) - START ))
 wait
 CAP=$(psql_db -t -A -c "SELECT capacity FROM tbl_scrn_m1 WHERE scrn_id='V00000000099'")
 if [ "$CAP" = "149" ] && [ "$ELAPSED" -ge 1 ]; then R=PASS; else R=FAIL; fi
-L="좌석 변경 대기 시간 ${ELAPSED}초 (1초 이상이어야 함), 최종 정원 ${CAP} (기대 149)  결과 ${R}"
+L="좌석 변경 대기 시간 ${ELAPSED}초 (1초 이상이어야 함), 최종 이용 가능 좌석 수 ${CAP} (기대 149)  결과 ${R}"
 echo "$L"; EXTRA="$EXTRA
 $L"
 
 # C16 데드락: 상영 UPDATE(세션 A)와 같은 상영관의 좌석 변경(세션 B)의 잠금 순서를 일부러 엇갈리게 만든다.
 #   t=0  A: 상영 행을 FOR UPDATE 로 잡고 2초 대기
 #   t=1  B: 좌석을 N 으로 변경 -> 트리거가 상영 행을 잠그려다 A 에게 막힘 (수정 전에는 상영관 행을 먼저 잡고 상영 행에서 막힘)
-#   t=2  A: 같은 행의 희망 정원 UPDATE -> 트리거가 상영관 행 FOR SHARE 를 요청
+#   t=2  A: 같은 행의 계획 좌석 수 UPDATE -> 트리거가 상영관 행 FOR SHARE 를 요청
 #   수정 전: 서로를 기다려 데드락, 한쪽이 중단됨 / 수정 후: 둘 다 성공
 reset_state
 echo
@@ -94,7 +94,7 @@ DL=$(cat "$TMP/A.out" "$TMP/B.out" | grep -c 'deadlock detected')
 CAP=$(psql_db -t -A -c "SELECT capacity FROM tbl_scrn_m1 WHERE scrn_id='V00000000098'")
 SEAT=$(psql_db -t -A -c "SELECT status FROM tbl_seat_m1 WHERE thtr_id=6 AND seatcode='A1'")
 if [ "$DL" = "0" ] && [ "$A_RC" = "0" ] && [ "$B_RC" = "0" ] && [ "$CAP" = "100" ] && [ "$SEAT" = "N" ]; then R=PASS; else R=FAIL; fi
-L="데드락 ${DL}건, 세션 A 종료코드 ${A_RC}, 세션 B 종료코드 ${B_RC}, 최종 정원 ${CAP} (기대 100), 좌석 A1 상태 ${SEAT} (기대 N)  결과 ${R}"
+L="데드락 ${DL}건, 세션 A 종료코드 ${A_RC}, 세션 B 종료코드 ${B_RC}, 최종 이용 가능 좌석 수 ${CAP} (기대 100), 좌석 A1 상태 ${SEAT} (기대 N)  결과 ${R}"
 echo "$L"; EXTRA="$EXTRA
 $L"
 [ "$DL" != "0" ] && cat "$TMP/A.out" "$TMP/B.out" | grep -E 'ERROR|DETAIL' | head -n 3 | sed 's/^/    /'
@@ -120,13 +120,13 @@ L="A5 예매 ${CNT}건 (기대 1), 세션 A 종료코드 ${A_RC} (기대 0), 세
 echo "$L"; EXTRA="$EXTRA
 $L"
 
-# C19 동시 예매로 정원 초과 시도: 정원 1 인 상영에 두 세션이 동시에 예매한다.
+# C19 동시 예매로 이용 가능 좌석 수 초과 시도: 이용 가능 좌석 수 1 인 상영에 두 세션이 동시에 예매한다.
 #   t=0  A: 예매 INSERT 후 커밋하지 않고 2초 대기
-#   t=1  B: 예매 INSERT -> 상영 행 잠금에서 기다렸다가 A 가 커밋하면 정원 초과(23514)로 거부되어야 한다
-#   잠금이 없으면 둘 다 정원 검사를 통과해 예매가 2건 저장된다.
+#   t=1  B: 예매 INSERT -> 상영 행 잠금에서 기다렸다가 A 가 커밋하면 이용 가능 좌석 수 초과(23514)로 거부되어야 한다
+#   잠금이 없으면 둘 다 이용 가능 좌석 수 검사를 통과해 예매가 2건 저장된다.
 reset_state
 echo
-echo "== C19  동시 예매로 정원 초과 시도: 정원 1 상영에 두 세션이 동시에 예매 -> 정확히 1건만 성공"
+echo "== C19  동시 예매로 이용 가능 좌석 수 초과 시도: 이용 가능 좌석 수 1 상영에 두 세션이 동시에 예매 -> 정확히 1건만 성공"
 psql_db -c "INSERT INTO tbl_scrn_m1(scrn_id, scmv_id, thtr_id, planned_capacity, scrndate, scrntime) VALUES ('V00000000096','2026092601',6,1,CURRENT_DATE+30,'10:00')" >/dev/null
 INS="INSERT INTO tbl_bytk_d1(mebr_id, scrn_id, thtr_id, buy_method, savings, mileage) VALUES ((SELECT mebr_id FROM tbl_mebr_m1 ORDER BY mebr_id LIMIT 1), 'V00000000096', 6, 'P', 0, 0)"
 ( psql_db -c "BEGIN; $INS; SELECT pg_sleep(2); COMMIT;" >"$TMP/A.out" 2>&1; echo $? >"$TMP/A.rc" ) &
@@ -137,7 +137,7 @@ A_RC=$(cat "$TMP/A.rc"); B_RC=$(cat "$TMP/B.rc")
 CHK=$(grep -c '23514' "$TMP/B.out")
 CNT=$(psql_db -t -A -c "SELECT count(*) FROM tbl_bytk_d1 WHERE scrn_id='V00000000096'")
 if [ "$CNT" = "1" ] && [ "$A_RC" = "0" ] && [ "$B_RC" != "0" ] && [ "$CHK" = "1" ]; then R=PASS; else R=FAIL; fi
-L="예매 ${CNT}건 (기대 1), 세션 A 종료코드 ${A_RC} (기대 0), 세션 B 종료코드 ${B_RC} (기대 0 아님), 정원 초과(23514) ${CHK}건 (기대 1)  결과 ${R}"
+L="예매 ${CNT}건 (기대 1), 세션 A 종료코드 ${A_RC} (기대 0), 세션 B 종료코드 ${B_RC} (기대 0 아님), 이용 가능 좌석 수 초과(23514) ${CHK}건 (기대 1)  결과 ${R}"
 echo "$L"; EXTRA="$EXTRA
 $L"
 
@@ -227,7 +227,7 @@ EOF
     DLF=$(echo "$PGB"  | awk '/^number of deadlock failures/{print $5}')
     BAD=$(psql_db -t -A -c "SELECT count(*) FROM tbl_scrn_m1 s WHERE s.scrn_id LIKE 'S%'
           AND s.capacity <> LEAST(s.planned_capacity, (SELECT count(*) FROM tbl_seat_m1 WHERE thtr_id = 6 AND status = 'Y'))")
-    # 부하 후 예매 규칙 위반: 정원을 넘는 예매 수, 예정 상영에서 이용 불가 좌석에 걸린 예매
+    # 부하 후 예매 규칙 위반: 이용 가능 좌석 수를 넘는 예매 수, 예정 상영에서 이용 불가 좌석에 걸린 예매
     BOOK_BAD=$(psql_db -t -A -c "SELECT
         (SELECT count(*) FROM tbl_scrn_m1 s WHERE s.scrn_id LIKE 'S%'
            AND (SELECT count(*) FROM tbl_bytk_d1 b WHERE b.scrn_id = s.scrn_id) > s.capacity)

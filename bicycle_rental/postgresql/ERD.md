@@ -61,6 +61,7 @@ erDiagram
         CHAR(7) bycl_id FK
         TIMESTAMP rentdate
         INTERVAL time
+        SMALLINT fixhour "고정 대여 시간, 1 / 2"
         NUMERIC(6,2) dist
         NUMERIC(7,2) kcal
         NUMERIC(6,3) carbon

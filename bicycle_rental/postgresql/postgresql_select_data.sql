@@ -49,6 +49,7 @@ select rent_id as 대여ID,
            || extract(minute from time) || '분 '
            || round(extract(seconds from time)) || '초'
            as 이용시간,
+       fixhour as "고정 대여 시간",
        dist as 거리,
        kcal as 칼로리소모량,
        carbon as 탄소저감,

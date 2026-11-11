@@ -88,6 +88,7 @@ CREATE TABLE tblrackD1 (
     status    CHAR(3)  NOT NULL CHECK (status IN ('AVL', 'DMG')),
     bycl_id   CHAR(7)  NULL,
     gubun     CHAR(2)  NOT NULL CHECK (gubun  IN ('GN',  'SD')),
+    UNIQUE (bycl_id),  -- 한 자전거는 거치대 하나에만 (NULL은 여러 개 가능)
     FOREIGN KEY (rtpl_id) REFERENCES tblrtplM1(rtpl_id),
     FOREIGN KEY (bycl_id) REFERENCES tblbyclM1(bycl_id)
 );
@@ -99,9 +100,9 @@ CREATE TABLE tblrentT1 (
     bycl_id      CHAR(7)        NOT NULL,
     rentdate     DATETIME       NOT NULL,
     time         TIME           NOT NULL,
-    dist         REAL           NOT NULL,
-    kcal         REAL           NOT NULL,
-    carbon       REAL           NOT NULL,
+    dist         DECIMAL(6,2)   NOT NULL,
+    kcal         DECIMAL(7,2)   NOT NULL,
+    carbon       DECIMAL(6,3)   NOT NULL,
     retrtpl_id   CHAR(5),
     returndate   DATETIME,
     fee          INT            NOT NULL,
@@ -152,3 +153,12 @@ CREATE TABLE tblfavoT1 (
     FOREIGN KEY (mebr_id) REFERENCES tblmebrM1(mebr_id),
     FOREIGN KEY (rtpl_id) REFERENCES tblrtplM1(rtpl_id)
 );
+
+
+-- 인덱스
+-- 미반납 대여(returndate IS NULL)는 자전거와 회원마다 하나뿐이다.
+-- MySQL은 부분 인덱스가 없어서 함수 기반 인덱스로 대신한다(8.0.13 이상). 반납된 대여는 NULL이 되어 중복을 허용한다.
+CREATE UNIQUE INDEX uq_rent_open_bycl ON tblrentT1 ((CASE WHEN returndate IS NULL THEN bycl_id END));
+CREATE UNIQUE INDEX uq_rent_open_mebr ON tblrentT1 ((CASE WHEN returndate IS NULL THEN mebr_id END));
+
+-- FK 컬럼 인덱스는 InnoDB가 자동으로 만들어서 따로 추가하지 않는다.

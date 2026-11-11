@@ -30,7 +30,21 @@ CREATE TABLE tbltickD1 (
   paymethod VARCHAR(4)  NOT NULL
             CHECK (
               paymethod ~ '^(CP|BT)[A-Z]{2}$|^(NV|KA|TO|ML)$'
-            )
+            ),
+  -- 이용권 코드(ticket)에서 뽑아낸 값. 코드가 바뀌면 같이 바뀌고, 직접 넣을 수 없다.
+  -- 코드 구성: 기간(3자리) + 시간(1자리) + 금액(3자리) + A/N, PRE는 PRE + 시간(1자리) + A/N
+  -- 마지막 A/N은 의미가 정해지지 않아 아직 분리하지 않았다.
+  periodday INT GENERATED ALWAYS AS (
+              CASE WHEN ticket LIKE 'PRE%' THEN NULL
+                   ELSE SUBSTRING(ticket FROM 1 FOR 3)::INT END
+            ) STORED,
+  usehour   INT GENERATED ALWAYS AS (
+              SUBSTRING(ticket FROM 4 FOR 1)::INT
+            ) STORED,
+  price     INT GENERATED ALWAYS AS (   -- 금액 3자리를 100원 단위로 읽음
+              CASE WHEN ticket LIKE 'PRE%' THEN NULL
+                   ELSE SUBSTRING(ticket FROM 5 FOR 3)::INT * 100 END
+            ) STORED
 );
 
 
@@ -99,14 +113,18 @@ CREATE TABLE tblspclD1 (
     spclgubun      CHAR(2)      NOT NULL
                        CHECK (spclgubun IN ('SP', 'CL')),
     collectreason  CHAR(2)
-                       CHECK (collectreason IN ('SP', 'DM', 'RP')),
+                       CHECK (collectreason IN ('DM', 'RP')),
     rtpl_id        CHAR(5)      NOT NULL REFERENCES tblrtplM1(rtpl_id),
-    spcldate       TIMESTAMP    NOT NULL
+    spcldate       TIMESTAMP    NOT NULL,
+    -- 수거(CL)일 때만 수거 사유가 있고, 보충(SP)은 NULL
+    CHECK ((spclgubun = 'CL' AND collectreason IS NOT NULL)
+        OR (spclgubun = 'SP' AND collectreason IS NULL))
 );
 
 
 CREATE TABLE tbldmlsD1 (
     dmls_id     BIGSERIAL      PRIMARY KEY,
+    rent_id     INT            NOT NULL REFERENCES tblrentT1(rent_id),
     bycl_id     CHAR(7)        NOT NULL REFERENCES tblbyclM1(bycl_id),
     mebr_id     VARCHAR(16)    NOT NULL REFERENCES tblmebrM1(mebr_id),
     dmlsflag    CHAR(2)        NOT NULL

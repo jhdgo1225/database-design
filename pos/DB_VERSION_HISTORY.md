@@ -1,0 +1,124 @@
+# pos DB 버전 이력 (패치노트)
+
+PostgreSQL `pos` 스키마의 버전별 변경 이력입니다. 스키마가 바뀔 때마다 이 문서 맨 위에 새 버전을 추가합니다.
+
+- 버전 규칙: `MAJOR.MINOR.PATCH`
+  - MAJOR: 테이블 추가·삭제, 컬럼 이름·타입 변경 등 기존 쿼리·데이터가 그대로 동작하지 않는 변경
+  - MINOR: 기존 쿼리를 깨지 않는 컬럼·제약·인덱스 추가
+  - PATCH: 주석·용어·데이터 정정, 폴더 정리 등 구조가 바뀌지 않는 수정
+- 기록 시점: 2026-11-14, git HEAD `106dd27`
+- 각 버전은 스키마 파일(DDL), 샘플 데이터, 조회·정보시스템 쿼리를 한 묶음으로 봅니다.
+- 기준 파일은 `postgresql/postgresql_create_ddl.sql`입니다. DDL이 바뀌지 않은 변경은 PATCH로 적습니다.
+- 지금은 정규화 스키마(`postgresql/`)만 있어서 v1.x뿐입니다. 반정규화 스키마는 아직 없습니다. 만들게 되면 cinema, bicycle_rental처럼 `postgresql_denormalization/`에 두고 v2.x로 올리는 쪽이 다른 DB와 맞습니다.
+
+| 버전 | 이름 | 상태 | 위치 | 마지막 변경 커밋 |
+|---|---|---|---|---|
+| v1.0.1 | 폴더 정리 (mysql, postgresql 분리) (현재) | 작성 완료, 커밋 전 | `pos/postgresql/`, `pos/mysql/` | 없음 (2026-11-14 작성) |
+| v1.0.0 | 정규화 (기준) | 적용됨 | `pos/` 바로 아래 (v1.0.1에서 `postgresql/`, `mysql/`로 이동) | `76efa34` (2026-10-05) |
+
+> MySQL 파일(`pos/mysql/`)은 v1.0.0의 최초 커밋(`f365bd2`, `886d612`, `a35c8ff`, `79ad76c`, 2025-12-22)에서 PostgreSQL과 같은 날 만들었고 그 뒤로 고친 적이 없습니다.
+>
+> 이 저장소의 docker 환경에는 PostgreSQL 컨테이너만 있어서 MySQL 파일은 서버에서 실행해 보지 못했습니다. 아래 검증 결과는 모두 PostgreSQL 기준입니다.
+>
+> 버전 번호 판단: v1.0.1은 파일 위치만 바뀌고 테이블, 컬럼, 제약, 샘플 데이터, 쿼리 내용은 그대로라서 PATCH입니다. v1.0.0 이후 DDL이 바뀐 커밋은 `76efa34`(남아 있던 `drop table` 문 8줄 삭제) 하나뿐이고, 스키마가 바뀐 것이 아니라서 별도 버전으로 나누지 않고 v1.0.0에 넣었습니다. bicycle_rental의 v1.0.0과 같은 처리입니다.
+
+---
+
+## v1.0.1: 폴더 정리 (mysql, postgresql 분리) (현재)
+
+> 커밋: 아직 없음 (2026-11-14 작성)
+> 기준(롤백 지점): v1.0.0 (`76efa34`)
+> 구분: PATCH. 파일 8개를 `mysql/`, `postgresql/` 폴더로 옮기고, 옮긴 경로를 읽는 docker 초기화 스크립트를 고쳤습니다. 파일 내용은 그대로입니다.
+
+### 변경 요약
+
+- `pos/` 바로 아래 있던 SQL 파일 8개를 DB 시스템별 폴더로 나눴습니다. library, cinema, school, bicycle_rental과 같은 구조입니다.
+- 파일 이름은 그대로 두었습니다 (`postgresql_create_ddl.sql` 등). cinema, school, bicycle_rental과 같고 library만 접두사를 뺐습니다.
+- 옮기는 데 `git mv`를 써서 파일 이력이 이어집니다 (rename으로 잡힘).
+- docker 초기화 스크립트가 `pos/postgresql_create_ddl.sql`을 읽고 있어서, 폴더를 나누면 `make up`에서 새 DB를 만들 때 파일을 못 찾습니다. 스크립트가 `pos`를 cinema, school과 같은 경로(`<DB>/postgresql/postgresql_*.sql`)로 읽도록 고쳤습니다.
+
+### 변경된 파일
+
+| 이전 경로 | 새 경로 |
+|---|---|
+| `pos/postgresql_create_ddl.sql` | `pos/postgresql/postgresql_create_ddl.sql` |
+| `pos/postgresql_insert_data.sql` | `pos/postgresql/postgresql_insert_data.sql` |
+| `pos/postgresql_select_data.sql` | `pos/postgresql/postgresql_select_data.sql` |
+| `pos/postgresql_information_system.sql` | `pos/postgresql/postgresql_information_system.sql` |
+| `pos/mysql_create_ddl.sql` | `pos/mysql/mysql_create_ddl.sql` |
+| `pos/mysql_insert_data.sql` | `pos/mysql/mysql_insert_data.sql` |
+| `pos/mysql_select_data.sql` | `pos/mysql/mysql_select_data.sql` |
+| `pos/mysql_information_system.sql` | `pos/mysql/mysql_information_system.sql` |
+| (신규) | `pos/DB_VERSION_HISTORY.md` (이 문서) |
+| `docker/init-db/00-init-databases.sh` | `pos`를 cinema, school과 같은 경로 규칙으로 읽도록 조건과 주석 수정 |
+
+### 스키마 변경
+
+없음. `postgresql_create_ddl.sql`의 내용은 v1.0.0과 같습니다.
+
+### 검증 방법과 결과
+
+임시 DB(`pos_hist_bench`)를 새로 만들어 새 경로의 파일로 적재했습니다 (2026-11-14, PostgreSQL 17). 확인 뒤 임시 DB는 지웠습니다.
+
+| 확인 | 결과 |
+|---|---|
+| `postgresql/postgresql_create_ddl.sql` 실행 | 오류 없음. 테이블 15개, 기본키 인덱스 15개, 외래키 18개, 이름 있는 CHECK 5개 |
+| `postgresql/postgresql_insert_data.sql` 실행 | 오류 없음. 행 수는 아래 v1.0.0의 표와 같음 |
+| `postgresql/postgresql_select_data.sql`, `postgresql/postgresql_information_system.sql` 실행 | 둘 다 오류 없음 |
+| `mysql/` 파일과 `postgresql/` 파일의 INSERT 대상 테이블 순서 비교 | 같음 |
+
+- docker 초기화 스크립트는 이미 만들어진 DB를 건너뛰기 때문에, 고친 뒤에 스크립트를 처음부터 끝까지 돌려 보지는 않았습니다. 스크립트가 읽는 경로(`/workspace/pos/postgresql/postgresql_create_ddl.sql`, `postgresql_insert_data.sql`)를 컨테이너 안에서 직접 실행해서 확인했습니다.
+- 쿼리 결과 값이 v1.0.0과 같은지는 비교하지 않았습니다. 파일 내용은 `git mv`로 바뀌지 않았습니다.
+- `mysql/` 파일은 실행하지 못했습니다.
+
+### 호환성에 미치는 영향
+
+- `pos/postgresql_*.sql`, `pos/mysql_*.sql` 경로를 직접 적어 실행하던 명령은 새 경로로 바꿔야 합니다.
+- 스키마와 데이터는 같아서 이미 만들어진 `pos` DB에는 영향이 없습니다.
+
+---
+
+## v1.0.0: 정규화 (기준)
+
+- 위치: 처음에는 `pos/` 바로 아래에 있었고, v1.0.1에서 `postgresql/`, `mysql/` 폴더로 옮겼습니다. (`postgresql_create_ddl.sql`, `postgresql_insert_data.sql`, `postgresql_select_data.sql`, `postgresql_information_system.sql`)
+- 커밋 (PostgreSQL): `1389c75` DDL → `6208c93` 샘플 데이터 → `510a7fb` 조회 쿼리 → `6af8759` 정보시스템 쿼리 (모두 2025-12-22), `76efa34` DDL에 남아 있던 `drop table` 문 정리 (2026-10-05)
+- 커밋 (MySQL): `f365bd2` DDL → `886d612` 샘플 데이터 → `a35c8ff` 조회 쿼리 → `79ad76c` 정보시스템 쿼리 (모두 2025-12-22)
+- 규모: 테이블 15개
+
+### 구조
+
+| 테이블 | 설명 | 샘플 행 수 |
+|---|---|---|
+| `tblmebrm` | 회원 | 30 |
+| `tblpostm` | 게시판 | 16 |
+| `tblrepld` | 댓글 | 30 |
+| `tblbsctl` | 업종 카테고리 | 4 |
+| `tblbusim` | 업체 | 10 |
+| `tblstafm` | 직원 | 20 |
+| `tblunitl` | 재고 단위 카테고리 | 10 |
+| `tblstokm` | 재고 | 30 |
+| `tblarext` | 재고 입출고 | 60 |
+| `tblordrt` | 재고 주문 | 30 |
+| `tblstodd` | 재고 주문 상세 | 90 |
+| `tblmenum` | 메뉴 | 10 |
+| `tblmestt` | 메뉴-재고 (메뉴 하나가 쓰는 재고 소모량) | 30 |
+| `tblsalet` | 판매 | 21 |
+| `tblsadtd` | 판매 상세 | 21 |
+
+관계는 회원(`tblmebrm`)이 게시글, 댓글, 업체 관리자로 이어지고, 업체(`tblbusim`)가 직원, 재고, 재고 주문, 메뉴, 판매로 이어집니다. 재고(`tblstokm`)는 입출고, 주문 상세, 메뉴-재고에 연결되고, 메뉴(`tblmenum`)는 메뉴-재고, 판매 상세에 연결됩니다. 외래키는 모두 18개입니다.
+
+### 특징
+
+- 번호가 자동으로 붙는 열은 `GENERATED BY DEFAULT AS IDENTITY`입니다. 게시글 번호, 댓글 번호는 `INT`이고 입출고, 주문, 주문 상세, 메뉴-재고, 판매, 판매 상세 번호는 `BIGINT`입니다.
+- 업체 번호, 직원 번호, 재고 번호, 메뉴 번호는 문자열 코드이고, 앞부분이 업체 번호입니다 (직원 = 업체 번호 + 등록 순서, 재고 = 업체 번호 + 등록 순서, 메뉴 = 업체 번호 + 등록 순서 2자리). 업체 번호는 도번호 + 시/군/구번호 + 업체 등록 순서입니다.
+- 코드값은 `CHECK`로 제한합니다: 회원 `manager`는 `T/F`, 직원 `position`은 `M/F/P`, 직원 `status`는 `N/L/R`, 단위 이름은 10개(`kg`, `mg`, `g`, `개`, `단`, `판`, `L`, `ml`, `병`, `박스`), 입출고 `gubun`은 `I/O/L/D`.
+- 인덱스는 기본키 15개뿐입니다. 외래키 컬럼에는 인덱스를 따로 만들지 않았습니다.
+- `tblordrt.total`(주문 총금액), `tblsalet.total`(판매 총금액), `tblsadtd.price`(메뉴 가격 * 수량)는 다른 행에서 계산할 수 있는 값을 저장하는 열입니다. 상세 행의 합과 맞는지는 `CHECK`나 트리거로 강제하지 않습니다.
+- 샘플 데이터는 회원 30명, 업체 10곳 규모이고, 정보시스템 쿼리 7개와 테이블 조회 쿼리를 함께 둡니다.
+
+### 알려진 한계
+
+- 직원 직책(`M/F/P`), 근무 상태(`N/L/R`), 입출고 구분(`I/O/L/D`)이 각각 무엇을 뜻하는지 DDL에 적혀 있지 않습니다.
+- 위 합계 열이 상세 행과 맞는지 확인하는 검증 쿼리가 없고, 이번 정리에서도 확인하지 않았습니다. bicycle_rental의 `postgresql_verify_data.sql` 같은 데이터 규칙 검증은 pos에는 없습니다.
+- 대량 샘플, 성능 측정 스크립트와 로그가 없습니다. 지금 샘플은 테이블마다 최대 90행이라 실행 계획이나 응답 시간 비교에는 쓸 수 없습니다.
+- MySQL 파일은 서버에서 실행해 보지 못했습니다. PostgreSQL과 다른 부분은 자동 증가 문법(`AUTO_INCREMENT`), 시각 타입(`TIMESTAMP` 대신 `DATETIME`), 별칭의 따옴표(`"` 대신 백틱), 정보시스템 쿼리 4번의 `GROUPING SETS` 대신 `WITH ROLLUP`입니다.

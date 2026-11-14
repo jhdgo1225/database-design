@@ -1,0 +1,420 @@
+===== RUN 1 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.401 ms
+ Execution Time: 129.453 ms
+(9 rows)
+
+===== RUN 2 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.354 ms
+ Execution Time: 131.238 ms
+(9 rows)
+
+===== RUN 3 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.824 ms
+ Execution Time: 140.487 ms
+(9 rows)
+
+===== RUN 4 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.360 ms
+ Execution Time: 135.121 ms
+(9 rows)
+
+===== RUN 5 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.366 ms
+ Execution Time: 133.977 ms
+(9 rows)
+
+===== RUN 6 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.360 ms
+ Execution Time: 134.583 ms
+(9 rows)
+
+===== RUN 7 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.359 ms
+ Execution Time: 132.310 ms
+(9 rows)
+
+===== RUN 8 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.385 ms
+ Execution Time: 134.378 ms
+(9 rows)
+
+===== RUN 9 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.397 ms
+ Execution Time: 131.098 ms
+(9 rows)
+
+===== RUN 10 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.377 ms
+ Execution Time: 139.019 ms
+(9 rows)
+
+===== RUN 11 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.424 ms
+ Execution Time: 129.571 ms
+(9 rows)
+
+===== RUN 12 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.381 ms
+ Execution Time: 128.680 ms
+(9 rows)
+
+===== RUN 13 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.366 ms
+ Execution Time: 132.881 ms
+(9 rows)
+
+===== RUN 14 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.372 ms
+ Execution Time: 140.559 ms
+(9 rows)
+
+===== RUN 15 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.378 ms
+ Execution Time: 132.089 ms
+(9 rows)
+
+===== RUN 16 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.347 ms
+ Execution Time: 128.035 ms
+(9 rows)
+
+===== RUN 17 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.360 ms
+ Execution Time: 132.287 ms
+(9 rows)
+
+===== RUN 18 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.424 ms
+ Execution Time: 137.937 ms
+(9 rows)
+
+===== RUN 19 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.394 ms
+ Execution Time: 131.189 ms
+(9 rows)
+
+===== RUN 20 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.378 ms
+ Execution Time: 151.965 ms
+(9 rows)
+
+===== RUN 21 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.480 ms
+ Execution Time: 143.934 ms
+(9 rows)
+
+===== RUN 22 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.395 ms
+ Execution Time: 135.029 ms
+(9 rows)
+
+===== RUN 23 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.548 ms
+ Execution Time: 137.861 ms
+(9 rows)
+
+===== RUN 24 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.461 ms
+ Execution Time: 136.503 ms
+(9 rows)
+
+===== RUN 25 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.345 ms
+ Execution Time: 137.829 ms
+(9 rows)
+
+===== RUN 26 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.405 ms
+ Execution Time: 139.284 ms
+(9 rows)
+
+===== RUN 27 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.462 ms
+ Execution Time: 137.098 ms
+(9 rows)
+
+===== RUN 28 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.389 ms
+ Execution Time: 139.643 ms
+(9 rows)
+
+===== RUN 29 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.373 ms
+ Execution Time: 129.694 ms
+(9 rows)
+
+===== RUN 30 =====
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18128.43..18208.64 rows=32084 width=76) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((rent_ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  HashAggregate  (cost=13561.34..15727.01 rows=32084 width=76) (actual rows=29318 loops=1)
+         Group Key: bycl_id, rent_ym
+         Batches: 1  Memory Usage: 5649kB
+         ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=28) (actual rows=332705 loops=1)
+ Planning Time: 0.367 ms
+ Execution Time: 135.119 ms
+(9 rows)
+

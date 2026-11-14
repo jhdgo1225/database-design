@@ -1,0 +1,81 @@
+===== RUN 1 =====
+                                                              QUERY PLAN                                                               
+---------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=52401.93..59887.80 rows=332705 width=61) (actual time=645.632..743.713 rows=5219 loops=1)
+   Group Key: rt.space, (to_char(tr.rentdate, 'YYYY-MM'::text))
+   Buffers: shared hit=3879 read=1585, temp read=1630 written=1635
+   ->  Sort  (cost=52401.93..53233.70 rows=332705 width=53) (actual time=645.625..716.420 rows=332705 loops=1)
+         Sort Key: rt.space, (to_char(tr.rentdate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 13040kB
+         Buffers: shared hit=3879 read=1585, temp read=1630 written=1635
+         ->  Hash Join  (cost=15.45..10511.42 rows=332705 width=53) (actual time=0.122..138.468 rows=332705 loops=1)
+               Hash Cond: (tr.rtpl_id = rt.rtpl_id)
+               Buffers: shared hit=3876 read=1585
+               ->  Seq Scan on tblrentt1 tr  (cost=0.00..8782.05 rows=332705 width=14) (actual time=0.005..24.546 rows=332705 loops=1)
+                     Buffers: shared hit=3870 read=1585
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.087..0.089 rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.004..0.039 rows=420 loops=1)
+                           Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=319
+   Memory: used=56kB  allocated=128kB
+ Planning Time: 0.586 ms
+ Execution Time: 744.935 ms
+(22 rows)
+
+===== RUN 2 =====
+                                                              QUERY PLAN                                                               
+---------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=52401.93..59887.80 rows=332705 width=61) (actual time=645.992..743.849 rows=5219 loops=1)
+   Group Key: rt.space, (to_char(tr.rentdate, 'YYYY-MM'::text))
+   Buffers: shared hit=3911 read=1553, temp read=1630 written=1635
+   ->  Sort  (cost=52401.93..53233.70 rows=332705 width=53) (actual time=645.985..716.542 rows=332705 loops=1)
+         Sort Key: rt.space, (to_char(tr.rentdate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 13040kB
+         Buffers: shared hit=3911 read=1553, temp read=1630 written=1635
+         ->  Hash Join  (cost=15.45..10511.42 rows=332705 width=53) (actual time=0.133..138.207 rows=332705 loops=1)
+               Hash Cond: (tr.rtpl_id = rt.rtpl_id)
+               Buffers: shared hit=3908 read=1553
+               ->  Seq Scan on tblrentt1 tr  (cost=0.00..8782.05 rows=332705 width=14) (actual time=0.005..24.240 rows=332705 loops=1)
+                     Buffers: shared hit=3902 read=1553
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.087..0.088 rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.004..0.038 rows=420 loops=1)
+                           Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=319
+   Memory: used=56kB  allocated=128kB
+ Planning Time: 0.595 ms
+ Execution Time: 745.052 ms
+(22 rows)
+
+===== RUN 3 =====
+                                                              QUERY PLAN                                                               
+---------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=52401.93..59887.80 rows=332705 width=61) (actual time=645.043..742.681 rows=5219 loops=1)
+   Group Key: rt.space, (to_char(tr.rentdate, 'YYYY-MM'::text))
+   Buffers: shared hit=3943 read=1521, temp read=1630 written=1635
+   ->  Sort  (cost=52401.93..53233.70 rows=332705 width=53) (actual time=645.036..715.425 rows=332705 loops=1)
+         Sort Key: rt.space, (to_char(tr.rentdate, 'YYYY-MM'::text))
+         Sort Method: external merge  Disk: 13040kB
+         Buffers: shared hit=3943 read=1521, temp read=1630 written=1635
+         ->  Hash Join  (cost=15.45..10511.42 rows=332705 width=53) (actual time=0.125..136.988 rows=332705 loops=1)
+               Hash Cond: (tr.rtpl_id = rt.rtpl_id)
+               Buffers: shared hit=3940 read=1521
+               ->  Seq Scan on tblrentt1 tr  (cost=0.00..8782.05 rows=332705 width=14) (actual time=0.005..23.492 rows=332705 loops=1)
+                     Buffers: shared hit=3934 read=1521
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.088..0.088 rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.004..0.038 rows=420 loops=1)
+                           Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=319
+   Memory: used=56kB  allocated=128kB
+ Planning Time: 0.656 ms
+ Execution Time: 743.869 ms
+(22 rows)
+

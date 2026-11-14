@@ -1,0 +1,60 @@
+===== RUN 1 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=400.22..517.67 rows=4252 width=48) (actual time=2.060..2.652 rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   Buffers: shared hit=91
+   ->  Sort  (cost=400.22..410.93 rows=4287 width=35) (actual time=2.034..2.228 rows=4287 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 326kB
+         Buffers: shared hit=91
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..141.59 rows=4287 width=35) (actual time=0.033..1.321 rows=4287 loops=1)
+               Buffers: shared hit=88
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=177
+   Memory: used=21kB  allocated=32kB
+ Planning Time: 0.264 ms
+ Execution Time: 2.698 ms
+(15 rows)
+
+===== RUN 2 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=400.22..517.67 rows=4252 width=48) (actual time=2.066..2.659 rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   Buffers: shared hit=91
+   ->  Sort  (cost=400.22..410.93 rows=4287 width=35) (actual time=2.040..2.235 rows=4287 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 326kB
+         Buffers: shared hit=91
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..141.59 rows=4287 width=35) (actual time=0.033..1.347 rows=4287 loops=1)
+               Buffers: shared hit=88
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=177
+   Memory: used=21kB  allocated=32kB
+ Planning Time: 0.293 ms
+ Execution Time: 2.706 ms
+(15 rows)
+
+===== RUN 3 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=400.22..517.67 rows=4252 width=48) (actual time=2.032..2.630 rows=13 loops=1)
+   Group Key: (to_char(occurdate, 'YYYY-MM'::text))
+   Buffers: shared hit=91
+   ->  Sort  (cost=400.22..410.93 rows=4287 width=35) (actual time=2.006..2.201 rows=4287 loops=1)
+         Sort Key: (to_char(occurdate, 'YYYY-MM'::text))
+         Sort Method: quicksort  Memory: 326kB
+         Buffers: shared hit=91
+         ->  Seq Scan on tbldmlsd1  (cost=0.00..141.59 rows=4287 width=35) (actual time=0.032..1.318 rows=4287 loops=1)
+               Buffers: shared hit=88
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=177
+   Memory: used=21kB  allocated=32kB
+ Planning Time: 0.278 ms
+ Execution Time: 2.672 ms
+(15 rows)
+

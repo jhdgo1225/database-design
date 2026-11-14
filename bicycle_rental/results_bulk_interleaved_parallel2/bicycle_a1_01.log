@@ -1,0 +1,90 @@
+===== RUN 1 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=583.22..596.27 rows=5219 width=65) (actual time=15.176..15.423 rows=5219 loops=1)
+   Sort Key: rt.space, (to_char((s.ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   Buffers: shared hit=58
+   ->  HashAggregate  (cost=182.68..260.96 rows=5219 width=65) (actual time=2.165..3.872 rows=5219 loops=1)
+         Group Key: rt.space, s.ym
+         Batches: 1  Memory Usage: 721kB
+         Buffers: shared hit=55
+         ->  Hash Join  (cost=15.45..143.53 rows=5219 width=29) (actual time=0.102..1.211 rows=5219 loops=1)
+               Hash Cond: (s.rtpl_id = rt.rtpl_id)
+               Buffers: shared hit=55
+               ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=14) (actual time=0.003..0.376 rows=5219 loops=1)
+                     Filter: (rent_cnt > 0)
+                     Rows Removed by Filter: 1
+                     Buffers: shared hit=49
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.093..0.093 rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.002..0.032 rows=420 loops=1)
+                           Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=268
+   Memory: used=50kB  allocated=128kB
+ Planning Time: 0.535 ms
+ Execution Time: 15.786 ms
+(25 rows)
+
+===== RUN 2 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=583.22..596.27 rows=5219 width=65) (actual time=14.978..15.226 rows=5219 loops=1)
+   Sort Key: rt.space, (to_char((s.ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   Buffers: shared hit=58
+   ->  HashAggregate  (cost=182.68..260.96 rows=5219 width=65) (actual time=2.158..3.861 rows=5219 loops=1)
+         Group Key: rt.space, s.ym
+         Batches: 1  Memory Usage: 721kB
+         Buffers: shared hit=55
+         ->  Hash Join  (cost=15.45..143.53 rows=5219 width=29) (actual time=0.106..1.231 rows=5219 loops=1)
+               Hash Cond: (s.rtpl_id = rt.rtpl_id)
+               Buffers: shared hit=55
+               ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=14) (actual time=0.003..0.376 rows=5219 loops=1)
+                     Filter: (rent_cnt > 0)
+                     Rows Removed by Filter: 1
+                     Buffers: shared hit=49
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.097..0.097 rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.002..0.034 rows=420 loops=1)
+                           Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=268
+   Memory: used=50kB  allocated=128kB
+ Planning Time: 0.487 ms
+ Execution Time: 15.584 ms
+(25 rows)
+
+===== RUN 3 =====
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=583.22..596.27 rows=5219 width=65) (actual time=14.968..15.204 rows=5219 loops=1)
+   Sort Key: rt.space, (to_char((s.ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   Buffers: shared hit=58
+   ->  HashAggregate  (cost=182.68..260.96 rows=5219 width=65) (actual time=2.144..3.858 rows=5219 loops=1)
+         Group Key: rt.space, s.ym
+         Batches: 1  Memory Usage: 721kB
+         Buffers: shared hit=55
+         ->  Hash Join  (cost=15.45..143.53 rows=5219 width=29) (actual time=0.103..1.205 rows=5219 loops=1)
+               Hash Cond: (s.rtpl_id = rt.rtpl_id)
+               Buffers: shared hit=55
+               ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=14) (actual time=0.003..0.371 rows=5219 loops=1)
+                     Filter: (rent_cnt > 0)
+                     Rows Removed by Filter: 1
+                     Buffers: shared hit=49
+               ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.094..0.094 rows=420 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                     Buffers: shared hit=6
+                     ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.002..0.032 rows=420 loops=1)
+                           Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=268
+   Memory: used=50kB  allocated=128kB
+ Planning Time: 0.482 ms
+ Execution Time: 15.564 ms
+(25 rows)
+

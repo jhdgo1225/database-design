@@ -1,0 +1,450 @@
+===== RUN 1 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.381 ms
+ Execution Time: 99.304 ms
+(10 rows)
+
+===== RUN 2 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.374 ms
+ Execution Time: 99.357 ms
+(10 rows)
+
+===== RUN 3 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.409 ms
+ Execution Time: 101.584 ms
+(10 rows)
+
+===== RUN 4 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.390 ms
+ Execution Time: 103.168 ms
+(10 rows)
+
+===== RUN 5 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.389 ms
+ Execution Time: 105.884 ms
+(10 rows)
+
+===== RUN 6 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.471 ms
+ Execution Time: 104.154 ms
+(10 rows)
+
+===== RUN 7 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.472 ms
+ Execution Time: 126.737 ms
+(10 rows)
+
+===== RUN 8 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.392 ms
+ Execution Time: 108.609 ms
+(10 rows)
+
+===== RUN 9 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.614 ms
+ Execution Time: 113.340 ms
+(10 rows)
+
+===== RUN 10 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.739 ms
+ Execution Time: 112.811 ms
+(10 rows)
+
+===== RUN 11 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.441 ms
+ Execution Time: 102.166 ms
+(10 rows)
+
+===== RUN 12 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.362 ms
+ Execution Time: 100.752 ms
+(10 rows)
+
+===== RUN 13 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.443 ms
+ Execution Time: 102.361 ms
+(10 rows)
+
+===== RUN 14 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.400 ms
+ Execution Time: 105.687 ms
+(10 rows)
+
+===== RUN 15 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.400 ms
+ Execution Time: 107.933 ms
+(10 rows)
+
+===== RUN 16 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.372 ms
+ Execution Time: 100.521 ms
+(10 rows)
+
+===== RUN 17 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.400 ms
+ Execution Time: 103.687 ms
+(10 rows)
+
+===== RUN 18 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.388 ms
+ Execution Time: 100.182 ms
+(10 rows)
+
+===== RUN 19 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.404 ms
+ Execution Time: 100.165 ms
+(10 rows)
+
+===== RUN 20 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.388 ms
+ Execution Time: 99.328 ms
+(10 rows)
+
+===== RUN 21 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.387 ms
+ Execution Time: 99.998 ms
+(10 rows)
+
+===== RUN 22 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.389 ms
+ Execution Time: 101.857 ms
+(10 rows)
+
+===== RUN 23 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.390 ms
+ Execution Time: 105.228 ms
+(10 rows)
+
+===== RUN 24 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.383 ms
+ Execution Time: 100.007 ms
+(10 rows)
+
+===== RUN 25 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.388 ms
+ Execution Time: 100.814 ms
+(10 rows)
+
+===== RUN 26 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.381 ms
+ Execution Time: 100.775 ms
+(10 rows)
+
+===== RUN 27 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.411 ms
+ Execution Time: 105.330 ms
+(10 rows)
+
+===== RUN 28 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.468 ms
+ Execution Time: 108.717 ms
+(10 rows)
+
+===== RUN 29 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.401 ms
+ Execution Time: 106.847 ms
+(10 rows)
+
+===== RUN 30 =====
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=17044.39..17073.72 rows=11732 width=129) (actual rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   ->  Subquery Scan on stats  (cost=15224.86..16251.41 rows=11732 width=129) (actual rows=10995 loops=1)
+         ->  HashAggregate  (cost=15224.86..15958.11 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+ Planning Time: 0.407 ms
+ Execution Time: 105.118 ms
+(10 rows)
+

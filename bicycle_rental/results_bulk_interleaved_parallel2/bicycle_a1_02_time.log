@@ -1,0 +1,330 @@
+===== RUN 1 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.275 ms
+ Execution Time: 65.158 ms
+(6 rows)
+
+===== RUN 2 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.268 ms
+ Execution Time: 64.401 ms
+(6 rows)
+
+===== RUN 3 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.274 ms
+ Execution Time: 64.430 ms
+(6 rows)
+
+===== RUN 4 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.269 ms
+ Execution Time: 64.519 ms
+(6 rows)
+
+===== RUN 5 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.348 ms
+ Execution Time: 68.789 ms
+(6 rows)
+
+===== RUN 6 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.262 ms
+ Execution Time: 63.918 ms
+(6 rows)
+
+===== RUN 7 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.266 ms
+ Execution Time: 63.942 ms
+(6 rows)
+
+===== RUN 8 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.255 ms
+ Execution Time: 64.173 ms
+(6 rows)
+
+===== RUN 9 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.272 ms
+ Execution Time: 64.255 ms
+(6 rows)
+
+===== RUN 10 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.269 ms
+ Execution Time: 64.400 ms
+(6 rows)
+
+===== RUN 11 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.267 ms
+ Execution Time: 64.481 ms
+(6 rows)
+
+===== RUN 12 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.268 ms
+ Execution Time: 64.383 ms
+(6 rows)
+
+===== RUN 13 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.261 ms
+ Execution Time: 64.305 ms
+(6 rows)
+
+===== RUN 14 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.258 ms
+ Execution Time: 64.343 ms
+(6 rows)
+
+===== RUN 15 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.267 ms
+ Execution Time: 64.101 ms
+(6 rows)
+
+===== RUN 16 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.293 ms
+ Execution Time: 64.341 ms
+(6 rows)
+
+===== RUN 17 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.280 ms
+ Execution Time: 64.427 ms
+(6 rows)
+
+===== RUN 18 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.284 ms
+ Execution Time: 63.981 ms
+(6 rows)
+
+===== RUN 19 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.269 ms
+ Execution Time: 64.005 ms
+(6 rows)
+
+===== RUN 20 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.271 ms
+ Execution Time: 64.647 ms
+(6 rows)
+
+===== RUN 21 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.298 ms
+ Execution Time: 64.073 ms
+(6 rows)
+
+===== RUN 22 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.280 ms
+ Execution Time: 63.928 ms
+(6 rows)
+
+===== RUN 23 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.265 ms
+ Execution Time: 64.706 ms
+(6 rows)
+
+===== RUN 24 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.316 ms
+ Execution Time: 64.017 ms
+(6 rows)
+
+===== RUN 25 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.277 ms
+ Execution Time: 65.929 ms
+(6 rows)
+
+===== RUN 26 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.277 ms
+ Execution Time: 64.019 ms
+(6 rows)
+
+===== RUN 27 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.275 ms
+ Execution Time: 64.269 ms
+(6 rows)
+
+===== RUN 28 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.262 ms
+ Execution Time: 64.332 ms
+(6 rows)
+
+===== RUN 29 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.280 ms
+ Execution Time: 64.183 ms
+(6 rows)
+
+===== RUN 30 =====
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Sort  (cost=4296.99..4370.29 rows=29318 width=72) (actual rows=29318 loops=1)
+   Sort Key: bycl_id, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 2372kB
+   ->  Seq Scan on tblbcmos1 s  (cost=0.00..2121.67 rows=29318 width=72) (actual rows=29318 loops=1)
+ Planning Time: 0.271 ms
+ Execution Time: 64.316 ms
+(6 rows)
+

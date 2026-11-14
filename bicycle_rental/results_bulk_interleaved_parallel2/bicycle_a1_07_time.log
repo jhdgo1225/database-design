@@ -1,0 +1,1320 @@
+===== RUN 1 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.824 ms
+ Execution Time: 56.315 ms
+(39 rows)
+
+===== RUN 2 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.838 ms
+ Execution Time: 55.519 ms
+(39 rows)
+
+===== RUN 3 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.861 ms
+ Execution Time: 56.338 ms
+(39 rows)
+
+===== RUN 4 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.855 ms
+ Execution Time: 55.466 ms
+(39 rows)
+
+===== RUN 5 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.823 ms
+ Execution Time: 55.773 ms
+(39 rows)
+
+===== RUN 6 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.833 ms
+ Execution Time: 56.600 ms
+(39 rows)
+
+===== RUN 7 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.815 ms
+ Execution Time: 55.716 ms
+(39 rows)
+
+===== RUN 8 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.839 ms
+ Execution Time: 55.930 ms
+(39 rows)
+
+===== RUN 9 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.829 ms
+ Execution Time: 55.698 ms
+(39 rows)
+
+===== RUN 10 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.805 ms
+ Execution Time: 55.350 ms
+(39 rows)
+
+===== RUN 11 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.951 ms
+ Execution Time: 55.832 ms
+(39 rows)
+
+===== RUN 12 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.809 ms
+ Execution Time: 57.421 ms
+(39 rows)
+
+===== RUN 13 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.825 ms
+ Execution Time: 55.948 ms
+(39 rows)
+
+===== RUN 14 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.817 ms
+ Execution Time: 55.671 ms
+(39 rows)
+
+===== RUN 15 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.851 ms
+ Execution Time: 56.784 ms
+(39 rows)
+
+===== RUN 16 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.830 ms
+ Execution Time: 55.545 ms
+(39 rows)
+
+===== RUN 17 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.842 ms
+ Execution Time: 56.741 ms
+(39 rows)
+
+===== RUN 18 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.832 ms
+ Execution Time: 55.447 ms
+(39 rows)
+
+===== RUN 19 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.824 ms
+ Execution Time: 55.690 ms
+(39 rows)
+
+===== RUN 20 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.828 ms
+ Execution Time: 55.509 ms
+(39 rows)
+
+===== RUN 21 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.866 ms
+ Execution Time: 55.582 ms
+(39 rows)
+
+===== RUN 22 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.805 ms
+ Execution Time: 55.521 ms
+(39 rows)
+
+===== RUN 23 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.840 ms
+ Execution Time: 55.761 ms
+(39 rows)
+
+===== RUN 24 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.835 ms
+ Execution Time: 56.718 ms
+(39 rows)
+
+===== RUN 25 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.857 ms
+ Execution Time: 56.417 ms
+(39 rows)
+
+===== RUN 26 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.836 ms
+ Execution Time: 55.590 ms
+(39 rows)
+
+===== RUN 27 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.838 ms
+ Execution Time: 57.266 ms
+(39 rows)
+
+===== RUN 28 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.983 ms
+ Execution Time: 57.944 ms
+(39 rows)
+
+===== RUN 29 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.929 ms
+ Execution Time: 56.384 ms
+(39 rows)
+
+===== RUN 30 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=23159.50..23186.99 rows=10995 width=123) (actual rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=21429.95..22421.49 rows=10995 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+         ->  Hash  (cost=21021.46..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=21008.96..21021.46 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=21008.96..21019.46 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=10472.05..10472.07 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Gather  (cost=10471.84..10472.05 rows=2 width=8) (actual rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         ->  Partial Aggregate  (cost=9471.84..9471.85 rows=1 width=8) (actual rows=1 loops=3)
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..9125.27 rows=138627 width=8) (actual rows=110902 loops=3)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.801 ms
+ Execution Time: 56.112 ms
+(39 rows)
+

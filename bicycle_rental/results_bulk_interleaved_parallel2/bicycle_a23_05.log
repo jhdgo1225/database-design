@@ -1,0 +1,96 @@
+===== RUN 1 =====
+                                                                        QUERY PLAN                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=16522.64..16551.97 rows=11732 width=129) (actual time=77.335..77.888 rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   Buffers: shared hit=7745
+   ->  Subquery Scan on stats  (cost=14703.12..15729.67 rows=11732 width=129) (actual time=46.662..54.673 rows=10995 loops=1)
+         Buffers: shared hit=7739
+         ->  Finalize HashAggregate  (cost=14703.12..15436.37 rows=11732 width=65) (actual time=46.660..53.222 rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               Buffers: shared hit=7739
+               ->  Gather  (cost=11858.11..14351.16 rows=23464 width=65) (actual time=36.360..39.574 rows=30606 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=7739
+                     ->  Partial HashAggregate  (cost=10858.11..11004.76 rows=11732 width=65) (actual time=35.046..36.277 rows=10202 loops=3)
+                           Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+                           Batches: 1  Memory Usage: 2449kB
+                           Buffers: shared hit=7739
+                           Worker 0:  Batches: 1  Memory Usage: 2449kB
+                           Worker 1:  Batches: 1  Memory Usage: 2449kB
+                           ->  Parallel Seq Scan on tblrentt1 r  (cost=0.00..9125.27 rows=138627 width=41) (actual time=0.007..8.643 rows=110902 loops=3)
+                                 Buffers: shared hit=7739
+ Planning:
+   Buffers: shared hit=248
+   Memory: used=110kB  allocated=128kB
+ Planning Time: 0.417 ms
+ Execution Time: 78.889 ms
+(27 rows)
+
+===== RUN 2 =====
+                                                                        QUERY PLAN                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=16522.64..16551.97 rows=11732 width=129) (actual time=76.727..77.264 rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   Buffers: shared hit=7745
+   ->  Subquery Scan on stats  (cost=14703.12..15729.67 rows=11732 width=129) (actual time=46.070..54.022 rows=10995 loops=1)
+         Buffers: shared hit=7739
+         ->  Finalize HashAggregate  (cost=14703.12..15436.37 rows=11732 width=65) (actual time=46.068..52.576 rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               Buffers: shared hit=7739
+               ->  Gather  (cost=11858.11..14351.16 rows=23464 width=65) (actual time=35.963..39.105 rows=30491 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=7739
+                     ->  Partial HashAggregate  (cost=10858.11..11004.76 rows=11732 width=65) (actual time=34.612..35.832 rows=10164 loops=3)
+                           Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+                           Batches: 1  Memory Usage: 2449kB
+                           Buffers: shared hit=7739
+                           Worker 0:  Batches: 1  Memory Usage: 2449kB
+                           Worker 1:  Batches: 1  Memory Usage: 2449kB
+                           ->  Parallel Seq Scan on tblrentt1 r  (cost=0.00..9125.27 rows=138627 width=41) (actual time=0.008..8.512 rows=110902 loops=3)
+                                 Buffers: shared hit=7739
+ Planning:
+   Buffers: shared hit=248
+   Memory: used=110kB  allocated=128kB
+ Planning Time: 0.395 ms
+ Execution Time: 78.304 ms
+(27 rows)
+
+===== RUN 3 =====
+                                                                        QUERY PLAN                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=16522.64..16551.97 rows=11732 width=129) (actual time=82.983..83.608 rows=10995 loops=1)
+   Sort Key: stats."대여소명", stats.dow_key, stats.timeslot_key
+   Sort Method: quicksort  Memory: 1329kB
+   Buffers: shared hit=7745
+   ->  Subquery Scan on stats  (cost=14703.12..15729.67 rows=11732 width=129) (actual time=50.855..59.491 rows=10995 loops=1)
+         Buffers: shared hit=7739
+         ->  Finalize HashAggregate  (cost=14703.12..15436.37 rows=11732 width=65) (actual time=50.852..57.972 rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 2449kB
+               Buffers: shared hit=7739
+               ->  Gather  (cost=11858.11..14351.16 rows=23464 width=65) (actual time=39.682..43.010 rows=30540 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=7739
+                     ->  Partial HashAggregate  (cost=10858.11..11004.76 rows=11732 width=65) (actual time=38.083..39.441 rows=10180 loops=3)
+                           Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+                           Batches: 1  Memory Usage: 2449kB
+                           Buffers: shared hit=7739
+                           Worker 0:  Batches: 1  Memory Usage: 2449kB
+                           Worker 1:  Batches: 1  Memory Usage: 2449kB
+                           ->  Parallel Seq Scan on tblrentt1 r  (cost=0.00..9125.27 rows=138627 width=41) (actual time=0.007..9.136 rows=110902 loops=3)
+                                 Buffers: shared hit=7739
+ Planning:
+   Buffers: shared hit=248
+   Memory: used=110kB  allocated=128kB
+ Planning Time: 0.428 ms
+ Execution Time: 84.726 ms
+(27 rows)
+

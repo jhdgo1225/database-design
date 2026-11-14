@@ -1,0 +1,63 @@
+===== RUN 1 =====
+                                                                       QUERY PLAN                                                                       
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=16.84..61110.96 rows=209107 width=72) (actual time=0.081..310.070 rows=29318 loops=1)
+   Group Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+   Buffers: shared hit=332727
+   ->  Incremental Sort  (cost=16.84..45023.72 rows=332705 width=56) (actual time=0.072..261.094 rows=332705 loops=1)
+         Sort Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+         Presorted Key: bycl_id
+         Full-sort Groups: 2401  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+         Pre-sorted Groups: 2335  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+         Buffers: shared hit=332727
+         ->  Index Scan using idx_rent_bycl on tblrentt1 r  (cost=0.30..29046.51 rows=332705 width=56) (actual time=0.034..191.239 rows=332705 loops=1)
+               Buffers: shared hit=332721
+ Planning:
+   Buffers: shared hit=241
+   Memory: used=55kB  allocated=128kB
+ Planning Time: 0.426 ms
+ Execution Time: 310.955 ms
+(16 rows)
+
+===== RUN 2 =====
+                                                                       QUERY PLAN                                                                       
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=16.84..61110.96 rows=209107 width=72) (actual time=0.083..310.634 rows=29318 loops=1)
+   Group Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+   Buffers: shared hit=332727
+   ->  Incremental Sort  (cost=16.84..45023.72 rows=332705 width=56) (actual time=0.074..261.819 rows=332705 loops=1)
+         Sort Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+         Presorted Key: bycl_id
+         Full-sort Groups: 2401  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+         Pre-sorted Groups: 2335  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+         Buffers: shared hit=332727
+         ->  Index Scan using idx_rent_bycl on tblrentt1 r  (cost=0.30..29046.51 rows=332705 width=56) (actual time=0.034..192.206 rows=332705 loops=1)
+               Buffers: shared hit=332721
+ Planning:
+   Buffers: shared hit=241
+   Memory: used=55kB  allocated=128kB
+ Planning Time: 0.407 ms
+ Execution Time: 311.532 ms
+(16 rows)
+
+===== RUN 3 =====
+                                                                       QUERY PLAN                                                                       
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=16.84..61110.96 rows=209107 width=72) (actual time=0.102..302.787 rows=29318 loops=1)
+   Group Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+   Buffers: shared hit=332727
+   ->  Incremental Sort  (cost=16.84..45023.72 rows=332705 width=56) (actual time=0.091..254.266 rows=332705 loops=1)
+         Sort Key: bycl_id, (to_char(rentdate, 'YYYY-MM'::text))
+         Presorted Key: bycl_id
+         Full-sort Groups: 2401  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+         Pre-sorted Groups: 2335  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+         Buffers: shared hit=332727
+         ->  Index Scan using idx_rent_bycl on tblrentt1 r  (cost=0.30..29046.51 rows=332705 width=56) (actual time=0.046..184.916 rows=332705 loops=1)
+               Buffers: shared hit=332721
+ Planning:
+   Buffers: shared hit=241
+   Memory: used=55kB  allocated=128kB
+ Planning Time: 0.458 ms
+ Execution Time: 303.687 ms
+(16 rows)
+

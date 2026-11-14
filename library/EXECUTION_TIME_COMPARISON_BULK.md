@@ -1,11 +1,13 @@
 # 도서관 정보시스템 쿼리 응답시간·리소스 비교 (반정규화 전/후, 대량 샘플, 직렬·병렬 구분)
 
-원본 로그는 실행 방식별로 폴더가 나뉩니다. 모든 수치는 이 로그에서 뽑았습니다.
+측정 스크립트(`library/estimation_response_time_and_resource.sh`)를 실행했을 때 대략 이런 집계 결과가 나왔다는 기록입니다. 로그 파일은 실행 방식별로 폴더가 나뉘어 생성되고, 모든 수치는 한 번 실행한 이 로그에서 뽑았습니다. 로그는 저장소에 두지 않았으므로 직렬(`library/results_parallel0/`)은 스크립트를 `PARALLEL=0`으로, 병렬(`library/results/`)은 `PARALLEL` 없이 실행해서 확인합니다. 다시 실행하면 시간은 조금씩 달라집니다.
+
+> **로그 파일 안내:** 이 문서가 말하는 측정 로그(`library_<before|after>_NN.log`, `library_*_meta.txt`)는 저장소에 없습니다. 로그를 열어 보려면 반드시 측정 스크립트(`library/estimation_response_time_and_resource.sh`)를 실행해서 생성해야 합니다. 이 문서의 수치를 확인하려고 새로 측정하면 값이 조금 다를 수 있습니다. 시간은 호스트 상태에 따라 달라지고, 캐시 상태에 따라 달라지는 값(버퍼 read 등)도 있습니다.
 
 | 구분 | 폴더 | 설정 | 병렬 노드(`Gather`)가 있는 로그 |
 |---|---|---|---|
-| **직렬 실행** | [`library/results_parallel0/`](results_parallel0) | `PARALLEL=0` → `max_parallel_workers_per_gather=0` (병렬을 끔) | 0 / 16 |
-| **병렬 실행** | [`library/results/`](results) | 서버 기본값 `max_parallel_workers_per_gather=2` (플래너가 비용으로 병렬 여부를 선택) | 9 / 16 |
+| **직렬 실행** | `library/results_parallel0/` (스크립트 실행 시 생성) | `PARALLEL=0` → `max_parallel_workers_per_gather=0` (병렬을 끔) | 0 / 16 |
+| **병렬 실행** | `library/results/` (스크립트 실행 시 생성) | 서버 기본값 `max_parallel_workers_per_gather=2` (플래너가 비용으로 병렬 여부를 선택) | 9 / 16 |
 
 저장 공간·계획 시간 원인 실험과 재현 실험(2차)은 로그가 아니라 별도 임시 DB와 임시 폴더에서 확인한 값이며 해당 절에 표시했습니다.
 

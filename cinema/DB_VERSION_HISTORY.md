@@ -18,6 +18,8 @@ PostgreSQL `cinema` 스키마의 버전별 변경 이력입니다. 스키마가 
 
 > MySQL 버전(`cinema/mysql/`, 2025-12-22 최초 커밋 `aacab33`~`f47d280`)은 별도 제품 계열이라 이 이력의 범위에 넣지 않았습니다.
 
+> **로그 파일 안내:** 이 문서가 말하는 측정 로그(`cinema_<before|after>_NN.log`, `cinema_<before|after>_NN_time.log`, `cinema_*_meta.txt`)는 저장소에 없습니다. 로그를 열어 보려면 반드시 측정 스크립트(`cinema/estimation_response_time_and_resource.sh`)를 실행해서 생성해야 합니다. 이 문서의 수치를 확인하려고 새로 측정하면 값이 조금 다를 수 있습니다. 시간은 호스트 상태에 따라 달라지고, 캐시 상태에 따라 달라지는 값(버퍼 read 등)도 있습니다. 대량 샘플은 `CURRENT_DATE` 기준으로 만들어져서 실행한 날짜에 따라 행 수도 조금 달라집니다.
+
 ---
 
 ## v2.1.1: 용어 정리·대량 샘플·측정 도구 (현재)
@@ -55,7 +57,7 @@ PostgreSQL `cinema` 스키마의 버전별 변경 이력입니다. 스키마가 
 | `postgresql/postgresql_insert_data_bulk.sql` | 정규화 쪽 대량 샘플 생성기 (신규) |
 | `estimation_response_time_and_resource.sh` | `setup`·`measure`·`all`·`drop`, 두 DB 번갈아 측정, 자원·시간 두 단계 측정 (다시 작성) |
 | `summarize_estimation_result.sh` | 시간 로그와 자원 로그를 읽어 쿼리별 중앙값·사분위 범위·CV 요약 (신규) |
-| `results_bulk_interleaved_parallel0/`, `results_bulk_interleaved_parallel2/` | 직렬·병렬 측정 로그 (신규) |
+| `results_bulk_interleaved_parallel0/`, `results_bulk_interleaved_parallel2/` | 직렬·병렬 측정 로그 (신규, 이후 저장소에서 삭제. 스크립트를 실행하면 생성됨) |
 | `EXECUTION_TIME_COMPARISON_BULK.md` | 대량 샘플 비교 문서 (신규) |
 
 ### 검증 방법과 결과
@@ -66,7 +68,7 @@ PostgreSQL `cinema` 스키마의 버전별 변경 이력입니다. 스키마가 
 
 ### 성능 측정 결과 (v1.0.0 → v2.1.x, 대량 샘플)
 
-환경: PostgreSQL 17.10 (aarch64), 예매 315,022건, 시간 측정 30회 중앙값. 상세는 [EXECUTION_TIME_COMPARISON_BULK.md](EXECUTION_TIME_COMPARISON_BULK.md), 원본 로그는 [results_bulk_interleaved_parallel0/](results_bulk_interleaved_parallel0)(직렬), [results_bulk_interleaved_parallel2/](results_bulk_interleaved_parallel2)(병렬)에 있습니다. 측정은 이 버전의 용어 변경 전 파일로 했고, 변경은 주석·메시지·별칭뿐이라 실행 계획은 같습니다.
+환경: PostgreSQL 17.10 (aarch64), 예매 315,022건, 시간 측정 30회 중앙값. 상세는 [EXECUTION_TIME_COMPARISON_BULK.md](EXECUTION_TIME_COMPARISON_BULK.md)에 있습니다. 측정 스크립트를 실행했을 때 대략 이런 집계 결과가 나왔다는 기록이고, 로그 파일은 저장소에 두지 않았습니다. 직렬(`PARALLEL=0`)과 병렬(`PARALLEL=2`)로 스크립트를 실행하면 `results_bulk_interleaved_parallel0/`, `results_bulk_interleaved_parallel2/`에 로그가 생기므로 그 로그로 확인합니다. 측정은 이 버전의 용어 변경 전 파일로 했고, 변경은 주석·메시지·별칭뿐이라 실행 계획은 같습니다.
 
 | 지표 (9개 쿼리 합, 전 → 후) | 결과 |
 |---|---|
@@ -321,7 +323,7 @@ K·D 케이스는 같은 방식으로 제약을 하나씩 빼거나 바꿔서 �
 
 ### 성능 측정 결과 (v1.0.0 → v2.0.0)
 
-환경: PostgreSQL 17.10 (aarch64), 쿼리당 10회, `EXPLAIN (ANALYZE, BUFFERS, ...)`, 중앙값 기준. 상세는 [EXECUTION_TIME_COMPARISON.md](EXECUTION_TIME_COMPARISON.md), 원본 로그는 [results/](results)에 있습니다.
+환경: PostgreSQL 17.10 (aarch64), 쿼리당 10회, `EXPLAIN (ANALYZE, BUFFERS, ...)`, 중앙값 기준. 상세는 [EXECUTION_TIME_COMPARISON.md](EXECUTION_TIME_COMPARISON.md)에 있습니다. 측정 스크립트를 실행했을 때 대략 이런 집계 결과가 나왔다는 기록이고, 로그 파일은 저장소에 두지 않았습니다. 스크립트를 실행하면 `results/`에 생기는 로그로 확인합니다.
 
 | 지표 (9개 쿼리 합, 전 → 후) | 결과 |
 |---|---|

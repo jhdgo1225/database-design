@@ -1,8 +1,10 @@
 # 자전거 대여 정보시스템 쿼리 응답시간·리소스 비교 (정규화와 반정규화 v2.0.0, 대량 샘플)
 
-원본 로그: [`results_bulk_interleaved_parallel0/`](results_bulk_interleaved_parallel0)(직렬), [`results_bulk_interleaved_parallel2/`](results_bulk_interleaved_parallel2)(병렬). 폴더마다 `bicycle_<phase>_NN.log`(자원 측정), `bicycle_<phase>_NN_time.log`(시간 측정), `bicycle_before_meta.txt`, `bicycle_after_meta.txt`가 있습니다. phase는 `before`(정규화), `a23`(후보 2·3), `a1`(후보 1), `a123`(후보 1·2·3을 합친 것)입니다. 표의 수치는 이 로그에서 `summarize_estimation_result.sh`로 뽑았고, 로그에 없는 값은 따로 적었습니다.
+측정 스크립트(`estimation_response_time_and_resource.sh`)를 실행했을 때 대략 이런 집계 결과가 나왔다는 기록입니다. 로그 파일은 저장소에 두지 않았습니다. 직렬(`PARALLEL=0`), 병렬(`PARALLEL=2`)로 스크립트를 실행하면 `results_bulk_interleaved_parallel0/`, `results_bulk_interleaved_parallel2/`에 `bicycle_<phase>_NN.log`(자원 측정), `bicycle_<phase>_NN_time.log`(시간 측정), `bicycle_before_meta.txt`, `bicycle_after_meta.txt`가 생기고, 이 로그를 `summarize_estimation_result.sh`로 요약해서 확인합니다. phase는 `before`(정규화), `a23`(후보 2·3), `a1`(후보 1), `a123`(후보 1·2·3을 합친 것)입니다. 표의 수치는 한 번 실행한 로그에서 뽑았고, 로그에 없는 값은 따로 적었습니다. 다시 실행하면 시간은 조금씩 달라집니다.
 
-`results_parallel0/`, `results_parallel2/`(v1.2.1의 정규화 기준값)는 DB 하나에서 날짜가 다른 데이터로 잰 것이라 이 문서의 수치와 직접 비교하지 않습니다.
+> **로그 파일 안내:** 이 문서가 말하는 측정 로그(`bicycle_<phase>_NN.log`, `bicycle_<phase>_NN_time.log`, `bicycle_*_meta.txt`, v1.2.1 시점의 `bicycle_NN.log`)는 저장소에 없습니다. 로그를 열어 보려면 반드시 측정 스크립트(`bicycle_rental/estimation_response_time_and_resource.sh`)를 실행해서 생성해야 합니다. 이 문서의 수치를 확인하려고 새로 측정하면 값이 조금 다를 수 있습니다. 시간은 호스트 상태에 따라 달라지고, 캐시 상태에 따라 달라지는 값(버퍼 read 등)도 있습니다. 대량 샘플은 `CURRENT_DATE` 기준으로 만들어져서 실행한 날짜에 따라 행 수도 조금 달라집니다.
+
+v1.2.1에서 정규화만 잰 기준값(`results_parallel0/`, `results_parallel2/`, 이후 저장소에서 삭제)은 DB 하나에서 날짜가 다른 데이터로 잰 것이라 이 문서의 수치와 직접 비교하지 않습니다.
 
 ## 결론
 

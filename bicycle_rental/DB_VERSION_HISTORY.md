@@ -24,6 +24,8 @@ PostgreSQL `bicycle_rental` 스키마의 버전별 변경 이력입니다. 스�
 >
 > 버전 번호 판단: 위 버전 규칙을 그대로 쓰면 v1.1.0(`tbldmlsD1.rent_id` NOT NULL, `dist`·`kcal`·`carbon` 타입 변경)과 v1.2.0(`tblrentT1.fixhour` NOT NULL)은 기존 INSERT가 깨지므로 MAJOR에 해당합니다. 읽기 쿼리는 그대로 동작하고 v2.0.0은 반정규화용으로 남겨 두려고 MINOR로 부여했습니다. cinema v2.1.0과 같은 판단입니다.
 
+> **로그 파일 안내:** 이 문서가 말하는 측정 로그(`bicycle_<phase>_NN.log`, `bicycle_<phase>_NN_time.log`, `bicycle_*_meta.txt`, v1.2.1 시점의 `bicycle_NN.log`)는 저장소에 없습니다. 로그를 열어 보려면 반드시 측정 스크립트(`bicycle_rental/estimation_response_time_and_resource.sh`)를 실행해서 생성해야 합니다. 이 문서의 수치를 확인하려고 새로 측정하면 값이 조금 다를 수 있습니다. 시간은 호스트 상태에 따라 달라지고, 캐시 상태에 따라 달라지는 값(버퍼 read 등)도 있습니다. 대량 샘플은 `CURRENT_DATE` 기준으로 만들어져서 실행한 날짜에 따라 행 수도 조금 달라집니다.
+
 ---
 
 ## v2.0.0: 반정규화 (대여소 이름 복사, 시각 파생 열, 집계 테이블) (현재)
@@ -67,7 +69,7 @@ PostgreSQL `bicycle_rental` 스키마의 버전별 변경 이력입니다. 스�
 | `estimation_response_time_and_resource.sh` | 정규화 DB(`bicycle_rental_normalized_bench`)와 반정규화 DB(`bicycle_rental_denormalized_bench`) 두 개를 만들고, 쿼리 세트 네 벌(`before`, `a23`, `a1`, `a123`)을 쿼리마다 순서를 돌려 가며 측정. 로그 이름이 `bicycle_<phase>_NN.log`로 바뀌고 `results_bulk_interleaved[_parallelN]/`에 저장 (v1.2.1 스크립트를 고침) |
 | `summarize_estimation_result.sh` | phase를 나란히 놓고 정규화 대비 변화율을 보여주는 비교표 추가. `results_parallel0/2` 형식의 로그도 그대로 읽음 |
 | `EXECUTION_TIME_COMPARISON.md` | 정규화와 반정규화 비교 결과 (신규) |
-| `results_bulk_interleaved_parallel0/`, `results_bulk_interleaved_parallel2/` | 직렬·병렬 측정 로그 (신규) |
+| `results_bulk_interleaved_parallel0/`, `results_bulk_interleaved_parallel2/` | 직렬·병렬 측정 로그 (신규, 이후 저장소에서 삭제. 스크립트를 실행하면 생성됨) |
 
 저장소 루트
 
@@ -158,7 +160,7 @@ DDL → 기존 샘플 → 날짜 이동 → `ALTER TABLE tblrentT1 DISABLE TRIGG
 
 ### 성능 측정 결과 (정보시스템 쿼리 1~7, 대량 샘플)
 
-두 DB에서 쿼리 세트 네 벌을 쿼리마다 순서를 돌려 가며 측정했습니다. 환경, 집계 기준, 쿼리·phase별 표, 병렬 결과, 해석할 때 주의할 점은 [EXECUTION_TIME_COMPARISON.md](EXECUTION_TIME_COMPARISON.md)에 있고, 원본 로그는 [results_bulk_interleaved_parallel0/](results_bulk_interleaved_parallel0)(직렬), [results_bulk_interleaved_parallel2/](results_bulk_interleaved_parallel2)(병렬)입니다. 시간은 쿼리당 30회의 중앙값, 버퍼·메모리는 3회 중앙값입니다.
+두 DB에서 쿼리 세트 네 벌을 쿼리마다 순서를 돌려 가며 측정했습니다. 환경, 집계 기준, 쿼리·phase별 표, 병렬 결과, 해석할 때 주의할 점은 [EXECUTION_TIME_COMPARISON.md](EXECUTION_TIME_COMPARISON.md)에 있습니다. 아래는 측정 스크립트를 실행했을 때 대략 이런 집계 결과가 나왔다는 기록이고, 로그 파일은 저장소에 두지 않았습니다. 직렬(`PARALLEL=0`)과 병렬(`PARALLEL=2`)로 스크립트를 실행하면 `results_bulk_interleaved_parallel0/`, `results_bulk_interleaved_parallel2/`에 로그가 생기므로 그 로그로 확인합니다. 시간은 쿼리당 30회의 중앙값, 버퍼·메모리는 3회 중앙값입니다.
 
 | 지표 (7개 쿼리 합, 직렬) | 정규화 | 후보 2·3 | 후보 1 | 후보 1·2·3 |
 |---|---|---|---|---|
@@ -229,7 +231,7 @@ DDL → 기존 샘플 → 날짜 이동 → `ALTER TABLE tblrentT1 DISABLE TRIGG
 | `postgresql/postgresql_verify_data.sql` | 데이터 규칙 34개 위반 수 (신규) |
 | `estimation_response_time_and_resource.sh` | `setup`·`measure`·`all`·`drop`. 측정용 DB 하나(`bicycle_rental_bench`)에 DDL, 기존 샘플, 날짜 이동, 대량 샘플 순서로 적재하고 `VACUUM (ANALYZE)` 한 뒤 측정. 자원 측정(전체 `EXPLAIN` 옵션 3회)과 시간 측정(`TIMING OFF` 30회)을 나눔 (신규) |
 | `summarize_estimation_result.sh` | 쿼리별 시간 중앙값·사분위 범위·CV, shared hit/read, temp, 계획·노드 메모리, 계획 버퍼, JIT 시간, 워커 수, 반환 행 수 요약 (신규, `106dd27`에서 뒤의 네 항목 추가) |
-| `results_parallel0/`, `results_parallel2/` | 직렬·병렬 측정 로그와 `bicycle_meta.txt` (신규) |
+| `results_parallel0/`, `results_parallel2/` | 직렬·병렬 측정 로그와 `bicycle_meta.txt` (신규, 이후 저장소에서 삭제) |
 
 실행 순서는 DDL, 기존 샘플, 날짜 이동, 대량 샘플, 검증입니다. 날짜 이동을 대량 샘플보다 먼저 하는 이유는, 대량 샘플을 먼저 넣으면 그 데이터가 가장 최근 이벤트가 되어서 기존 샘플이 옮겨지지 않기 때문입니다.
 
@@ -251,7 +253,7 @@ DDL → 기존 샘플 → 날짜 이동 → `ALTER TABLE tblrentT1 DISABLE TRIGG
 
 비교할 이전 버전이 없어서 전후 비교가 아니라 기준값입니다. 정규화와 반정규화 비교는 반정규화 스키마가 생기면 cinema처럼 DB 두 개로 늘려서 합니다.
 
-환경: PostgreSQL 17.10 (aarch64), 대여 332,776건(2025-11-11 ~ 2026-11-10), 전체 76 MB(대여 테이블 62 MB), `shared_buffers` 16384 블록(128 MB), `work_mem` 4 MB, JIT 켬. 시간은 쿼리당 30회의 중앙값입니다. 원본 로그는 [results_parallel0/](results_parallel0)(직렬, `max_parallel_workers_per_gather=0`), [results_parallel2/](results_parallel2)(병렬, 2)에 있습니다. 정보시스템 쿼리 1~7번은 `CURRENT_DATE`를 쓰지 않아서 적재한 날짜와 상관없이 같은 행을 읽습니다.
+환경: PostgreSQL 17.10 (aarch64), 대여 332,776건(2025-11-11 ~ 2026-11-10), 전체 76 MB(대여 테이블 62 MB), `shared_buffers` 16384 블록(128 MB), `work_mem` 4 MB, JIT 켬. 시간은 쿼리당 30회의 중앙값입니다. 이 수치는 v1.2.1 측정 스크립트를 직렬(`max_parallel_workers_per_gather=0`)과 병렬(2)로 실행했을 때 나온 집계이고, 로그 파일은 저장소에 두지 않았습니다. 지금 스크립트는 로그 이름과 폴더가 달라서(v2.0.0 항목 참고) `before` phase로 같은 방식의 측정을 할 수 있습니다. 정보시스템 쿼리 1~7번은 `CURRENT_DATE`를 쓰지 않아서 적재한 날짜와 상관없이 같은 행을 읽습니다.
 
 | 쿼리 | 직렬 (ms) | 병렬 (ms) | 병렬 변화 | 병렬 워커 수 | 디스크 사용 직렬 / 병렬 (kB) | 반환 행 수 |
 |---|---|---|---|---|---|---|

@@ -1,6 +1,8 @@
 # 영화관 정보시스템 쿼리 응답시간·리소스 비교 (반정규화 전/후)
 
-원본 로그: [`cinema/results/`](results) (`cinema_before_NN.log`, `cinema_after_NN.log`, `cinema_*_meta.txt`). 모든 수치는 이 로그에서 뽑았습니다.
+측정 스크립트(`cinema/estimation_response_time_and_resource.sh`)를 실행했을 때 대략 이런 집계 결과가 나왔다는 기록입니다. 로그 파일은 저장소에 두지 않았습니다. 스크립트를 실행하면 `cinema/results/`에 `cinema_before_NN.log`, `cinema_after_NN.log`, `cinema_*_meta.txt`가 생기고, 이 로그로 확인합니다. 모든 수치는 한 번 실행한 로그에서 뽑았고, 다시 실행하면 시간은 조금씩 달라집니다.
+
+> **로그 파일 안내:** 이 문서가 말하는 측정 로그(`cinema_<before|after>_NN.log`, `cinema_<before|after>_NN_time.log`, `cinema_*_meta.txt`)는 저장소에 없습니다. 로그를 열어 보려면 반드시 측정 스크립트(`cinema/estimation_response_time_and_resource.sh`)를 실행해서 생성해야 합니다. 이 문서의 수치를 확인하려고 새로 측정하면 값이 조금 다를 수 있습니다. 시간은 호스트 상태에 따라 달라지고, 캐시 상태에 따라 달라지는 값(버퍼 read 등)도 있습니다.
 
 ## 결론
 

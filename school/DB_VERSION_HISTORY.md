@@ -19,6 +19,8 @@ PostgreSQL `school` 스키마의 버전별 변경 이력입니다. 스키마가 
 
 > MySQL 버전(`school/mysql/`, 2025-12-22 최초 커밋 `7dc367c`~`abe6fa7`)은 별도 제품 계열이라 이 이력의 범위에 넣지 않았습니다.
 
+> **로그 파일 안내:** 이 문서가 말하는 측정 로그(`school_<before|after>_NN.log`, `school_*_meta.txt`)는 저장소에 없습니다. 로그를 열어 보려면 반드시 측정 스크립트(`school/estimation_response_time_and_resource.sh`)를 실행해서 생성해야 합니다. 이 문서의 수치를 확인하려고 새로 측정하면 값이 조금 다를 수 있습니다. 시간은 호스트 상태에 따라 달라지고, 캐시 상태에 따라 달라지는 값(버퍼 read 등)도 있습니다.
+
 ---
 
 ## v2.1.0: 강의실 이중 배정 방지
@@ -74,7 +76,7 @@ PostgreSQL `school` 스키마의 버전별 변경 이력입니다. 스키마가 
 
 ### 성능 영향
 
-정보시스템 쿼리 6개를 `school/estimation_response_time_and_resource.sh`로 다시 돌려 기존 로그(`school/results/`)와 비교했습니다. 다시 돌린 결과는 임시 폴더에만 저장했고 저장소의 로그와 `EXECUTION_TIME_COMPARISON.md`는 **고치지 않았습니다**.
+정보시스템 쿼리 6개를 `school/estimation_response_time_and_resource.sh`로 다시 돌려 기존 로그(`school/results/`, 이후 저장소에서 삭제)와 비교했습니다. 다시 돌린 결과는 임시 폴더에만 저장했고 저장소의 로그와 `EXECUTION_TIME_COMPARISON.md`는 **고치지 않았습니다**.
 
 | 점검 | 결과 |
 |---|---|
@@ -104,7 +106,7 @@ PostgreSQL `school` 스키마의 버전별 변경 이력입니다. 스키마가 
 
 - 위치: `school/postgresql_denormalization/` (`create_ddl.sql`, `insert_data.sql`, `information_system.sql`)
 - 커밋: `b677a49` 설계 → `1e603c3` 샘플 데이터 → `10c90a4` 정보시스템 쿼리 (모두 2026-10-30)
-- 부속: `school/estimation_response_time_and_resource.sh` (`9881f61`) 응답시간·리소스 측정 스크립트, `school/EXECUTION_TIME_COMPARISON.md`와 `school/results/` (`b117a8a`) 측정 문서·원본 로그
+- 부속: `school/estimation_response_time_and_resource.sh` (`9881f61`) 응답시간·리소스 측정 스크립트, `school/EXECUTION_TIME_COMPARISON.md`와 `school/results/` (`b117a8a`) 측정 문서·원본 로그(`school/results/`는 이후 저장소에서 삭제)
 - 기준: v1.0.0에서 변환
 - 규모: 테이블 8개 → 5개, 트리거 함수 1개·트리거 1개 신규
 
@@ -154,7 +156,7 @@ PostgreSQL `school` 스키마의 버전별 변경 이력입니다. 스키마가 
 
 ### 성능 측정 결과 (v1.0.0 → v2.0.0)
 
-환경: PostgreSQL 17.10 (aarch64), 쿼리당 10회, `EXPLAIN (ANALYZE, BUFFERS, ...)`, 중앙값 기준. 상세는 [EXECUTION_TIME_COMPARISON.md](EXECUTION_TIME_COMPARISON.md), 원본 로그는 [results/](results)에 있습니다.
+환경: PostgreSQL 17.10 (aarch64), 쿼리당 10회, `EXPLAIN (ANALYZE, BUFFERS, ...)`, 중앙값 기준. 상세는 [EXECUTION_TIME_COMPARISON.md](EXECUTION_TIME_COMPARISON.md)에 있습니다. 측정 스크립트를 실행했을 때 대략 이런 집계 결과가 나왔다는 기록이고, 로그 파일은 저장소에 두지 않았습니다. 스크립트를 실행하면 `results/`에 생기는 로그로 확인합니다.
 
 | 지표 (6개 쿼리 합, 전 → 후) | 결과 |
 |---|---|

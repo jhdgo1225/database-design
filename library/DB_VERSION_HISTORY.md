@@ -22,13 +22,15 @@ PostgreSQL `library` 스키마의 버전별 변경 이력입니다. 스키마가
 >
 > `library/trigger_study/`(PostgreSQL·MySQL·Oracle 트리거 학습 정리 3개)는 v3.0.0의 트리거를 설명한 학습 문서이고 아직 git에 추가되지 않았습니다. 스키마가 아니므로 버전에 포함하지 않았습니다.
 
+> **로그 파일 안내:** 이 문서가 말하는 측정 로그(`library_<before|after>_NN.log`, `library_*_meta.txt`)는 저장소에 없습니다. 로그를 열어 보려면 반드시 측정 스크립트(`library/estimation_response_time_and_resource.sh`)를 실행해서 생성해야 합니다. 이 문서의 수치를 확인하려고 새로 측정하면 값이 조금 다를 수 있습니다. 시간은 호스트 상태에 따라 달라지고, 캐시 상태에 따라 달라지는 값(버퍼 read 등)도 있습니다.
+
 ---
 
 ## v3.0.1: 대량 샘플 생성기 (반정규화)
 
 - 위치: `library/postgresql_denormalized/insert_data_bulk.sql` (신규), 커밋 `c45a2be` (2026-11-03)
 - 스키마 변경 없음. 정규화 쪽 `postgresql/insert_data_bulk.sql`(v1.0.1)과 같은 데이터를 만듭니다.
-- 부속: `library/estimation_response_time_and_resource.sh`(측정, `795c584`), `library/summarize_estimation_result.sh`(요약, `9d723ae`), 원본 로그 `library/results/`·`library/results_parallel0/`(`9dbddd3`), 비교 문서 [EXECUTION_TIME_COMPARISON_BULK.md](EXECUTION_TIME_COMPARISON_BULK.md)(`668131f`)
+- 부속: `library/estimation_response_time_and_resource.sh`(측정, `795c584`), `library/summarize_estimation_result.sh`(요약, `9d723ae`), 원본 로그 `library/results/`·`library/results_parallel0/`(`9dbddd3`, 두 폴더 모두 이후 저장소에서 삭제), 비교 문서 [EXECUTION_TIME_COMPARISON_BULK.md](EXECUTION_TIME_COMPARISON_BULK.md)(`668131f`)
 - `insert_data.sql` 적재 후에 실행합니다. 보유도서는 `book_no`를 트리거가 부여하므로 사본 번호 순서대로 INSERT합니다.
 - 난수 대신 md5 해시로 값을 만들어 실행할 때마다, 두 스키마에서 항상 같은 데이터가 나옵니다.
 
@@ -110,7 +112,7 @@ PostgreSQL `library` 스키마의 버전별 변경 이력입니다. 스키마가
 
 ### 성능 영향 (v1.0.x → v3.0.x)
 
-환경: PostgreSQL 17.10 (aarch64), 대량 샘플(대출 약 18만 건), 쿼리당 워밍업 3회 + 측정 30회, 직렬·병렬 구분, 중앙값 기준. 상세는 [EXECUTION_TIME_COMPARISON_BULK.md](EXECUTION_TIME_COMPARISON_BULK.md), 원본 로그는 [results_parallel0/](results_parallel0)(직렬), [results/](results)(병렬)에 있습니다.
+환경: PostgreSQL 17.10 (aarch64), 대량 샘플(대출 약 18만 건), 쿼리당 워밍업 3회 + 측정 30회, 직렬·병렬 구분, 중앙값 기준. 상세는 [EXECUTION_TIME_COMPARISON_BULK.md](EXECUTION_TIME_COMPARISON_BULK.md), 측정 스크립트를 실행했을 때 대략 이런 집계 결과가 나왔다는 기록입니다. 스크립트를 `PARALLEL=0`으로 실행하면 `results_parallel0/`(직렬), `PARALLEL` 없이 실행하면 `results/`(병렬)에 로그가 생기고, 그 로그로 확인합니다. 로그 파일은 저장소에 두지 않았습니다.
 
 | 지표 (8개 쿼리 합, 전 → 후) | 직렬 실행 | 병렬 실행 |
 |---|---|---|

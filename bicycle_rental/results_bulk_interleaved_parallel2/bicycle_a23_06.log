@@ -1,0 +1,102 @@
+===== RUN 1 =====
+                                                                         QUERY PLAN                                                                          
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=58455.99..77941.35 rows=40000 width=147) (actual time=499.899..1231.758 rows=282134 loops=1)
+   Group Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+   Buffers: shared hit=10020 read=5532, temp read=4473 written=4485
+   ->  Gather Merge  (cost=58455.99..73241.35 rows=80000 width=147) (actual time=499.887..815.575 rows=508585 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=10020 read=5532, temp read=4473 written=4485
+         ->  Partial GroupAggregate  (cost=57455.97..63007.34 rows=40000 width=147) (actual time=482.807..663.448 rows=169528 loops=3)
+               Group Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+               Buffers: shared hit=10020 read=5532, temp read=4473 written=4485
+               ->  Sort  (cost=57455.97..58149.02 rows=277221 width=70) (actual time=482.796..558.930 rows=221777 loops=3)
+                     Sort Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+                     Sort Method: external merge  Disk: 12096kB
+                     Buffers: shared hit=10020 read=5532, temp read=4473 written=4485
+                     Worker 0:  Sort Method: external merge  Disk: 11328kB
+                     Worker 1:  Sort Method: external merge  Disk: 12360kB
+                     ->  Parallel Append  (cost=0.00..21022.75 rows=277221 width=70) (actual time=0.009..61.043 rows=221777 loops=3)
+                           Buffers: shared hit=9946 read=5532
+                           ->  Parallel Seq Scan on tblrentt1 r  (cost=0.00..9818.41 rows=138627 width=70) (actual time=0.005..21.600 rows=110902 loops=3)
+                                 Buffers: shared hit=5005 read=2734
+                           ->  Parallel Seq Scan on tblrentt1 r_1  (cost=0.00..9818.24 rows=138594 width=70) (actual time=0.010..34.974 rows=166313 loops=2)
+                                 Filter: (retrtpl_id IS NOT NULL)
+                                 Rows Removed by Filter: 40
+                                 Buffers: shared hit=4941 read=2798
+ Planning:
+   Buffers: shared hit=280
+   Memory: used=130kB  allocated=256kB
+ Planning Time: 0.532 ms
+ Execution Time: 1241.445 ms
+(29 rows)
+
+===== RUN 2 =====
+                                                                         QUERY PLAN                                                                          
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=58455.99..77941.35 rows=40000 width=147) (actual time=496.831..1232.079 rows=282134 loops=1)
+   Group Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+   Buffers: shared hit=10150 read=5402, temp read=4472 written=4484
+   ->  Gather Merge  (cost=58455.99..73241.35 rows=80000 width=147) (actual time=496.820..815.712 rows=509010 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=10150 read=5402, temp read=4472 written=4484
+         ->  Partial GroupAggregate  (cost=57455.97..63007.34 rows=40000 width=147) (actual time=481.529..662.137 rows=169670 loops=3)
+               Group Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+               Buffers: shared hit=10150 read=5402, temp read=4472 written=4484
+               ->  Sort  (cost=57455.97..58149.02 rows=277221 width=70) (actual time=481.519..557.605 rows=221777 loops=3)
+                     Sort Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+                     Sort Method: external merge  Disk: 12328kB
+                     Buffers: shared hit=10150 read=5402, temp read=4472 written=4484
+                     Worker 0:  Sort Method: external merge  Disk: 11336kB
+                     Worker 1:  Sort Method: external merge  Disk: 12112kB
+                     ->  Parallel Append  (cost=0.00..21022.75 rows=277221 width=70) (actual time=0.008..60.716 rows=221777 loops=3)
+                           Buffers: shared hit=10076 read=5402
+                           ->  Parallel Seq Scan on tblrentt1 r  (cost=0.00..9818.41 rows=138627 width=70) (actual time=0.016..21.631 rows=110902 loops=3)
+                                 Buffers: shared hit=5102 read=2637
+                           ->  Parallel Seq Scan on tblrentt1 r_1  (cost=0.00..9818.24 rows=138594 width=70) (actual time=0.009..34.616 rows=166313 loops=2)
+                                 Filter: (retrtpl_id IS NOT NULL)
+                                 Rows Removed by Filter: 40
+                                 Buffers: shared hit=4974 read=2765
+ Planning:
+   Buffers: shared hit=280
+   Memory: used=130kB  allocated=256kB
+ Planning Time: 0.535 ms
+ Execution Time: 1241.758 ms
+(29 rows)
+
+===== RUN 3 =====
+                                                                         QUERY PLAN                                                                          
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=58455.99..77941.35 rows=40000 width=147) (actual time=488.333..1219.157 rows=282134 loops=1)
+   Group Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+   Buffers: shared hit=10470 read=5082, temp read=4473 written=4485
+   ->  Gather Merge  (cost=58455.99..73241.35 rows=80000 width=147) (actual time=488.320..803.689 rows=507554 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=10470 read=5082, temp read=4473 written=4485
+         ->  Partial GroupAggregate  (cost=57455.97..63007.34 rows=40000 width=147) (actual time=482.511..663.004 rows=169185 loops=3)
+               Group Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+               Buffers: shared hit=10470 read=5082, temp read=4473 written=4485
+               ->  Sort  (cost=57455.97..58149.02 rows=277221 width=70) (actual time=482.501..558.606 rows=221777 loops=3)
+                     Sort Key: r.mebr_id, ("substring"((r.rtpl_id)::text, 1, 2))
+                     Sort Method: external merge  Disk: 12056kB
+                     Buffers: shared hit=10470 read=5082, temp read=4473 written=4485
+                     Worker 0:  Sort Method: external merge  Disk: 11960kB
+                     Worker 1:  Sort Method: external merge  Disk: 11768kB
+                     ->  Parallel Append  (cost=0.00..21022.75 rows=277221 width=70) (actual time=0.008..60.308 rows=221777 loops=3)
+                           Buffers: shared hit=10396 read=5082
+                           ->  Parallel Seq Scan on tblrentt1 r  (cost=0.00..9818.41 rows=138627 width=70) (actual time=0.004..21.302 rows=110902 loops=3)
+                                 Buffers: shared hit=5262 read=2477
+                           ->  Parallel Seq Scan on tblrentt1 r_1  (cost=0.00..9818.24 rows=138594 width=70) (actual time=0.007..34.367 rows=166313 loops=2)
+                                 Filter: (retrtpl_id IS NOT NULL)
+                                 Rows Removed by Filter: 40
+                                 Buffers: shared hit=5134 read=2605
+ Planning:
+   Buffers: shared hit=280
+   Memory: used=130kB  allocated=256kB
+ Planning Time: 0.519 ms
+ Execution Time: 1228.880 ms
+(29 rows)
+

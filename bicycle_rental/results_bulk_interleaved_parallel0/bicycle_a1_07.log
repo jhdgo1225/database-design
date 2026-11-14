@@ -1,0 +1,168 @@
+===== RUN 1 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=26011.02..26038.51 rows=10995 width=123) (actual time=129.505..130.116 rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   Buffers: shared hit=13785 read=1822
+   ->  Hash Join  (cost=24281.47..25273.01 rows=10995 width=123) (actual time=98.173..105.584 rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         Buffers: shared hit=13776 read=1822
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual time=6.349..8.710 rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               Buffers: shared hit=120
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual time=0.110..2.683 rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     Buffers: shared hit=120
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual time=0.005..0.672 rows=10995 loops=1)
+                           Buffers: shared hit=114
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.096..0.098 rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           Buffers: shared hit=6
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.003..0.034 rows=420 loops=1)
+                                 Buffers: shared hit=6
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual time=91.807..91.811 rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               Buffers: shared hit=13656 read=1822
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual time=91.766..91.802 rows=7 loops=1)
+                     Buffers: shared hit=13656 read=1822
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual time=91.765..91.801 rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           Buffers: shared hit=13656 read=1822
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual time=46.041..46.042 rows=1 loops=1)
+                                   Buffers: shared hit=6812 read=927
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual time=0.034..22.887 rows=332705 loops=1)
+                                         Buffers: shared hit=6812 read=927
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual time=45.553..45.554 rows=1 loops=1)
+                                   Buffers: shared hit=6844 read=895
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual time=0.036..22.261 rows=332705 loops=1)
+                                         Buffers: shared hit=6844 read=895
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual time=91.756..91.774 rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 Buffers: shared hit=13656 read=1822
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual time=91.670..91.730 rows=365 loops=1)
+                                       Buffers: shared hit=13656 read=1822
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=440
+   Memory: used=253kB  allocated=512kB
+ Planning Time: 0.916 ms
+ Execution Time: 131.179 ms
+(51 rows)
+
+===== RUN 2 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=26011.02..26038.51 rows=10995 width=123) (actual time=125.266..125.765 rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   Buffers: shared hit=14233 read=1374
+   ->  Hash Join  (cost=24281.47..25273.01 rows=10995 width=123) (actual time=95.247..102.519 rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         Buffers: shared hit=14224 read=1374
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual time=6.288..8.623 rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               Buffers: shared hit=120
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual time=0.102..2.657 rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     Buffers: shared hit=120
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual time=0.005..0.669 rows=10995 loops=1)
+                           Buffers: shared hit=114
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.091..0.091 rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           Buffers: shared hit=6
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.003..0.031 rows=420 loops=1)
+                                 Buffers: shared hit=6
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual time=88.946..88.948 rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               Buffers: shared hit=14104 read=1374
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual time=88.911..88.944 rows=7 loops=1)
+                     Buffers: shared hit=14104 read=1374
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual time=88.911..88.942 rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           Buffers: shared hit=14104 read=1374
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual time=44.455..44.456 rows=1 loops=1)
+                                   Buffers: shared hit=7036 read=703
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual time=0.031..21.821 rows=332705 loops=1)
+                                         Buffers: shared hit=7036 read=703
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual time=44.304..44.305 rows=1 loops=1)
+                                   Buffers: shared hit=7068 read=671
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual time=0.035..20.998 rows=332705 loops=1)
+                                         Buffers: shared hit=7068 read=671
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual time=88.901..88.918 rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 Buffers: shared hit=14104 read=1374
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual time=88.819..88.876 rows=365 loops=1)
+                                       Buffers: shared hit=14104 read=1374
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=440
+   Memory: used=253kB  allocated=512kB
+ Planning Time: 0.807 ms
+ Execution Time: 126.700 ms
+(51 rows)
+
+===== RUN 3 =====
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=26011.02..26038.51 rows=10995 width=123) (actual time=124.963..125.461 rows=10995 loops=1)
+   Sort Key: rt.space, (CASE s.dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), s.slot
+   Sort Method: quicksort  Memory: 1071kB
+   Buffers: shared hit=14489 read=1118
+   ->  Hash Join  (cost=24281.47..25273.01 rows=10995 width=123) (actual time=94.221..101.867 rows=10995 loops=1)
+         Hash Cond: (s.dow = d.dow)
+         Buffers: shared hit=14480 read=1118
+         ->  HashAggregate  (cost=405.99..543.43 rows=10995 width=65) (actual time=6.638..9.268 rows=10995 loops=1)
+               Group Key: rt.space, s.dow, s.slot
+               Batches: 1  Memory Usage: 5009kB
+               Buffers: shared hit=120
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=41) (actual time=0.104..2.688 rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     Buffers: shared hit=120
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=26) (actual time=0.005..0.684 rows=10995 loops=1)
+                           Buffers: shared hit=114
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=0.091..0.093 rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           Buffers: shared hit=6
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=0.003..0.032 rows=420 loops=1)
+                                 Buffers: shared hit=6
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual time=87.564..87.568 rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               Buffers: shared hit=14360 read=1118
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual time=87.530..87.564 rows=7 loops=1)
+                     Buffers: shared hit=14360 read=1118
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual time=87.529..87.562 rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           Buffers: shared hit=14360 read=1118
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual time=44.577..44.578 rows=1 loops=1)
+                                   Buffers: shared hit=7164 read=575
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual time=0.044..21.897 rows=332705 loops=1)
+                                         Buffers: shared hit=7164 read=575
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual time=42.791..42.792 rows=1 loops=1)
+                                   Buffers: shared hit=7196 read=543
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual time=0.028..19.928 rows=332705 loops=1)
+                                         Buffers: shared hit=7196 read=543
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual time=87.522..87.538 rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 Buffers: shared hit=14360 read=1118
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual time=87.433..87.491 rows=365 loops=1)
+                                       Buffers: shared hit=14360 read=1118
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=440
+   Memory: used=253kB  allocated=512kB
+ Planning Time: 0.849 ms
+ Execution Time: 126.461 ms
+(51 rows)
+

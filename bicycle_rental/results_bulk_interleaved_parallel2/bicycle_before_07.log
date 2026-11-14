@@ -1,0 +1,240 @@
+===== RUN 1 =====
+                                                                                                                                                                                                                                                                                                                                                                      QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=191723.48..192555.24 rows=332705 width=125) (actual time=749.877..750.469 rows=10995 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1071kB
+   Buffers: shared hit=13983 read=2550, temp read=2688 written=2694
+   ->  Hash Join  (cost=52547.66..139598.97 rows=332705 width=125) (actual time=508.276..741.418 rows=10995 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         Buffers: shared hit=13983 read=2550, temp read=2688 written=2694
+         ->  GroupAggregate  (cost=36091.70..103120.60 rows=332705 width=129) (actual time=444.123..670.231 rows=10995 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               Buffers: shared hit=4869 read=754, temp read=2688 written=2694
+               ->  Gather Merge  (cost=36091.70..74840.68 rows=332705 width=105) (actual time=444.084..588.794 rows=332705 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=4869 read=754, temp read=2688 written=2694
+                     ->  Sort  (cost=35091.67..35438.24 rows=138627 width=105) (actual time=408.717..456.673 rows=110902 loops=3)
+                           Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                           Sort Method: external merge  Disk: 7896kB
+                           Buffers: shared hit=4869 read=754, temp read=2688 written=2694
+                           Worker 0:  Sort Method: external merge  Disk: 6816kB
+                           Worker 1:  Sort Method: external merge  Disk: 6792kB
+                           ->  Hash Join  (cost=15.45..15195.34 rows=138627 width=105) (actual time=4.414..107.611 rows=110902 loops=3)
+                                 Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                                 Buffers: shared hit=4781 read=754
+                                 ->  Parallel Seq Scan on tblrentt1 r  (cost=0.00..6841.27 rows=138627 width=30) (actual time=0.008..8.468 rows=110902 loops=3)
+                                       Buffers: shared hit=4701 read=754
+                                 ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=4.368..4.369 rows=420 loops=3)
+                                       Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                       Buffers: shared hit=18
+                                       ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=4.272..4.311 rows=420 loops=3)
+                                             Buffers: shared hit=18
+         ->  Hash  (cost=16453.46..16453.46 rows=200 width=12) (actual time=64.130..64.164 rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               Buffers: shared hit=9114 read=1796
+               ->  Subquery Scan on d  (cost=16440.96..16453.46 rows=200 width=12) (actual time=64.084..64.158 rows=7 loops=1)
+                     Buffers: shared hit=9114 read=1796
+                     ->  GroupAggregate  (cost=16440.96..16451.46 rows=200 width=12) (actual time=64.082..64.155 rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           Buffers: shared hit=9114 read=1796
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=8188.05..8188.07 rows=1 width=8) (actual time=25.687..25.702 rows=1 loops=1)
+                                   Buffers: shared hit=4509 read=946
+                                   ->  Gather  (cost=8187.84..8188.05 rows=2 width=8) (actual time=25.526..25.689 rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         Buffers: shared hit=4509 read=946
+                                         ->  Partial Aggregate  (cost=7187.84..7187.85 rows=1 width=8) (actual time=18.534..18.534 rows=1 loops=3)
+                                               Buffers: shared hit=4509 read=946
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..6841.27 rows=138627 width=8) (actual time=0.013..8.329 rows=110902 loops=3)
+                                                     Buffers: shared hit=4509 read=946
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=8188.05..8188.07 rows=1 width=8) (actual time=24.807..24.825 rows=1 loops=1)
+                                   Buffers: shared hit=4605 read=850
+                                   ->  Gather  (cost=8187.84..8188.05 rows=2 width=8) (actual time=24.670..24.811 rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         Buffers: shared hit=4605 read=850
+                                         ->  Partial Aggregate  (cost=7187.84..7187.85 rows=1 width=8) (actual time=18.166..18.167 rows=1 loops=3)
+                                               Buffers: shared hit=4605 read=850
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..6841.27 rows=138627 width=8) (actual time=0.007..8.031 rows=110902 loops=3)
+                                                     Buffers: shared hit=4605 read=850
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual time=64.070..64.087 rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 Buffers: shared hit=9114 read=1796
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual time=63.980..64.042 rows=365 loops=1)
+                                       Buffers: shared hit=9114 read=1796
+ Planning:
+   Buffers: shared hit=368
+   Memory: used=327kB  allocated=512kB
+ Planning Time: 0.870 ms
+ JIT:
+   Functions: 74
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 2.673 ms (Deform 0.789 ms), Inlining 0.000 ms, Optimization 1.351 ms, Emission 33.575 ms, Total 37.599 ms
+ Execution Time: 760.537 ms
+(75 rows)
+
+===== RUN 2 =====
+                                                                                                                                                                                                                                                                                                                                                                      QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=191723.48..192555.24 rows=332705 width=125) (actual time=742.259..742.841 rows=10995 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1071kB
+   Buffers: shared hit=14847 read=1686, temp read=2688 written=2694
+   ->  Hash Join  (cost=52547.66..139598.97 rows=332705 width=125) (actual time=500.977..733.735 rows=10995 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         Buffers: shared hit=14847 read=1686, temp read=2688 written=2694
+         ->  GroupAggregate  (cost=36091.70..103120.60 rows=332705 width=129) (actual time=437.599..663.330 rows=10995 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               Buffers: shared hit=5157 read=466, temp read=2688 written=2694
+               ->  Gather Merge  (cost=36091.70..74840.68 rows=332705 width=105) (actual time=437.563..581.893 rows=332705 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=5157 read=466, temp read=2688 written=2694
+                     ->  Sort  (cost=35091.67..35438.24 rows=138627 width=105) (actual time=406.331..454.253 rows=110902 loops=3)
+                           Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                           Sort Method: external merge  Disk: 7816kB
+                           Buffers: shared hit=5157 read=466, temp read=2688 written=2694
+                           Worker 0:  Sort Method: external merge  Disk: 6816kB
+                           Worker 1:  Sort Method: external merge  Disk: 6872kB
+                           ->  Hash Join  (cost=15.45..15195.34 rows=138627 width=105) (actual time=4.438..107.271 rows=110902 loops=3)
+                                 Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                                 Buffers: shared hit=5069 read=466
+                                 ->  Parallel Seq Scan on tblrentt1 r  (cost=0.00..6841.27 rows=138627 width=30) (actual time=0.006..8.453 rows=110902 loops=3)
+                                       Buffers: shared hit=4989 read=466
+                                 ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=4.396..4.397 rows=420 loops=3)
+                                       Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                       Buffers: shared hit=18
+                                       ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=4.299..4.340 rows=420 loops=3)
+                                             Buffers: shared hit=18
+         ->  Hash  (cost=16453.46..16453.46 rows=200 width=12) (actual time=63.356..63.392 rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               Buffers: shared hit=9690 read=1220
+               ->  Subquery Scan on d  (cost=16440.96..16453.46 rows=200 width=12) (actual time=63.311..63.386 rows=7 loops=1)
+                     Buffers: shared hit=9690 read=1220
+                     ->  GroupAggregate  (cost=16440.96..16451.46 rows=200 width=12) (actual time=63.309..63.383 rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           Buffers: shared hit=9690 read=1220
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=8188.05..8188.07 rows=1 width=8) (actual time=25.154..25.171 rows=1 loops=1)
+                                   Buffers: shared hit=4797 read=658
+                                   ->  Gather  (cost=8187.84..8188.05 rows=2 width=8) (actual time=25.016..25.156 rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         Buffers: shared hit=4797 read=658
+                                         ->  Partial Aggregate  (cost=7187.84..7187.85 rows=1 width=8) (actual time=18.519..18.519 rows=1 loops=3)
+                                               Buffers: shared hit=4797 read=658
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..6841.27 rows=138627 width=8) (actual time=0.010..8.261 rows=110902 loops=3)
+                                                     Buffers: shared hit=4797 read=658
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=8188.05..8188.07 rows=1 width=8) (actual time=24.539..24.557 rows=1 loops=1)
+                                   Buffers: shared hit=4893 read=562
+                                   ->  Gather  (cost=8187.84..8188.05 rows=2 width=8) (actual time=24.398..24.541 rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         Buffers: shared hit=4893 read=562
+                                         ->  Partial Aggregate  (cost=7187.84..7187.85 rows=1 width=8) (actual time=18.049..18.050 rows=1 loops=3)
+                                               Buffers: shared hit=4893 read=562
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..6841.27 rows=138627 width=8) (actual time=0.005..7.896 rows=110902 loops=3)
+                                                     Buffers: shared hit=4893 read=562
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual time=63.296..63.314 rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 Buffers: shared hit=9690 read=1220
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual time=63.206..63.269 rows=365 loops=1)
+                                       Buffers: shared hit=9690 read=1220
+ Planning:
+   Buffers: shared hit=368
+   Memory: used=327kB  allocated=512kB
+ Planning Time: 0.846 ms
+ JIT:
+   Functions: 74
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 2.667 ms (Deform 0.776 ms), Inlining 0.000 ms, Optimization 1.369 ms, Emission 33.822 ms, Total 37.857 ms
+ Execution Time: 752.967 ms
+(75 rows)
+
+===== RUN 3 =====
+                                                                                                                                                                                                                                                                                                                                                                      QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=191723.48..192555.24 rows=332705 width=125) (actual time=747.085..747.683 rows=10995 loops=1)
+   Sort Key: rt.space, (CASE ((EXTRACT(dow FROM r.rentdate))::integer) WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), (CASE (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END) WHEN '심야'::text THEN 1 WHEN '오전'::text THEN 2 WHEN '오후'::text THEN 3 ELSE 4 END)
+   Sort Method: quicksort  Memory: 1071kB
+   Buffers: shared hit=15632 read=901, temp read=2688 written=2694
+   ->  Hash Join  (cost=52547.66..139598.97 rows=332705 width=125) (actual time=504.511..738.572 rows=10995 loops=1)
+         Hash Cond: (((EXTRACT(dow FROM r.rentdate))::integer) = d.dow)
+         Buffers: shared hit=15632 read=901, temp read=2688 written=2694
+         ->  GroupAggregate  (cost=36091.70..103120.60 rows=332705 width=129) (actual time=440.898..667.891 rows=10995 loops=1)
+               Group Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+               Buffers: shared hit=5374 read=249, temp read=2688 written=2694
+               ->  Gather Merge  (cost=36091.70..74840.68 rows=332705 width=105) (actual time=440.863..586.342 rows=332705 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=5374 read=249, temp read=2688 written=2694
+                     ->  Sort  (cost=35091.67..35438.24 rows=138627 width=105) (actual time=408.467..456.540 rows=110902 loops=3)
+                           Sort Key: rt.space, ((EXTRACT(dow FROM r.rentdate))::integer), (CASE (EXTRACT(dow FROM r.rentdate))::integer WHEN 1 THEN '월'::text WHEN 2 THEN '화'::text WHEN 3 THEN '수'::text WHEN 4 THEN '목'::text WHEN 5 THEN '금'::text WHEN 6 THEN '토'::text WHEN 0 THEN '일'::text ELSE NULL::text END), (CASE WHEN ((EXTRACT(hour FROM r.rentdate) >= '0'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '4'::numeric)) THEN '심야'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '5'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '11'::numeric)) THEN '오전'::text WHEN ((EXTRACT(hour FROM r.rentdate) >= '12'::numeric) AND (EXTRACT(hour FROM r.rentdate) <= '17'::numeric)) THEN '오후'::text ELSE '야간'::text END)
+                           Sort Method: external merge  Disk: 7856kB
+                           Buffers: shared hit=5374 read=249, temp read=2688 written=2694
+                           Worker 0:  Sort Method: external merge  Disk: 6880kB
+                           Worker 1:  Sort Method: external merge  Disk: 6768kB
+                           ->  Hash Join  (cost=15.45..15195.34 rows=138627 width=105) (actual time=4.417..107.154 rows=110902 loops=3)
+                                 Hash Cond: (r.rtpl_id = rt.rtpl_id)
+                                 Buffers: shared hit=5286 read=249
+                                 ->  Parallel Seq Scan on tblrentt1 r  (cost=0.00..6841.27 rows=138627 width=30) (actual time=0.007..8.086 rows=110902 loops=3)
+                                       Buffers: shared hit=5206 read=249
+                                 ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual time=4.374..4.375 rows=420 loops=3)
+                                       Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                                       Buffers: shared hit=18
+                                       ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual time=4.280..4.318 rows=420 loops=3)
+                                             Buffers: shared hit=18
+         ->  Hash  (cost=16453.46..16453.46 rows=200 width=12) (actual time=63.593..63.631 rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               Buffers: shared hit=10258 read=652
+               ->  Subquery Scan on d  (cost=16440.96..16453.46 rows=200 width=12) (actual time=63.544..63.622 rows=7 loops=1)
+                     Buffers: shared hit=10258 read=652
+                     ->  GroupAggregate  (cost=16440.96..16451.46 rows=200 width=12) (actual time=63.542..63.619 rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           Buffers: shared hit=10258 read=652
+                           InitPlan 1
+                             ->  Finalize Aggregate  (cost=8188.05..8188.07 rows=1 width=8) (actual time=25.420..25.436 rows=1 loops=1)
+                                   Buffers: shared hit=5085 read=370
+                                   ->  Gather  (cost=8187.84..8188.05 rows=2 width=8) (actual time=25.265..25.419 rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         Buffers: shared hit=5085 read=370
+                                         ->  Partial Aggregate  (cost=7187.84..7187.85 rows=1 width=8) (actual time=18.296..18.297 rows=1 loops=3)
+                                               Buffers: shared hit=5085 read=370
+                                               ->  Parallel Seq Scan on tblrentt1  (cost=0.00..6841.27 rows=138627 width=8) (actual time=0.008..7.998 rows=110902 loops=3)
+                                                     Buffers: shared hit=5085 read=370
+                           InitPlan 2
+                             ->  Finalize Aggregate  (cost=8188.05..8188.07 rows=1 width=8) (actual time=24.430..24.451 rows=1 loops=1)
+                                   Buffers: shared hit=5173 read=282
+                                   ->  Gather  (cost=8187.84..8188.05 rows=2 width=8) (actual time=24.271..24.436 rows=3 loops=1)
+                                         Workers Planned: 2
+                                         Workers Launched: 2
+                                         Buffers: shared hit=5173 read=282
+                                         ->  Partial Aggregate  (cost=7187.84..7187.85 rows=1 width=8) (actual time=17.727..17.729 rows=1 loops=3)
+                                               Buffers: shared hit=5173 read=282
+                                               ->  Parallel Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..6841.27 rows=138627 width=8) (actual time=0.011..7.560 rows=110902 loops=3)
+                                                     Buffers: shared hit=5173 read=282
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual time=63.530..63.547 rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 Buffers: shared hit=10258 read=652
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual time=63.439..63.502 rows=365 loops=1)
+                                       Buffers: shared hit=10258 read=652
+ Planning:
+   Buffers: shared hit=368
+   Memory: used=327kB  allocated=512kB
+ Planning Time: 0.864 ms
+ JIT:
+   Functions: 74
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 2.611 ms (Deform 0.776 ms), Inlining 0.000 ms, Optimization 1.373 ms, Emission 33.706 ms, Total 37.690 ms
+ Execution Time: 757.915 ms
+(75 rows)
+

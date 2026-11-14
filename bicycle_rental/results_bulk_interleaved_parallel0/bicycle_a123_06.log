@@ -1,0 +1,39 @@
+===== RUN 1 =====
+                                                                  QUERY PLAN                                                                  
+----------------------------------------------------------------------------------------------------------------------------------------------
+ Index Scan using tblmbrgs1_pkey on tblmbrgs1 s  (cost=0.42..36705.80 rows=282134 width=114) (actual time=0.014..281.726 rows=282134 loops=1)
+   Buffers: shared hit=283362
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=161
+   Memory: used=29kB  allocated=64kB
+ Planning Time: 0.323 ms
+ Execution Time: 290.087 ms
+(8 rows)
+
+===== RUN 2 =====
+                                                                  QUERY PLAN                                                                  
+----------------------------------------------------------------------------------------------------------------------------------------------
+ Index Scan using tblmbrgs1_pkey on tblmbrgs1 s  (cost=0.42..36705.80 rows=282134 width=114) (actual time=0.014..328.242 rows=282134 loops=1)
+   Buffers: shared hit=283362
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=161
+   Memory: used=29kB  allocated=64kB
+ Planning Time: 0.316 ms
+ Execution Time: 336.919 ms
+(8 rows)
+
+===== RUN 3 =====
+                                                                  QUERY PLAN                                                                  
+----------------------------------------------------------------------------------------------------------------------------------------------
+ Index Scan using tblmbrgs1_pkey on tblmbrgs1 s  (cost=0.42..36705.80 rows=282134 width=114) (actual time=0.012..298.363 rows=282134 loops=1)
+   Buffers: shared hit=283362
+ Settings: max_parallel_workers_per_gather = '0'
+ Planning:
+   Buffers: shared hit=161
+   Memory: used=29kB  allocated=64kB
+ Planning Time: 0.333 ms
+ Execution Time: 306.874 ms
+(8 rows)
+

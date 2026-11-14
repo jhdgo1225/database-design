@@ -1,0 +1,570 @@
+===== RUN 1 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.608 ms
+ Execution Time: 31.040 ms
+(14 rows)
+
+===== RUN 2 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.597 ms
+ Execution Time: 32.276 ms
+(14 rows)
+
+===== RUN 3 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.602 ms
+ Execution Time: 31.047 ms
+(14 rows)
+
+===== RUN 4 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.594 ms
+ Execution Time: 30.820 ms
+(14 rows)
+
+===== RUN 5 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.615 ms
+ Execution Time: 31.068 ms
+(14 rows)
+
+===== RUN 6 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.627 ms
+ Execution Time: 31.075 ms
+(14 rows)
+
+===== RUN 7 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.589 ms
+ Execution Time: 30.672 ms
+(14 rows)
+
+===== RUN 8 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.613 ms
+ Execution Time: 31.224 ms
+(14 rows)
+
+===== RUN 9 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.620 ms
+ Execution Time: 30.815 ms
+(14 rows)
+
+===== RUN 10 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.609 ms
+ Execution Time: 30.715 ms
+(14 rows)
+
+===== RUN 11 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.586 ms
+ Execution Time: 30.954 ms
+(14 rows)
+
+===== RUN 12 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.611 ms
+ Execution Time: 31.581 ms
+(14 rows)
+
+===== RUN 13 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.709 ms
+ Execution Time: 31.523 ms
+(14 rows)
+
+===== RUN 14 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.590 ms
+ Execution Time: 31.862 ms
+(14 rows)
+
+===== RUN 15 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.600 ms
+ Execution Time: 30.700 ms
+(14 rows)
+
+===== RUN 16 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.625 ms
+ Execution Time: 31.358 ms
+(14 rows)
+
+===== RUN 17 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.619 ms
+ Execution Time: 30.746 ms
+(14 rows)
+
+===== RUN 18 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.595 ms
+ Execution Time: 30.692 ms
+(14 rows)
+
+===== RUN 19 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.608 ms
+ Execution Time: 30.809 ms
+(14 rows)
+
+===== RUN 20 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.607 ms
+ Execution Time: 30.676 ms
+(14 rows)
+
+===== RUN 21 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.623 ms
+ Execution Time: 30.625 ms
+(14 rows)
+
+===== RUN 22 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.605 ms
+ Execution Time: 30.617 ms
+(14 rows)
+
+===== RUN 23 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.594 ms
+ Execution Time: 30.974 ms
+(14 rows)
+
+===== RUN 24 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.611 ms
+ Execution Time: 30.746 ms
+(14 rows)
+
+===== RUN 25 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.619 ms
+ Execution Time: 30.702 ms
+(14 rows)
+
+===== RUN 26 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.607 ms
+ Execution Time: 30.863 ms
+(14 rows)
+
+===== RUN 27 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.621 ms
+ Execution Time: 30.741 ms
+(14 rows)
+
+===== RUN 28 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.617 ms
+ Execution Time: 30.713 ms
+(14 rows)
+
+===== RUN 29 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.587 ms
+ Execution Time: 30.819 ms
+(14 rows)
+
+===== RUN 30 =====
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on stats  (cost=1006.57..2133.55 rows=10995 width=129) (actual rows=10995 loops=1)
+   ->  GroupAggregate  (cost=1006.57..1308.93 rows=10995 width=49) (actual rows=10995 loops=1)
+         Group Key: rt.space, s.dow, s.slot
+         ->  Sort  (cost=1006.57..1034.05 rows=10995 width=45) (actual rows=10995 loops=1)
+               Sort Key: rt.space, s.dow, s.slot
+               Sort Method: quicksort  Memory: 1071kB
+               ->  Hash Join  (cost=15.45..268.55 rows=10995 width=45) (actual rows=10995 loops=1)
+                     Hash Cond: (s.rtpl_id = rt.rtpl_id)
+                     ->  Seq Scan on tblrpwds1 s  (cost=0.00..223.95 rows=10995 width=30) (actual rows=10995 loops=1)
+                     ->  Hash  (cost=10.20..10.20 rows=420 width=27) (actual rows=420 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 33kB
+                           ->  Seq Scan on tblrtplm1 rt  (cost=0.00..10.20 rows=420 width=27) (actual rows=420 loops=1)
+ Planning Time: 0.598 ms
+ Execution Time: 30.785 ms
+(14 rows)
+

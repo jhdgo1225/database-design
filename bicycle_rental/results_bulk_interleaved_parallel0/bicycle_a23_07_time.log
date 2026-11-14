@@ -1,0 +1,930 @@
+===== RUN 1 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.523 ms
+ Execution Time: 176.286 ms
+(26 rows)
+
+===== RUN 2 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.516 ms
+ Execution Time: 175.986 ms
+(26 rows)
+
+===== RUN 3 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.511 ms
+ Execution Time: 178.506 ms
+(26 rows)
+
+===== RUN 4 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.549 ms
+ Execution Time: 172.626 ms
+(26 rows)
+
+===== RUN 5 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.518 ms
+ Execution Time: 176.792 ms
+(26 rows)
+
+===== RUN 6 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.515 ms
+ Execution Time: 182.801 ms
+(26 rows)
+
+===== RUN 7 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.528 ms
+ Execution Time: 180.067 ms
+(26 rows)
+
+===== RUN 8 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.545 ms
+ Execution Time: 194.819 ms
+(26 rows)
+
+===== RUN 9 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.550 ms
+ Execution Time: 171.542 ms
+(26 rows)
+
+===== RUN 10 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.521 ms
+ Execution Time: 173.382 ms
+(26 rows)
+
+===== RUN 11 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.524 ms
+ Execution Time: 172.560 ms
+(26 rows)
+
+===== RUN 12 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.533 ms
+ Execution Time: 172.981 ms
+(26 rows)
+
+===== RUN 13 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.521 ms
+ Execution Time: 181.769 ms
+(26 rows)
+
+===== RUN 14 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.525 ms
+ Execution Time: 185.139 ms
+(26 rows)
+
+===== RUN 15 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.605 ms
+ Execution Time: 201.988 ms
+(26 rows)
+
+===== RUN 16 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.520 ms
+ Execution Time: 171.534 ms
+(26 rows)
+
+===== RUN 17 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.506 ms
+ Execution Time: 172.469 ms
+(26 rows)
+
+===== RUN 18 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.545 ms
+ Execution Time: 176.198 ms
+(26 rows)
+
+===== RUN 19 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.518 ms
+ Execution Time: 171.583 ms
+(26 rows)
+
+===== RUN 20 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.515 ms
+ Execution Time: 177.290 ms
+(26 rows)
+
+===== RUN 21 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.518 ms
+ Execution Time: 175.009 ms
+(26 rows)
+
+===== RUN 22 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.569 ms
+ Execution Time: 186.364 ms
+(26 rows)
+
+===== RUN 23 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.582 ms
+ Execution Time: 184.728 ms
+(26 rows)
+
+===== RUN 24 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.527 ms
+ Execution Time: 173.388 ms
+(26 rows)
+
+===== RUN 25 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.563 ms
+ Execution Time: 173.052 ms
+(26 rows)
+
+===== RUN 26 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.513 ms
+ Execution Time: 172.931 ms
+(26 rows)
+
+===== RUN 27 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.531 ms
+ Execution Time: 174.637 ms
+(26 rows)
+
+===== RUN 28 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.533 ms
+ Execution Time: 175.077 ms
+(26 rows)
+
+===== RUN 29 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.514 ms
+ Execution Time: 176.091 ms
+(26 rows)
+
+===== RUN 30 =====
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=40951.32..40980.65 rows=11732 width=123) (actual rows=10995 loops=1)
+   Sort Key: r.rtpl_space, (CASE r.rent_dow WHEN 1 THEN 1 WHEN 2 THEN 2 WHEN 3 THEN 3 WHEN 4 THEN 4 WHEN 5 THEN 5 WHEN 6 THEN 6 WHEN 0 THEN 7 ELSE NULL::integer END), r.rent_slot
+   Sort Method: quicksort  Memory: 1071kB
+   ->  Hash Join  (cost=39100.34..40158.35 rows=11732 width=123) (actual rows=10995 loops=1)
+         Hash Cond: (r.rent_dow = d.dow)
+         ->  HashAggregate  (cost=15224.86..15371.51 rows=11732 width=65) (actual rows=10995 loops=1)
+               Group Key: r.rtpl_space, r.rent_dow, r.rent_slot
+               Batches: 1  Memory Usage: 4753kB
+               ->  Seq Scan on tblrentt1 r  (cost=0.00..11066.05 rows=332705 width=41) (actual rows=332705 loops=1)
+         ->  Hash  (cost=23872.98..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               ->  Subquery Scan on d  (cost=23860.48..23872.98 rows=200 width=12) (actual rows=7 loops=1)
+                     ->  GroupAggregate  (cost=23860.48..23870.98 rows=200 width=12) (actual rows=7 loops=1)
+                           Group Key: ((EXTRACT(dow FROM g.d))::integer)
+                           InitPlan 1
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           InitPlan 2
+                             ->  Aggregate  (cost=11897.81..11897.83 rows=1 width=8) (actual rows=1 loops=1)
+                                   ->  Seq Scan on tblrentt1 tblrentt1_1  (cost=0.00..11066.05 rows=332705 width=8) (actual rows=332705 loops=1)
+                           ->  Sort  (cost=64.83..67.33 rows=1000 width=4) (actual rows=365 loops=1)
+                                 Sort Key: ((EXTRACT(dow FROM g.d))::integer)
+                                 Sort Method: quicksort  Memory: 25kB
+                                 ->  Function Scan on generate_series g  (cost=0.00..15.00 rows=1000 width=4) (actual rows=365 loops=1)
+ Planning Time: 0.513 ms
+ Execution Time: 176.016 ms
+(26 rows)
+

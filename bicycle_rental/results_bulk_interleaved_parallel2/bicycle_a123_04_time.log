@@ -1,0 +1,480 @@
+===== RUN 1 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.248 ms
+ Execution Time: 15.295 ms
+(11 rows)
+
+===== RUN 2 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.265 ms
+ Execution Time: 14.705 ms
+(11 rows)
+
+===== RUN 3 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.267 ms
+ Execution Time: 14.773 ms
+(11 rows)
+
+===== RUN 4 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.275 ms
+ Execution Time: 14.901 ms
+(11 rows)
+
+===== RUN 5 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.257 ms
+ Execution Time: 14.815 ms
+(11 rows)
+
+===== RUN 6 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.269 ms
+ Execution Time: 14.834 ms
+(11 rows)
+
+===== RUN 7 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.260 ms
+ Execution Time: 14.910 ms
+(11 rows)
+
+===== RUN 8 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.261 ms
+ Execution Time: 14.914 ms
+(11 rows)
+
+===== RUN 9 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.260 ms
+ Execution Time: 14.565 ms
+(11 rows)
+
+===== RUN 10 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.256 ms
+ Execution Time: 14.623 ms
+(11 rows)
+
+===== RUN 11 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.286 ms
+ Execution Time: 15.636 ms
+(11 rows)
+
+===== RUN 12 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.285 ms
+ Execution Time: 14.996 ms
+(11 rows)
+
+===== RUN 13 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.265 ms
+ Execution Time: 15.427 ms
+(11 rows)
+
+===== RUN 14 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.456 ms
+ Execution Time: 15.258 ms
+(11 rows)
+
+===== RUN 15 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.263 ms
+ Execution Time: 15.330 ms
+(11 rows)
+
+===== RUN 16 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.295 ms
+ Execution Time: 15.070 ms
+(11 rows)
+
+===== RUN 17 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.285 ms
+ Execution Time: 14.671 ms
+(11 rows)
+
+===== RUN 18 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.261 ms
+ Execution Time: 14.858 ms
+(11 rows)
+
+===== RUN 19 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.339 ms
+ Execution Time: 14.797 ms
+(11 rows)
+
+===== RUN 20 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.277 ms
+ Execution Time: 14.812 ms
+(11 rows)
+
+===== RUN 21 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.263 ms
+ Execution Time: 14.989 ms
+(11 rows)
+
+===== RUN 22 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.337 ms
+ Execution Time: 14.861 ms
+(11 rows)
+
+===== RUN 23 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.263 ms
+ Execution Time: 14.635 ms
+(11 rows)
+
+===== RUN 24 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.292 ms
+ Execution Time: 15.457 ms
+(11 rows)
+
+===== RUN 25 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.299 ms
+ Execution Time: 15.092 ms
+(11 rows)
+
+===== RUN 26 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.260 ms
+ Execution Time: 14.982 ms
+(11 rows)
+
+===== RUN 27 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.284 ms
+ Execution Time: 15.608 ms
+(11 rows)
+
+===== RUN 28 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.264 ms
+ Execution Time: 15.355 ms
+(11 rows)
+
+===== RUN 29 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.258 ms
+ Execution Time: 14.840 ms
+(11 rows)
+
+===== RUN 30 =====
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Sort  (cost=187.40..188.70 rows=522 width=65) (actual rows=5219 loops=1)
+   Sort Key: space, (to_char((ym)::timestamp with time zone, 'YYYY-MM'::text))
+   Sort Method: quicksort  Memory: 519kB
+   ->  HashAggregate  (cost=153.39..163.83 rows=522 width=65) (actual rows=5219 loops=1)
+         Group Key: space, ym
+         Batches: 1  Memory Usage: 1233kB
+         ->  Seq Scan on tblrpmos1 s  (cost=0.00..114.25 rows=5219 width=33) (actual rows=5219 loops=1)
+               Filter: (ret_cnt > 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.261 ms
+ Execution Time: 14.845 ms
+(11 rows)
+

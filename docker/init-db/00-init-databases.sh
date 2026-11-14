@@ -29,14 +29,14 @@ for db in $DATABASES; do
 
   # library is split into mysql/postgresql/postgresql_denormalized/migration
   # subfolders, cinema into mysql/postgresql/postgresql_denormalization/migration
-  # and school into mysql/postgresql/postgresql_denormalization;
-  # every other DB keeps its flat postgresql_*.sql layout. Only the original
-  # (normalized) PostgreSQL schema is loaded here; the denormalized variants
-  # are applied by hand.
+  # school into mysql/postgresql/postgresql_denormalization and pos into
+  # mysql/postgresql; every other DB keeps its flat postgresql_*.sql layout.
+  # Only the original (normalized) PostgreSQL schema is loaded here; the
+  # denormalized variants are applied by hand.
   if [ "$db" = "library" ]; then
     ddl_path="$SQL_ROOT/$db/postgresql/create_ddl.sql"
     insert_path="$SQL_ROOT/$db/postgresql/insert_data.sql"
-  elif [ "$db" = "cinema" ] || [ "$db" = "school" ]; then
+  elif [ "$db" = "cinema" ] || [ "$db" = "school" ] || [ "$db" = "pos" ]; then
     ddl_path="$SQL_ROOT/$db/postgresql/postgresql_create_ddl.sql"
     insert_path="$SQL_ROOT/$db/postgresql/postgresql_insert_data.sql"
   else

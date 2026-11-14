@@ -29,19 +29,18 @@ for db in $DATABASES; do
 
   # library is split into mysql/postgresql/postgresql_denormalized/migration
   # subfolders, cinema into mysql/postgresql/postgresql_denormalization/migration
-  # school into mysql/postgresql/postgresql_denormalization and pos into
-  # mysql/postgresql; every other DB keeps its flat postgresql_*.sql layout.
+  # school into mysql/postgresql/postgresql_denormalization, bicycle_rental
+  # into mysql/postgresql/postgresql_denormalization/migration and pos into
+  # mysql/postgresql.
   # Only the original (normalized) PostgreSQL schema is loaded here; the
-  # denormalized variants are applied by hand.
+  # denormalized variants are applied by hand (bicycle_rental's needs its
+  # summary-trigger steps, see bicycle_rental/estimation_response_time_and_resource.sh).
   if [ "$db" = "library" ]; then
     ddl_path="$SQL_ROOT/$db/postgresql/create_ddl.sql"
     insert_path="$SQL_ROOT/$db/postgresql/insert_data.sql"
-  elif [ "$db" = "cinema" ] || [ "$db" = "school" ] || [ "$db" = "pos" ]; then
+  else
     ddl_path="$SQL_ROOT/$db/postgresql/postgresql_create_ddl.sql"
     insert_path="$SQL_ROOT/$db/postgresql/postgresql_insert_data.sql"
-  else
-    ddl_path="$SQL_ROOT/$db/postgresql_create_ddl.sql"
-    insert_path="$SQL_ROOT/$db/postgresql_insert_data.sql"
   fi
 
   echo "[load]   ${ddl_path#"$SQL_ROOT/"}"

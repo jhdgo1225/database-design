@@ -87,12 +87,12 @@ res_stat() {
     /^-----+/ && !gotsep {
       gotsep = 1; getline; top = $0
       # 최상위 노드가 돌려준 행 수 (actual time=a..b rows=N)
-      if (match(top, /actual time=[0-9.]+\.\.[0-9.]+ rows=[0-9]+/)) { s = substr(top, RSTART, RLENGTH); sub(/.*rows=/, "", s); rw = s }
+      if (match(top, /actual time=[0-9.]+\.\.[0-9.]+ rows=[0-9]+/)) { s = substr(top, RSTART, RLENGTH); sub(/.*rows=/, "", s); rw = s + 0 }
       sub(/^ +/, "", top); sub(/  \(cost.*/, "", top); sub(/ +$/, "", top); gsub(/ /, "_", top); next
     }
     /^ *Planning:/ { inplan = 1; next }
-    /^ *Buffers: shared/ && inplan { if (match($0, /hit=[0-9]+/)) ph = substr($0, RSTART + 4, RLENGTH - 4); next }
-    /Timing: Generation/ { if (match($0, /Total [0-9.]+ ms/)) jit = substr($0, RSTART + 6, RLENGTH - 9); next }
+    /^ *Buffers: shared/ && inplan { if (match($0, /hit=[0-9]+/)) ph = substr($0, RSTART + 4, RLENGTH - 4) + 0; next }
+    /Timing: Generation/ { if (match($0, /Total [0-9.]+ ms/)) jit = substr($0, RSTART + 6, RLENGTH - 9) + 0; next }
     /Workers Launched:/ { if (match($0, /Launched: [0-9]+/)) wk += substr($0, RSTART + 10, RLENGTH - 10); next }
     /^ *Buffers: shared/ && !inplan && !gotbuf {
       gotbuf = 1; seg = ""
@@ -106,7 +106,7 @@ res_stat() {
       }
       next
     }
-    /^ *Memory: used=/ { if (match($0, /used=[0-9]+/)) mu = substr($0, RSTART + 5, RLENGTH - 5); if (match($0, /allocated=[0-9]+/)) ma = substr($0, RSTART + 10, RLENGTH - 10); next }
+    /^ *Memory: used=/ { if (match($0, /used=[0-9]+/)) mu = substr($0, RSTART + 5, RLENGTH - 5) + 0; if (match($0, /allocated=[0-9]+/)) ma = substr($0, RSTART + 10, RLENGTH - 10) + 0; next }
     {
       line = $0
       while (match(line, /Memory Usage: [0-9]+kB/)) { s = substr(line, RSTART, RLENGTH); sub(/Memory Usage: /, "", s); sub(/kB/, "", s); nm += s; line = substr(line, RSTART + RLENGTH) }
